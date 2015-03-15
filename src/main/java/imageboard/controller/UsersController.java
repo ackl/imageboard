@@ -1,4 +1,4 @@
-package controller;
+package imageboard.controller;
 
 import java.util.List;
 import java.util.Date;
@@ -14,11 +14,7 @@ import model.UsersModel;
 //TODO: Authentication information
 public class UsersController {
 	
-	private UsersDao dao;
-	@Autowired
-	public UsersController(UsersDao dao) {
-		this.dao = dao;
-	}
+	private UsersDao dao = new UsersDao();
 
 	@RequestMapping(method=RequestMethod.GET)
 	public List<UsersModel> getAllUsers() {
@@ -28,6 +24,11 @@ public class UsersController {
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public UsersModel getUser(@PathVariable long id) {
 		return dao.selectUserById(id);
+	}
+
+	@RequestMapping(value="/test", method=RequestMethod.GET)
+	public String test() {
+		return "Hello World!";
 	}
 	
 //	@RequestMapping(method=RequestMethod.POST)
