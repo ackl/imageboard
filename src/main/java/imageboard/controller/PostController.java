@@ -4,7 +4,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 
-import model.Posts;
+import imageboard.model.Posts;
 
 
 @RestController
