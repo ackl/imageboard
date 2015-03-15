@@ -6,14 +6,14 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import dao.UsersDao;
-import model.UsersModel;
+import imageboard.dao.UsersDao;
+import imageboard.model.UsersModel;
 
 @RestController
 @RequestMapping("/users")
 //TODO: Authentication information
 public class UsersController {
-	
+
 	private UsersDao dao = new UsersDao();
 
 	@RequestMapping(method=RequestMethod.GET)
@@ -30,9 +30,9 @@ public class UsersController {
 	public String test() {
 		return "Hello World!";
 	}
-	
+
 //	@RequestMapping(method=RequestMethod.POST)
-//	public String postUser(@RequestParam(value="keycode") String keycode, 
+//	public String postUser(@RequestParam(value="keycode") String keycode,
 //				       @RequestParam(value="timeLimit", defaultValue=24) long timeLimit) {
 //		dao.insertUser(keycode, (new Date()).getTime() + TimeUnit.HOURS.toMillis(timeLimit));
 //
@@ -55,11 +55,11 @@ public class UsersController {
 //	public User getUser(@PathVariable int id) {
 //		return dao.getUserById(id);
 //	}
-//	
+//
 //	@RequestMapping(value = "/settings", method = RequestMethod.POST)
 //	public String userSettingsSubmit(@RequestParam("keycode") String keycode,
 //					 @RequestParam("name") String name,
-//					 @RequestParam("pass") String pass, 
+//					 @RequestParam("pass") String pass,
 //					 @RequestParam("image_url") String imageUrl) {
 //		dao.updateUser(keycode, name, pass, imageUrl);
 //

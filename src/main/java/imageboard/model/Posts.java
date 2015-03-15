@@ -1,4 +1,4 @@
-package model;
+package imageboard.model;
 
 import java.util.Date;
 import java.text.SimpleDateFormat;

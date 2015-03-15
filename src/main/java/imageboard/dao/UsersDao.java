@@ -1,4 +1,4 @@
-package dao;
+package imageboard.dao;
 
 import java.util.List;
 
@@ -6,31 +6,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 
-import model.UsersModel;
+import imageboard.model.UsersModel;
 
 public class UsersDao {
 
 	@Autowired
 	JdbcTemplate jdbcTemplate; //TODO: Define a data source?
-	
+
 	public List<UsersModel> selectAllUsers() {
 		String sql = "SELECT * FROM users";
 
-		return jdbcTemplate.query(sql, 
+		return jdbcTemplate.query(sql,
 				new BeanPropertyRowMapper(UsersModel.class));
 	}
 
 	public UsersModel selectUserById(long id) {
 		String sql = "SELECT * FROM users WHERE id = ?";
-	
-		return (UsersModel)jdbcTemplate.queryForObject(sql, new Object[] {id}, 
+
+		return (UsersModel)jdbcTemplate.queryForObject(sql, new Object[] {id},
 				new BeanPropertyRowMapper(UsersModel.class));
 	}
 
 	public UsersModel selectUserByKeycode(String keycode) {
 		String sql = "SELECT * FROM users WHERE keycode = ?";
 
-		return (UsersModel)jdbcTemplate.queryForObject(sql, new Object[] {keycode}, 
+		return (UsersModel)jdbcTemplate.queryForObject(sql, new Object[] {keycode},
 				new BeanPropertyRowMapper(UsersModel.class));
 	}
 

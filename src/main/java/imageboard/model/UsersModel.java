@@ -1,4 +1,4 @@
-package model;
+package imageboard.model;
 
 import java.util.Date;
 
@@ -10,7 +10,7 @@ public class UsersModel {
 	private String imageUrl;
 	private String keycode;
 	private long expiryDate;
-	
+
 	public UsersModel() {}
 
 	public boolean checkRegistered() {
@@ -21,4 +21,4 @@ public class UsersModel {
 		return (new Date(expiryDate)).before(new Date());
 	}
 
-}	
+}
