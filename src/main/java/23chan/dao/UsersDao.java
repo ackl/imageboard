@@ -6,27 +6,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 
-public class UserDao {
+import model.UsersModel;
+
+public class UsersDao {
 
 	@Autowired
 	JdbcTemplate jdbcTemplate; //TODO: Define a data source?
 	
-	public List<User> selectAllUsers() {
+	public List<UsersModel> selectAllUsers() {
 		String sql = "SELECT * FROM users";
 
-		return jdbcTemplate.query(sql, new BeanPropertyRowMapper(User.class));
+		return jdbcTemplate.query(sql, 
+				new BeanPropertyRowMapper(UsersModel.class));
 	}
 
-	public User selectUserById(long id) {
+	public UsersModel selectUserById(long id) {
 		String sql = "SELECT * FROM users WHERE id = ?";
 	
-		return (User)jdbcTemplate.queryForObject(sql, new Object[] {id}, new BeanPropertyRowMapper(User.class));
+		return (UsersModel)jdbcTemplate.queryForObject(sql, new Object[] {id}, 
+				new BeanPropertyRowMapper(UsersModel.class));
 	}
 
-	public User selectUserByKeycode(String keycode) {
+	public UsersModel selectUserByKeycode(String keycode) {
 		String sql = "SELECT * FROM users WHERE keycode = ?";
 
-		return (User)jdbcTemplate.queryForObject(sql, new Object[] {keycode}, new BeanPropertyMapper(User.class));
+		return (UsersModel)jdbcTemplate.queryForObject(sql, new Object[] {keycode}, 
+				new BeanPropertyRowMapper(UsersModel.class));
 	}
 
 	public void insertUser(String keycode, long expiryDate) {
