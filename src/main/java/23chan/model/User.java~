@@ -1,0 +1,42 @@
+package model;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+
+public class User {
+
+	private int id;
+	private String name;
+	private String pass;
+	private String imageUrl;
+	private String keycode;
+	private int issueDate;
+	private int expiryDate;
+	
+	@Autowired
+	JdbcTemplate jdbcTemplate;
+
+	public User(int id) {
+		String sql = "SELECT * FROM users WHERE id = ?";
+
+		User result = (User)jdbcTemplate.queryForObject(sql, 
+				new Object[] {id}, new BeanPropertyRowMapper(User.class));
+
+		return result;
+	}
+	public User(int id, String name, String pass, String imageUrl, String keycode, int issueDate, int expiryDate) {
+		this.id = id;
+		this.name = name;
+		this.pass = pass;
+		this.imageUrl = imageUrl;
+		this.keycode = keycode;
+		this.issueDate = issueDate;
+		this.expiryDate = expiryDate;
+	}
+
+	public boolean checkValid() {
+		return !this.name.equals("");
+	}
+
+}	
