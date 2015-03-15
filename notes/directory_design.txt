@@ -20,14 +20,14 @@ An integer limit to represent the maximum file size for
 any one upload can be set here.
 
 /threads (permits users)
-Profile details, imageurl and name, of the entry with a 
+Profile details, imageurl and name, of the entry with a
 matching id from the users table. Links to /users/id/settings
 where id is the id of the authenticated user.
 A link to /threads/new should be here.
 List of threads generated from all entries in the threads
 table. For each entry in threads table attributes imageurl and
 content- from posts table where id matches postid- and subject,
-and postid from threads table. These link to /threads/id 
+and postid from threads table. These link to /threads/id
 where id is the postid value of that thread.
 
 /threads/id (permits users)
@@ -43,7 +43,7 @@ file with its extension removed.
 A link to /threads/id/new, where id is the postid of the thread
 (the id of the opening post). A form to create a new posts
 entry at the bottom, where the id of the thread is passed
-to parentid to indicate a reply. The id and date are 
+to parentid to indicate a reply. The id and date are
 generated, while the id of the authenticated user is given to
 userid. Text box takes in content, but no subject is taken as
 those are specific to opening posts only. Image upload also
@@ -53,7 +53,7 @@ available with the resulting url passed to imageurl.
 Form to create a new threads and posts entry. An id is
 generated for the postid and id of the threads and posts table
 respectively. File upload option with the resulting url
-passed to imageurl of posts table. Text for subject and 
+passed to imageurl of posts table. Text for subject and
 content are taken for threads and posts tables. The id of the
 authenticated user passed to userid of posts entry. Finally
 a date is generated and passed to date of posts, the parentid
@@ -72,7 +72,7 @@ to /thread/parentid for easy context access.
 
 /users/id/settings (permits specific user)
 Authentication check that the currently authenticated user
-has a matching id value. Forms to change name, pass, and 
+has a matching id value. Forms to change name, pass, and
 imageurl available here. A new image can be uploaded while
 the server deletes the previous image.
 
@@ -81,17 +81,17 @@ Form to create a new entry in the users table. A keycode
 is generated and passed to the table along with the date
 and given expiry value, which is a integer representing a
 time frame.
-Other attributes are left blank to be filled later by 
+Other attributes are left blank to be filled later by
 another page. A link to /users/new/keycode is generated that
 is to be sent to a registering user.
 
 /users/new/keycode (permits all)
 A check is done by adding the date and expiry attributes and
-comparing them to a current date value. If there is an 
+comparing them to a current date value. If there is an
 existing username/password, the client is informed that the
-keycode has been used. If it exceeds the current date, and 
-there is no existing username/passsword the entry in the users table is deleted and the client is informed the keycode has 
-expired.
+keycode has been used. If it exceeds the current date, and
+there is no existing username/passsword the entry in the users
+table is deleted and the client is informed the keycode has expired.
 Otherwise, the remaining time is displayed and a form
 accepting a username and password is displayed. These are
 passed to the name and pass attributes respectively, where
