@@ -1,6 +1,0 @@
-model/UsersModel.class
-Application.class
-controller/PostController.class
-model/Posts.class
-controller/UsersController.class
-dao/UsersDao.class
