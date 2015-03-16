@@ -1,0 +1,36 @@
+ul.posts {
+    padding: 0;
+
+    li {
+        list-style-type: none;
+        padding: 10px 20px;
+        border: 1px solid grey;
+        margin-bottom: 10px;
+
+        .post__timestamp {
+            font-size: 0.7rem;
+            color: grey;
+            margin-top: 8px;
+        }
+    }
+}
+
+.new-post-form {
+    margin: 20px 0;
+
+    input, button {
+        width: 100%;
+        padding: 10px 0;
+    }
+
+    input {
+        border: 2px solid grey;
+    }
+
+    button {
+        background: #999;
+        color: #efefef;
+        padding: 5px 0;
+        font-size: 1.1rem;
+    }
+}
