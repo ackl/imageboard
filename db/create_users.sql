@@ -1,8 +1,0 @@
-CREATE TABLE users (
-	id INTEGER NOT NULL PRIMARY KEY,
-	name VARCHAR(255),
-	pass VARCHAR(255),
-	image_url VARCHAR(255),
-	keycode VARCHAR(255) NOT NULL PRIMARY KEY,
-	expiry_date INTEGER NOT NULL
-);
