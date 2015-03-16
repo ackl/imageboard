@@ -11,7 +11,7 @@ CREATE TABLE posts (
 	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	user_id INT NOT NULL,
 	parent_id INT,
-	date INT NOT NULL,
+	date BIGINT NOT NULL,
 	image_url VARCHAR(255),
 	content VARCHAR(255)
 );

@@ -6,7 +6,7 @@ var getPosts = function() {
             $('.posts').append('<li>'
                 + post.content
                 + '<p class="post__timestamp">Posted at: '
-                + post.time
+                + new Date(post.date)
                 + '</p></li>');
         });
     });

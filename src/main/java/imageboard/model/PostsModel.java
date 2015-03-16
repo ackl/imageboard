@@ -5,7 +5,7 @@ public class PostsModel {
 	private int id;
 	private int userId;
 	private int parentId;
-	private int date;
+	private long date;
 	private String imageUrl;
 	private String content;
 
@@ -26,9 +26,9 @@ public class PostsModel {
 	} public void setParentId(int parentId) {
 		this.parentId = parentId;
 	}
-	public int getDate() {
+	public long getDate() {
 		return this.date;
-	} public void setDate(int date) {
+	} public void setDate(long date) {
 		this.date = date;
 	}
 	public String getImageUrl() {

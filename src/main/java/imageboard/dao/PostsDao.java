@@ -48,13 +48,13 @@ public class PostsDao {
 				new BeanPropertyRowMapper(PostsModel.class));
 	}
 
-	public void insertPost(int userId, int parentId, int date, String imageUrl, String content) {
+	public void insertPost(int userId, int parentId, long date, String imageUrl, String content) {
 		String sql = "INSERT INTO posts (user_id, parent_id, date, image_url, content) VALUES (?, ?, ?, ?, ?)";
 
 		jdbcTemplate.update(sql, new Object[] {userId, parentId, date, imageUrl, content});
 	}
 
-	public void updatePost(int id, int userId, int parentId, int date, String imageUrl, String content) {
+	public void updatePost(int id, int userId, int parentId, long date, String imageUrl, String content) {
 		String sql = "UPDATE posts SET user_id=?,parent_id=?,date=?,image_url=?,content=? WHERE id=?";
 
 		jdbcTemplate.update(sql, new Object[] {userId, parentId, date, imageUrl, content, id});
