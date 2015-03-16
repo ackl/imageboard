@@ -5,15 +5,26 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.datasource.*;
 
 import imageboard.model.UsersModel;
 
 public class UsersDao {
 
-	@Autowired
-	JdbcTemplate jdbcTemplate; //TODO: Define a data source?
+	JdbcTemplate jdbcTemplate = initJdbc();
 
+	public JdbcTemplate initJdbc() {
+		DriverManagerDataSource data = new DriverManagerDataSource();
+		data.setDriverClassName("com.mysql.jdbc.Driver");
+		data.setUrl("jdbc:mysql://localhost:3306/db");
+		data.setUsername("root");
+		data.setPassword("420");
+
+		return new JdbcTemplate(data);
+	}
+	
 	public List<UsersModel> selectAllUsers() {
+		this.insertUser("pleasework", 100010100);
 		String sql = "SELECT * FROM users";
 
 		return jdbcTemplate.query(sql,
@@ -37,7 +48,7 @@ public class UsersDao {
 	public void insertUser(String keycode, long expiryDate) {
 		String sql = "INSERT INTO users (keycode, expiry_date) VALUES (?, ?)";
 
-		jdbcTemplate.update(sql, new Object[] {keycode, expiryDate});
+		jdbcTemplate.update(sql, keycode, expiryDate);
 	}
 
 	public void updateUser(String keycode, String name, String pass, String imageUrl) {
