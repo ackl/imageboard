@@ -46,7 +46,7 @@ public class UsersDao {
 	}
 
 	public void updateUser(int id, String name, String pass, String imageUrl) {
-		String sql = "UPDATE users SET name=?, pass=?, image_url=? WHERE id=?";
+		String sql = "UPDATE users SET name=?,pass=?,image_url=? WHERE id=?";
 
 		jdbcTemplate.update(sql, new Object[] {name, pass, imageUrl, id});
 	}

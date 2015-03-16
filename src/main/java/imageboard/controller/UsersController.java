@@ -19,6 +19,9 @@ import imageboard.model.UsersModel;
  * Check authentication for certain requests
  * Reduce precision loss from expiryDate
  * Keep Map for RequestParam?
+ * Hash the password parameter from PUT requests
+ * Run checks before accepting changes from PUT requests
+ * PUT is not working
  */
 
 @RestController

@@ -20,12 +20,6 @@ public class Application {
 
     @Bean
     public JdbcTemplate jdbcTemplate() {
-	    DriverManagerDataSource data = new DriverManagerDataSource();
-	    data.setDriverClassName("com.mysql.jdbc.Driver");
-	    data.setUrl("jdbc:mysql://localhost:3306/db");
-	    data.setUsername("root");
-	    data.setPassword("420");
-
 	    return new JdbcTemplate(this.dataSource);
     }
 
