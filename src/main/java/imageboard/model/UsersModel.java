@@ -4,18 +4,18 @@ import java.util.Date;
 
 public class UsersModel {
 
-	private long id;
+	private int id;
 	private String name;
 	private String pass;
 	private String imageUrl;
 	private String keycode;
-	private long expiryDate;
+	private int expiryDate;
 
 	public UsersModel() {}
 
-	public long getId() {
+	public int getId() {
 		return this.id;
-	} public void setId(long id) {
+	} public void setId(int id) {
 		this.id = id;
 	}
 	public String getName() {
@@ -38,9 +38,9 @@ public class UsersModel {
 	} public void setKeycode(String keycode) {
 		this.keycode = keycode;
 	}
-	public long getExpiryDate() {
+	public int getExpiryDate() {
 		return this.expiryDate;
-	} public void setExpiryDate(long expiryDate) {
+	} public void setExpiryDate(int expiryDate) {
 		this.expiryDate = expiryDate;
 	}
 
