@@ -4,17 +4,21 @@ import java.util.List;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import imageboard.dao.UsersDao;
 import imageboard.model.UsersModel;
 
 @RestController
 @RequestMapping("/users")
-//TODO: Authentication information
 public class UsersController {
 
-	private UsersDao dao = new UsersDao();
+	@Autowired
+	private UsersDao dao;
 
 	@RequestMapping(method=RequestMethod.GET)
 	public List<UsersModel> getAllUsers() {
@@ -22,48 +26,31 @@ public class UsersController {
 	}
 
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public UsersModel getUser(@PathVariable long id) {
+	public UsersModel getUser(@PathVariable int id) {
 		return dao.selectUserById(id);
 	}
 
-	@RequestMapping(value="/test", method=RequestMethod.GET)
-	public String test() {
-		return "Hello World!";
+	@RequestMapping(method=RequestMethod.POST)
+	public String postUser(@RequestParam Map<String, String> params) {
+		int timeLimit = (int) TimeUnit.HOURS.toMillis(params.get("timeLimit") +
+				(new Date()).getTime();
+		dao.insertUser(params.get("keycode"), timeLimit);
+
+		return "redirect:/";
 	}
 
-//	@RequestMapping(method=RequestMethod.POST)
-//	public String postUser(@RequestParam(value="keycode") String keycode,
-//				       @RequestParam(value="timeLimit", defaultValue=24) long timeLimit) {
-//		dao.insertUser(keycode, (new Date()).getTime() + TimeUnit.HOURS.toMillis(timeLimit));
-//
-//		return "redirect:/"; //TODO: Confirmation message?
-//	}
-//
-//	@RequestMapping(value="/register", method=RequestMethod.GET)
-//	public String getRegisterForm(@RequestParam(value="keycode", method=) String keycode, ModelMap model) {
-//		User user = dao.selectUserByKeycode(keycode);
-//
-//		if (user.checkRegistered()) return "registered"; //TODO: Define view
-//		else if (user.checkExpired()) return "expired"; //TODO: Define view
-//		else {
-//			model.addAttribute("keycode", keycode);
-//			return "registerForm"; //TODO: Define view
-//		}
-//	}
-//
-//	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-//	public User getUser(@PathVariable int id) {
-//		return dao.getUserById(id);
-//	}
-//
-//	@RequestMapping(value = "/settings", method = RequestMethod.POST)
-//	public String userSettingsSubmit(@RequestParam("keycode") String keycode,
-//					 @RequestParam("name") String name,
-//					 @RequestParam("pass") String pass,
-//					 @RequestParam("image_url") String imageUrl) {
-//		dao.updateUser(keycode, name, pass, imageUrl);
-//
-//		return "redirect:/settings"; //TODO: Confirmation message?
-//	}
+	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
+	public String putUser(@PathVariable int id, @RequestParam Map<String, String> params) {
+		dao.updateUser(id, params.get("name"), params.get("pass"), params.get("imageUrl"));
+
+		return "redirect:/" + id;
+	}
+
+	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
+	public String deleteUser(@PathVariable int id) {
+		dao.removeUserById(id);
+
+		return "redirect:/";
+	}
 
 }

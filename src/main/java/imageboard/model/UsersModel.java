@@ -13,14 +13,6 @@ public class UsersModel {
 
 	public UsersModel() {}
 
-	public boolean checkRegistered() {
-		return !this.name.equals(null);
-	}
-
-	public boolean checkExpired() {
-		return (new Date(expiryDate)).before(new Date());
-	}
-
 	public long getId() {
 		return this.id;
 	} public void setId(long id) {
@@ -50,6 +42,14 @@ public class UsersModel {
 		return this.expiryDate;
 	} public void setExpiryDate(long expiryDate) {
 		this.expiryDate = expiryDate;
+	}
+
+	public boolean checkRegistered() {
+		return !this.name.equals(null);
+	}
+
+	public boolean checkExpired() {
+		return (new Date(expiryDate)).before(new Date());
 	}
 
 }
