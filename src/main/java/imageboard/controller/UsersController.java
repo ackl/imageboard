@@ -22,25 +22,24 @@ import imageboard.model.UsersModel;
  * Hash the password parameter from PUT requests
  * Run checks before accepting changes from PUT requests
  * PUT is not working
+ * Exception handling
  */
 
 @RestController
 @RequestMapping("/users")
 public class UsersController {
 
-	@Autowired
 	private UsersDao dao;
+
+	@Autowired
+	public UsersController(UsersDao dao) {
+		this.dao = dao;
+	}
 
 	@RequestMapping(method=RequestMethod.GET)
 	public List<UsersModel> getAllUsers() {
 		return dao.selectAllUsers();
 	}
-
-	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public UsersModel getUser(@PathVariable int id) {
-		return dao.selectUserById(id);
-	}
-
 	@RequestMapping(method=RequestMethod.POST)
 	public String postUser(@RequestParam Map<String, String> params) {
 		int timeLimit = (int) (TimeUnit.HOURS.toMillis(Integer.parseInt(params.get("timeLimit"))) +
@@ -49,14 +48,17 @@ public class UsersController {
 
 		return "redirect:/";
 	}
-
+	
+	@RequestMapping(value="/{id}", method=RequestMethod.GET)
+	public UsersModel getUser(@PathVariable int id) {
+		return dao.selectUserById(id);
+	}
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
 	public String putUser(@PathVariable int id, @RequestParam Map<String, String> params) {
 		dao.updateUser(id, params.get("name"), params.get("pass"), params.get("imageUrl"));
 
 		return "redirect:/" + id;
 	}
-
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
 	public String deleteUser(@PathVariable int id) {
 		dao.removeUserById(id);

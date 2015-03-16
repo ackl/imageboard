@@ -9,6 +9,11 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 
 import imageboard.model.UsersModel;
 
+/* TODO:
+ * Separate database access functions through service layer?
+ * Exception handling.
+ */
+
 @Repository
 public class UsersDao {
 
@@ -27,13 +32,13 @@ public class UsersDao {
 	}
 
 	public UsersModel selectUserById(int id) {
-		String sql = "SELECT * FROM users WHERE id = ?";
+		String sql = "SELECT * FROM users WHERE id=?";
 
 		return (UsersModel)jdbcTemplate.queryForObject(sql, new Object[] {id},
 				new BeanPropertyRowMapper(UsersModel.class));
 	}
 	public UsersModel selectUserByKeycode(String keycode) {
-		String sql = "SELECT * FROM users WHERE keycode = ?";
+		String sql = "SELECT * FROM users WHERE keycode=?";
 
 		return (UsersModel)jdbcTemplate.queryForObject(sql, new Object[] {keycode},
 				new BeanPropertyRowMapper(UsersModel.class));

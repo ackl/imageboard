@@ -47,9 +47,8 @@ public class UsersModel {
 	public boolean checkRegistered() {
 		return !this.name.equals(null);
 	}
-
 	public boolean checkExpired() {
-		return (new Date(expiryDate)).before(new Date());
+		return (new Date((long) this.expiryDate)).before(new Date());
 	}
 
 }
