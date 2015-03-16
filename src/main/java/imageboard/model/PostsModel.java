@@ -42,7 +42,6 @@ public class PostsModel {
 		this.content = content;
 	}
 
-	//TODO: Useful abstraction, or redundant?
 	public boolean isThread() {
 		return this.parentId == 0;
 	}

@@ -11,13 +11,15 @@ import imageboard.model.UsersModel;
 
 /* TODO:
  * Separate database access functions through service layer?
- * Exception handling.
+ * Exception handling
+ * Consider using another connection handler
+ * Column filtering for select statements?
  */
 
 @Repository
 public class UsersDao {
 
-	JdbcTemplate jdbcTemplate;
+	private JdbcTemplate jdbcTemplate;
 
 	@Autowired
 	public UsersDao(JdbcTemplate jdbcTemplate) {
@@ -30,7 +32,6 @@ public class UsersDao {
 		return jdbcTemplate.query(sql,
 				new BeanPropertyRowMapper(UsersModel.class));
 	}
-
 	public UsersModel selectUserById(int id) {
 		String sql = "SELECT * FROM users WHERE id=?";
 

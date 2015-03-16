@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import imageboard.dao.UsersDao;
 import imageboard.model.UsersModel;
+import imageboard.dao.UsersDao;
 
 /* TODO:
  * Check authentication for certain requests
@@ -42,8 +42,9 @@ public class UsersController {
 	}
 	@RequestMapping(method=RequestMethod.POST)
 	public String postUser(@RequestParam Map<String, String> params) {
-		int timeLimit = (int) (TimeUnit.HOURS.toMillis(Integer.parseInt(params.get("timeLimit"))) +
-				(new Date()).getTime());
+		int timeLimit = (int) (TimeUnit.HOURS.toMillis(
+					Integer.parseInt(params.get("timeLimit"))
+					) +(new Date()).getTime());
 		dao.insertUser(params.get("keycode"), timeLimit);
 
 		return "redirect:/";
@@ -55,7 +56,9 @@ public class UsersController {
 	}
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
 	public String putUser(@PathVariable int id, @RequestParam Map<String, String> params) {
-		dao.updateUser(id, params.get("name"), params.get("pass"), params.get("imageUrl"));
+		dao.updateUser(id, params.get("name"), 
+				   params.get("pass"), 
+				   params.get("imageUrl"));
 
 		return "redirect:/" + id;
 	}
