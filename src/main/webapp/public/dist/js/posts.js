@@ -1,36 +1,55 @@
+var Post = can.Model.extend({
+  findAll: 'GET /posts',
+  findOne: 'GET /posts/{id}',
+  //create:  'POST /posts',
+  create:  function(attrs){
+    return $.ajax('/posts', {
+                data : JSON.stringify(attrs),
+                contentType : 'application/json',
+                type : 'POST'
+            });
+  },
+  update:  'PUT /posts/{id}',
+  destroy: 'DELETE /posts/{id}'
+},{});
+
+
 var getPosts = function() {
-    $.get('/posts')
-    .then(function(posts) {
-        $('.posts').empty();
-        posts.forEach(function(post) {
-            $('.posts').append('<li>'
-                + post.content
-                + '<p class="post__timestamp">Posted at: '
-                + new Date(post.date)
-                + '</p></li>');
-        });
+    Post.findAll({}, function(posts) {
+        $('.posts').html(can.view('postTemplate', {posts: posts}, {
+            formatDate: function(date) { return new Date(date()); }
+        }));
     });
 }
+
+Post.bind('created', function( ev, todo ) {
+    console.log(ev);
+    getPosts();
+});
 
 $(function() {
     getPosts();
 
-    $('.new-post-form__submit').on('click', function(e) {
-        e.preventDefault();
-        var $postInput = $('.new-post-form input'),
-            postContent = $postInput.val();
+    var PostForm = can.Control.extend({
+        init: function(el, ev) {
+        },
 
-        if (postContent) {
-            var postData = { content: postContent };
-            $.ajax('http://localhost:8080/posts', {
-                data : JSON.stringify(postData),
-                contentType : 'application/json',
-                type : 'POST'
-            }).then(function(data) {
-                console.log(data);
-                getPosts();
-                $postInput.val('');
-            });
+        'button click': function(el, ev) {
+            ev.stopPropagation();
+            ev.preventDefault();
+
+            var postContent = this.element.find('input.content').val();
+
+            if (postContent) {
+                var post = new Post({ content: postContent });
+                post.save();
+                this.element.find('input.content').val('');
+            }
         }
-    })
+    });
+
+    new PostForm('.new-post-form');
+
+    //$('.new-post-form__submit').on('click', function(e) {
+    //})
 });
