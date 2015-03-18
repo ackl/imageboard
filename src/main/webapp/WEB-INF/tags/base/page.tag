@@ -1,5 +1,5 @@
 <%@tag description="Base page template" pageEncoding="UTF-8"%>
-<%@taglib prefix="template" tagdir="/WEB-INF/tags/templates" %>
+<%@taglib prefix="base" tagdir="/WEB-INF/tags/base" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
@@ -14,8 +14,8 @@
         <link rel="stylesheet" href="<c:url value="/public/dist/css/style.css" />">
     </head>
     <body>
-        <template:header></template:header>
+        <base:header></base:header>
         <jsp:doBody/>
-        <template:footer></template:footer>
+        <base:footer></base:footer>
     </body>
 </html>

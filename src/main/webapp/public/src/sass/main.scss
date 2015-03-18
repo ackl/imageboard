@@ -1,6 +1,7 @@
 @import 'reset';
 @import 'posts';
 @import 'header';
+@import 'quickreply';
 
 body, html {
     font-family: Helvetica, sans-serif;
@@ -13,7 +14,7 @@ body, html {
 button {
     background: #999;
     opacity: 0.8;
-    transition: opacity 0.8s;
+    transition: opacity 0.2s;
     color: #efefef;
     padding: 5px;
     font-size: 1.1rem;
