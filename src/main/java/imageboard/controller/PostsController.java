@@ -22,7 +22,7 @@ import imageboard.model.PostsModel;
 import imageboard.dao.PostsDao;
 
 @RestController
-@RequestMapping("/posts")
+@RequestMapping("/api/posts")
 public class PostsController {
 
 	private PostsDao dao;
