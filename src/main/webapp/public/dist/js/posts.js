@@ -1,4 +1,4 @@
-var Thread = can.Model.extend({
+var Post = can.Model.extend({
     findAll: 'GET /api/posts',
     findOne: 'GET /api/posts/{id}',
     create:  function(attrs){
@@ -10,6 +10,10 @@ var Thread = can.Model.extend({
     },
     update:  'PUT /api/posts/{id}',
     destroy: 'DELETE /api/posts/{id}'
+},{});
+
+var Thread = Post.extend({
+    findAll: 'GET /api/posts/threads',
 },{});
 
 
@@ -54,6 +58,11 @@ var ThreadControl = can.Control.extend({
     '.new-reply-form__submit click': function(el, ev) {
         ev.stopPropagation();
         ev.preventDefault();
+        var threadContent = el.siblings().first().val(),
+            parentId = this.element.data('post-id');
+
+        var reply = new Post({ content: threadContent, parentId: parentId });
+        reply.save();
     },
 
     showQuickReply: function(el, ev) {
@@ -83,11 +92,13 @@ var ThreadForm = can.Control.extend({
         ev.preventDefault();
 
         var threadContent = this.element.find('input.content').val();
+        var threadSubject = this.element.find('input.subject').val();
 
         if (threadContent) {
-            var thread = new Thread({ content: threadContent });
+            var thread = new Thread({ content: threadContent, subject: threadSubject });
             thread.save();
             this.element.find('input.content').val('');
+            this.element.find('input.subject').val('');
         }
     }
 });

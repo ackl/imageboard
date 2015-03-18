@@ -13,5 +13,6 @@ CREATE TABLE posts (
 	parent_id INT,
 	date BIGINT NOT NULL,
 	image_url VARCHAR(255),
-	content VARCHAR(255)
+	content VARCHAR(255),
+	subject VARCHAR(255)
 );

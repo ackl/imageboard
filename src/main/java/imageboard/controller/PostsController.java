@@ -1,6 +1,7 @@
 package imageboard.controller;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Date;
@@ -19,22 +20,50 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import imageboard.model.PostsModel;
+import imageboard.model.ThreadsModel;
 import imageboard.dao.PostsDao;
+import imageboard.dao.ThreadsDao;
 
 @RestController
 @RequestMapping("/api/posts")
 public class PostsController {
 
 	private PostsDao dao;
+	private ThreadsDao threadsDao;
 
 	@Autowired
-	public PostsController(PostsDao dao) {
+	public PostsController(PostsDao dao, ThreadsDao threadsDao) {
 		this.dao = dao;
+		this.threadsDao = threadsDao;
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
 	public List<PostsModel> getAllPosts() {
 		return dao.selectAllPosts();
+	}
+
+    @RequestMapping(value="/threads", method = RequestMethod.GET)
+    public List<ThreadsModel> getAllThreads() {
+        List<ThreadsModel> threadsModels = threadsDao.selectAllThreads();
+        for (ThreadsModel thread : threadsModels) {
+            List<PostsModel> replies = dao.selectPostsByParentId(thread.getId());
+            thread.setReplies(replies);
+        }
+
+        return threadsModels;
+    }
+
+	@RequestMapping(value="/threads", method = RequestMethod.POST)
+	public ResponseEntity<Map<String, String>> postThread(@RequestBody ThreadsModel thread, UriComponentsBuilder b) {
+		threadsDao.insertThread(thread.getUserId(),
+			       thread.getParentId(),
+                   new Date().getTime(),
+			       thread.getImageUrl(),
+			       thread.getContent(),
+                   thread.getSubject());
+
+        //TODO: Get id of created post;
+        return buildCreateResponse(b, 1);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)

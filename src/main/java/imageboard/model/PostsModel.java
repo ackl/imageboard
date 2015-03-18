@@ -9,6 +9,7 @@ public class PostsModel {
 	private String imageUrl;
 	private String content;
 
+
 	public PostsModel() {}
 
 	public int getId() {
