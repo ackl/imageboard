@@ -1,13 +1,13 @@
-<%@tag description="Front end post template" pageEncoding="UTF-8"%>
+<%@tag description="Front end thread template" pageEncoding="UTF-8"%>
 
-<script type="text/mustache" id="postTemplate">
-    {{#posts}}
+<script type="text/mustache" id="threadTemplate">
+    {{#threads}}
         <li class="thread">
             {{content}}
-            <p class="post__timestamp">Posted at: {{formatDate date}}</p>
-            <div class="post__info">
-                <p class="post__info--id">postID: {{id}}</p>
-                <p class="post__info--parent-id">parentId: {{parentId}}</p>
+            <p class="thread__timestamp">Posted at: {{formatDate date}}</p>
+            <div class="thread__info">
+                <p class="thread__info--id">postID: {{id}}</p>
+                <p class="thread__info--parent-id">parentId: {{parentId}}</p>
             </div>
 
             <div class="thread__reply-buttons">
@@ -18,6 +18,6 @@
                     <button class="thread__reply--expand">Expand replies</button>
             </div>
         </li>
-    {{/posts}}
+    {{/threads}}
 </script>
 

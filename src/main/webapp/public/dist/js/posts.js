@@ -1,75 +1,49 @@
-var Post = can.Model.extend({
-  findAll: 'GET /api/posts',
-  findOne: 'GET /api/posts/{id}',
-  create:  function(attrs){
-    return $.ajax('/api/posts', {
-                data : JSON.stringify(attrs),
-                contentType : 'application/json',
-                type : 'POST'
-            });
-  },
-  update:  'PUT /api/posts/{id}',
-  destroy: 'DELETE /api/posts/{id}'
+var Thread = can.Model.extend({
+    findAll: 'GET /api/posts',
+    findOne: 'GET /api/posts/{id}',
+    create:  function(attrs){
+        return $.ajax('/api/posts', {
+            data : JSON.stringify(attrs),
+            contentType : 'application/json',
+            type : 'POST'
+        });
+    },
+    update:  'PUT /api/posts/{id}',
+    destroy: 'DELETE /api/posts/{id}'
 },{});
 
 
-var getPosts = function() {
-    Post.findAll({}, function(posts) {
-        $('.posts').html(can.view('postTemplate', {posts: posts}, {
-            formatDate: function(date) { return new Date(date()); }
-        }));
-    });
-}
-
-
-
-var PostsControl = can.Control.extend({
+var ThreadsControl = can.Control.extend({
     //defaults are merged into the options arg provided to the constructor
-    defaults : { view: 'postTemplate', reply: 'replyTemplate' } }, {
+    defaults : { view: 'threadTemplate', reply: 'replyTemplate' } }, {
     init: function(el, opts) {
         this.options = opts;
-        this.getPosts();
+        this.getThreads();
     },
 
-    '{Post} created': 'getPosts',
-
-    /*'.thread__reply--quick click': function(el, ev) {*/
-        /*if (!el.hasClass('disabled')) {*/
-            /*el.toggleClass('disabled');*/
-            /*el.parent().parent().append(can.view(this.options.reply));*/
-        /*}*/
-
-        /*console.log('clicked quick reply button');*/
-    /*},*/
-
-    /**
-    * Toggles disabled state of the quick reply button.
-    */
-    /*toggleQuickReply: function(el) {*/
-        /*el.toggleClass('disabled');*/
-    /*},*/
+    '{Thread} created': 'getThreads',
 
     /*
     * Retrieve all threads from server.
     * Data is stored in a can.List and pass to view.
     */
-    getPosts: function() {
+    getThreads: function() {
         var self = this;
-        Post.findAll({}, function(posts) {
-            self.element.html(can.view(self.options.view, {posts: posts}, {
+        Thread.findAll({}, function(threads) {
+            self.element.html(can.view(self.options.view, {threads: threads}, {
                 formatDate: function(date) { return new Date(date()); }
             }));
 
 
-            /*new PostControl('.thread');*/
+            /*new ThreadControl('.thread');*/
             $('.thread').each(function(i, el) {
-                new PostControl(el);
+                new ThreadControl(el);
             });
         });
     }
 });
 
-var PostControl = can.Control.extend({
+var ThreadControl = can.Control.extend({
     defaults : { reply: 'replyTemplate' } }, {
     init: function(el, opts) {
         console.log(el.find('button'));
@@ -100,12 +74,7 @@ var PostControl = can.Control.extend({
     }
 });
 
-/*Post.bind('created', function( ev, todo ) {*/
-    /*console.log(ev);*/
-    /*getPosts();*/
-/*});*/
-
-var PostForm = can.Control.extend({
+var ThreadForm = can.Control.extend({
     init: function(el, ev) {
     },
 
@@ -113,11 +82,11 @@ var PostForm = can.Control.extend({
         ev.stopPropagation();
         ev.preventDefault();
 
-        var postContent = this.element.find('input.content').val();
+        var threadContent = this.element.find('input.content').val();
 
-        if (postContent) {
-            var post = new Post({ content: postContent });
-            post.save();
+        if (threadContent) {
+            var thread = new Thread({ content: threadContent });
+            thread.save();
             this.element.find('input.content').val('');
         }
     }
@@ -125,7 +94,6 @@ var PostForm = can.Control.extend({
 
 
 $(function() {
-    /*getPosts();*/
-    new PostForm('.new-post-form');
-    new PostsControl('.posts');
+    new ThreadForm('.new-thread-form');
+    new ThreadsControl('.threads');
 });

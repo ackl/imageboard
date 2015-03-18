@@ -7,12 +7,11 @@
 <base:page>
     <div class="page">
         ${message}
-        <form:post></form:post>
-        <ul id="posts-list" class="posts"></ul>
+        <form:thread></form:thread>
+        <ul id="thread-list" class="threads"></ul>
     </div>
 
     <script src='<c:url value="/public/dist/js/posts.js"/>'></script>
-    <template:post></template:post>
-    <template:postSingle></template:postSingle>
+    <template:thread></template:thread>
     <template:reply></template:reply>
 </base:page>

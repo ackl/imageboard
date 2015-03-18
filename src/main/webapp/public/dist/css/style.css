@@ -35,9 +35,9 @@ table {
   border-collapse: collapse;
   border-spacing: 0; }
 
-ul.posts {
+ul.threads {
   padding: 0; }
-  ul.posts li {
+  ul.threads li {
     position: relative;
     overflow: hidden;
     list-style-type: none;
@@ -45,36 +45,36 @@ ul.posts {
     border: 1px solid grey;
     margin-bottom: 10px;
     min-height: 150px; }
-    ul.posts li .post__timestamp {
+    ul.threads li .thread__timestamp {
       font-size: 0.7rem;
       color: grey;
       margin-top: 8px; }
-  ul.posts .post__info {
+  ul.threads .thread__info {
     position: absolute;
     right: 0;
     top: 0;
     color: white;
     padding: 5px;
     background: rgba(60, 0, 60, 0.4); }
-  ul.posts button:active, ul.posts button:focus {
+  ul.threads button:active, ul.threads button:focus {
     outline: none; }
-  ul.posts button.disabled {
+  ul.threads button.disabled {
     opacity: 1;
     background: rgba(0, 0, 0, 0.1);
     transition: none; }
-    ul.posts button.disabled:hover {
+    ul.threads button.disabled:hover {
       cursor: default; }
-  ul.posts .thread__reply-buttons {
+  ul.threads .thread__reply-buttons {
     position: absolute;
     bottom: 10px;
     right: 10px; }
 
-.new-post-form {
+.new-thread-form {
   margin: 20px 0; }
-  .new-post-form input, .new-post-form button {
+  .new-thread-form input, .new-thread-form button {
     width: 100%;
     padding: 10px 0; }
-  .new-post-form input {
+  .new-thread-form input {
     border: 2px solid grey; }
 
 header {
@@ -117,48 +117,6 @@ footer {
   color: #efefef;
   min-height: 35px; }
 
-ul.posts {
-  padding: 0; }
-  ul.posts li {
-    position: relative;
-    overflow: hidden;
-    list-style-type: none;
-    padding: 10px 20px;
-    border: 1px solid grey;
-    margin-bottom: 10px;
-    min-height: 150px; }
-    ul.posts li .post__timestamp {
-      font-size: 0.7rem;
-      color: grey;
-      margin-top: 8px; }
-  ul.posts .post__info {
-    position: absolute;
-    right: 0;
-    top: 0;
-    color: white;
-    padding: 5px;
-    background: rgba(60, 0, 60, 0.4); }
-  ul.posts button:active, ul.posts button:focus {
-    outline: none; }
-  ul.posts button.disabled {
-    opacity: 1;
-    background: rgba(0, 0, 0, 0.1);
-    transition: none; }
-    ul.posts button.disabled:hover {
-      cursor: default; }
-  ul.posts .thread__reply-buttons {
-    position: absolute;
-    bottom: 10px;
-    right: 10px; }
-
-.new-post-form {
-  margin: 20px 0; }
-  .new-post-form input, .new-post-form button {
-    width: 100%;
-    padding: 10px 0; }
-  .new-post-form input {
-    border: 2px solid grey; }
-
 .quick-reply {
   display: inline-block;
   border: 1px solid #111;
@@ -197,3 +155,45 @@ blockquote:before, blockquote:after, q:before, q:after {
 table {
   border-collapse: collapse;
   border-spacing: 0; }
+
+ul.threads {
+  padding: 0; }
+  ul.threads li {
+    position: relative;
+    overflow: hidden;
+    list-style-type: none;
+    padding: 10px 20px;
+    border: 1px solid grey;
+    margin-bottom: 10px;
+    min-height: 150px; }
+    ul.threads li .thread__timestamp {
+      font-size: 0.7rem;
+      color: grey;
+      margin-top: 8px; }
+  ul.threads .thread__info {
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: white;
+    padding: 5px;
+    background: rgba(60, 0, 60, 0.4); }
+  ul.threads button:active, ul.threads button:focus {
+    outline: none; }
+  ul.threads button.disabled {
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.1);
+    transition: none; }
+    ul.threads button.disabled:hover {
+      cursor: default; }
+  ul.threads .thread__reply-buttons {
+    position: absolute;
+    bottom: 10px;
+    right: 10px; }
+
+.new-thread-form {
+  margin: 20px 0; }
+  .new-thread-form input, .new-thread-form button {
+    width: 100%;
+    padding: 10px 0; }
+  .new-thread-form input {
+    border: 2px solid grey; }
