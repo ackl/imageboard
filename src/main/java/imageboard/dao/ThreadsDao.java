@@ -31,6 +31,13 @@ public class ThreadsDao {
 				new BeanPropertyRowMapper(ThreadsModel.class));
 	}
 
+	public ThreadsModel selectThreadById(int id) {
+		String sql = "SELECT * FROM posts WHERE id=?";
+
+		return (ThreadsModel) jdbcTemplate.queryForObject(sql, new Object[] {id},
+				new BeanPropertyRowMapper(ThreadsModel.class));
+	}
+
 	public void insertThread(int userId, int parentId, long date, String imageUrl, String content, String subject) {
 		String sql = "INSERT INTO posts (user_id, parent_id, date, image_url, content, subject) VALUES (?, ?, ?, ?, ?, ?)";
 

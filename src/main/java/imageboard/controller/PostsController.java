@@ -42,30 +42,6 @@ public class PostsController {
 		return dao.selectAllPosts();
 	}
 
-    @RequestMapping(value="/threads", method = RequestMethod.GET)
-    public List<ThreadsModel> getAllThreads() {
-        List<ThreadsModel> threadsModels = threadsDao.selectAllThreads();
-        for (ThreadsModel thread : threadsModels) {
-            List<PostsModel> replies = dao.selectPostsByParentId(thread.getId());
-            thread.setReplies(replies);
-        }
-
-        return threadsModels;
-    }
-
-	@RequestMapping(value="/threads", method = RequestMethod.POST)
-	public ResponseEntity<Map<String, String>> postThread(@RequestBody ThreadsModel thread, UriComponentsBuilder b) {
-		threadsDao.insertThread(thread.getUserId(),
-			       thread.getParentId(),
-                   new Date().getTime(),
-			       thread.getImageUrl(),
-			       thread.getContent(),
-                   thread.getSubject());
-
-        //TODO: Get id of created post;
-        return buildCreateResponse(b, 1);
-	}
-
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Map<String, String>> postTesting(@RequestBody PostsModel post, UriComponentsBuilder b) {
 		dao.insertPost(post.getUserId(),

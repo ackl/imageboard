@@ -49,15 +49,15 @@ public class UsersController {
 
 		return "redirect:/";
 	}
-	
+
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public UsersModel getUser(@PathVariable int id) {
 		return dao.selectUserById(id);
 	}
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
 	public String putUser(@PathVariable int id, @RequestParam Map<String, String> params) {
-		dao.updateUser(id, params.get("name"), 
-				   params.get("pass"), 
+		dao.updateUser(id, params.get("name"),
+				   params.get("pass"),
 				   params.get("imageUrl"));
 
 		return "redirect:/" + id;
