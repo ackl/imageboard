@@ -6,11 +6,10 @@
 
 <base:page>
     <div class="page">
-        ${message}
+        <h1>this is a thread page</h1>
     </div>
 
-    <script src='<c:url value="/public/dist/js/posts.js"/>'></script>
-    <template:threadList></template:threadList>
-    <template:thread></template:thread>
-    <template:reply></template:reply>
+    <%--<script src='<c:url value="/public/dist/js/posts.js"/>'></script>--%>
+    <%--<template:thread></template:thread>--%>
+    <%--<template:reply></template:reply>--%>
 </base:page>

@@ -12,14 +12,47 @@ var Post = can.Model.extend({
     destroy: 'DELETE /api/posts/{id}'
 },{});
 
-var Thread = Post.extend({
-    findAll: 'GET /api/posts/threads',
+Thread = Post.extend({
+    findAll: 'GET /api/threads',
+    findOne: 'GET /api/threads/{id}'
 },{});
 
 
+var Router = can.Control({
+    'init': function(el, ev) {
+        console.log(el);
+    },
+    'route' : function(){
+        console.log('root');
+        this.element.html(can.view('threadListTemplate'));
+        new ThreadForm('.new-thread-form');
+        var threadsControl = new ThreadsControl('.threads');
+    },
+    'dashboard route': function() {
+        $(document.body).append("Dashboard");
+    },
+
+    'threads/:id route': function(data) {
+        console.log('thread with id');
+        var self = this;
+        this.element.empty();
+        this.element.append('<h1>yo</h1>');
+        Thread.findOne({id: data.id}).then(function(resp) {
+            console.log(resp);
+            self.element.html(can.view('threadTemplate', resp));
+
+        })
+    }
+});
+
+
+
+
+
+
 var ThreadsControl = can.Control.extend({
-    //defaults are merged into the options arg provided to the constructor
     defaults : { view: 'threadTemplate', reply: 'replyTemplate' } }, {
+
     init: function(el, opts) {
         this.options = opts;
         this.getThreads();
@@ -34,59 +67,104 @@ var ThreadsControl = can.Control.extend({
     getThreads: function() {
         var self = this;
         Thread.findAll({}, function(threads) {
-            self.element.html(can.view(self.options.view, {threads: threads}, {
-                formatDate: function(date) { return new Date(date()); }
-            }));
+            console.log('threads: ', threads);
+            can.each(threads, function(thread) {
+                /*self.element.append(can.)*/
+                self.element.append(can.view(self.options.view, thread, {
+                    formatDate: function(date) { return new Date(date()); },
+                    replyLink: function() {
+                        return can.route.link( "<button>Reply</button>", { id: thread.attr('id')}, {}, false );
+                    }
+                }));
+            });
+            /*self.element.html(can.view(self.options.view, {threads: threads}, {*/
+                /*formatDate: function(date) { return new Date(date()); },*/
+                /*replyLink: function(postId) {*/
+                    /*console.log(postId);*/
+                    /*var link = can.route.link( "<button>Reply</button>", { id: postId}, {}, false );*/
+                    /*console.log(link);*/
+                    /*return link;*/
+                /*}*/
+            /*}));*/
 
 
             /*new ThreadControl('.thread');*/
-            $('.thread').each(function(i, el) {
-                new ThreadControl(el);
-            });
+
+            // Instantiate a ThreadControl for each thread on the page.
+            /*$('.thread').each(function(i, el) {*/
+                /*new ThreadControl(el);*/
+            /*});*/
         });
     }
 });
 
 var ThreadControl = can.Control.extend({
-    defaults : { reply: 'replyTemplate' } }, {
+    defaults : {
+        view: {
+            reply: 'replyPreviewTemplate',
+            quickreply: 'replyTemplate'
+        },
+
+        sections: {
+            replies: '.replies-preview',
+            quickreply: '.quick-reply'
+        }
+    } }, {
+
     init: function(el, opts) {
-        console.log(el.find('button'));
+        this.postId = el.data('post-id');
+    },
+
+    '.thread__reply click': function(el, ev) {
+        can.route.attr('id', this.postId);
     },
 
     '.thread__reply--quick click': 'showQuickReply',
     '.quick-reply__close click': 'hideQuickReply',
+
     '.new-reply-form__submit click': function(el, ev) {
         ev.stopPropagation();
         ev.preventDefault();
         var threadContent = el.siblings().first().val(),
-            parentId = this.element.data('post-id');
+            self = this;
 
-        var reply = new Post({ content: threadContent, parentId: parentId });
-        reply.save();
+        var reply = new Post({ content: threadContent, parentId: this.postId });
+        reply.save()
+             .then(function(postData) {
+                self.element.find('.replies-preview').append(can.view(self.options.view.reply, postData));
+                self.hideQuickReply();
+             });
     },
 
     showQuickReply: function(el, ev) {
         if (!this.quickreply) {
-            this.element.append(can.view(this.options.reply));
+            this.element.append(can.view(this.options.view.quickreply));
             this.toggleQuickReply();
         }
     },
 
     hideQuickReply: function(el, ev) {
-        el.parent().remove();
+        this.element.find('.quick-reply').remove();
         this.toggleQuickReply();
     },
 
+    /**
+     * Toggle this control's quickreply flag and disabled class of quickreply button
+     */
     toggleQuickReply: function() {
         this.element.find('button.thread__reply--quick').toggleClass('disabled');
         this.quickreply = !this.quickreply;
     }
 });
 
+
 var ThreadForm = can.Control.extend({
     init: function(el, ev) {
     },
 
+    /**
+     * Submit a new thread.
+     */
     'button click': function(el, ev) {
         ev.stopPropagation();
         ev.preventDefault();
@@ -105,6 +183,6 @@ var ThreadForm = can.Control.extend({
 
 
 $(function() {
-    new ThreadForm('.new-thread-form');
-    new ThreadsControl('.threads');
+    new Router($('.page'));
+    can.route.ready();
 });
