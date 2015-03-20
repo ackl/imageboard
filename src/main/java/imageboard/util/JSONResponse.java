@@ -19,7 +19,6 @@ public class JSONResponse {
 
         String resp = JSONResponse.populateThreadJSON(thread).toString();
         return ResponseEntity.status(HttpStatus.OK)
-                .header("Content-Type", "application/json")
                 .body(resp);
     }
 
@@ -30,7 +29,6 @@ public class JSONResponse {
         }
 
         return ResponseEntity.status(HttpStatus.OK)
-                .header("Content-Type", "application/json")
                 .body(resp.toString());
     }
 

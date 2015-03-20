@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+
 @SpringBootApplication
 @ImportResource("data_source.xml")
 public class Application {

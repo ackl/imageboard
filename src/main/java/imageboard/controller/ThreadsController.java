@@ -30,12 +30,12 @@ public class ThreadsController {
 		this.threadsService = threadsService;
 	}
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET, produces="application/json")
     public ResponseEntity<String> getAllThreads(@RequestParam(value="replylimit", required=false) Integer replylimit) throws JSONException {
         return JSONResponse.buildGetAllResponse(threadsService.getAllThreads(replylimit));
     }
 
-	@RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST, produces="application/json")
 	public ResponseEntity<String> postThread(@RequestBody ThreadsModel thread, UriComponentsBuilder b) throws JSONException {
         //TODO: Get id of created post;
         this.threadsService.createThread(thread);
