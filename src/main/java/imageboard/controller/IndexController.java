@@ -1,26 +1,20 @@
 package imageboard.controller;
 
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-import imageboard.model.PostsModel;
-import imageboard.model.ThreadsModel;
-import imageboard.dao.PostsDao;
 import imageboard.dao.ThreadsDao;
 
 
 @Controller
 public class IndexController {
 
-	private PostsDao dao;
 	private ThreadsDao threadsDao;
 
 	@Autowired
 	public IndexController(ThreadsDao threadsDao) {
-		this.dao = dao;
 		this.threadsDao = threadsDao;
 	}
 
