@@ -4,4 +4,5 @@
 <script type="text/mustache" id="threadListTemplate">
     <form:thread></form:thread>
     <ul id="thread-list" class="threads"></ul>
+    <div class="paginate-controls"></div>
 </script>

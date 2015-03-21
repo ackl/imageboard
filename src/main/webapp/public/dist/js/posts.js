@@ -13,8 +13,36 @@ var Post = can.Model.extend({
 },{});
 
 Thread = Post.extend({
-    findAll: 'GET /api/threads',
-    findOne: 'GET /api/threads/{id}'
+    findAll: function(attrs) {
+        var queryString = '';
+        if (attrs.options.active) {
+            queryString += '?paginate=true';
+
+            if (attrs.options.page) {
+                queryString += '&page='+attrs.options.page;
+            }
+            if (attrs.options.perPage) {
+                queryString += '&perpage='+attrs.options.perPage;
+            }
+        }
+        console.log(queryString);
+
+        return $.get('/api/threads'+queryString);
+    },
+
+    findOne: 'GET /api/threads/{id}',
+
+    create:  function(attrs) {
+        return $.ajax('/api/threads', {
+            data : JSON.stringify(attrs),
+            contentType : 'application/json',
+            type : 'POST'
+        });
+    },
+
+    getMetaInfo: function() {
+        return $.get('/api/threads/meta');
+    }
 },{});
 
 
@@ -22,16 +50,23 @@ var Router = can.Control({
     'init': function(el, ev) {
         console.log(el);
     },
-    'route' : function(){
-        console.log('root');
+
+    displayHome: function() {
         this.element.html(can.view('threadListTemplate'));
         new ThreadForm('.new-thread-form');
         var threadsControl = new ThreadsControl('.threads');
+        var paginateControl = new PaginateControl('.paginate-controls');
+    },
+    'route' : function(){
+        this.displayHome();
+        //this.element.html(can.view('threadListTemplate'));
+        //new ThreadForm('.new-thread-form');
+        //var threadsControl = new ThreadsControl('.threads');
+        //var paginateControl = new PaginateControl('.paginate-controls');
     },
     'dashboard route': function() {
         $(document.body).append("Dashboard");
     },
-
     'threads/:id route': function(data) {
         console.log('thread with id');
         var self = this;
@@ -42,13 +77,93 @@ var Router = can.Control({
             self.element.html(can.view('threadTemplate', resp));
 
         })
+    },
+
+    'page/:page route': function(data) {
+        this.displayHome();
+        Pagination.attr('options.active', true);
+        Pagination.attr('options.page', data.page);
+        Pagination.attr('options.perPage', null);
+    },
+
+    'perpage/:perpage/page/:page route': function(data) {
+        this.displayHome();
+        Pagination.attr('options.active', true);
+        Pagination.attr('options.page', data.page);
+        Pagination.attr('options.perPage', data.perpage);
+        can.trigger(Pagination.attr('options'), 'change');
     }
 });
 
+Pagination = new can.Map({
+    options: {
+        active: true,
+        page: 1,
+        perPage: 5
+    },
+    meta: {
+        pages: null
+    }
+});
 
+updateAmountOfPages = can.compute(function() {
+    Thread.getMetaInfo().then(function(metaInf) {
+        var threadCount = metaInf.thread_count;
 
+        var pagesCount = Math.ceil(threadCount / Pagination.attr('options.perPage'));
 
+        if (Pagination.attr('options.page') > pagesCount) {
+            Pagination.attr('options.page', pagesCount);
+        }
 
+        Pagination.attr('meta.pages', pagesCount);
+    });
+});
+
+var PaginateControl = can.Control.extend({
+    defaults : { view: 'paginateTemplate' } }, {
+
+    init: function(el, opts) {
+        this.options = opts;
+        console.log('yoyo this is paginator');
+        can.trigger(Pagination.attr('meta'), 'change');
+    },
+
+    '.paginate-controls__back click': function(el, ev) {
+        if (Pagination.attr('options.page') != 1) {
+            Pagination.attr('options.page', parseInt(Pagination.attr('options.page'))-1);
+        }
+    },
+
+    '.paginate-controls__forward click': function(el, ev) {
+        if (Pagination.attr('options.page') != Pagination.attr('meta.pages')) {
+            Pagination.attr('options.page', parseInt(Pagination.attr('options.page'))+1);
+        }
+    },
+
+    '{Pagination.meta} change': function(el, ev) {
+        console.log('paginator heard Pagination.meta change');
+        this.element.html(can.view(this.options.view, {
+            count: function() {
+                var links = '';
+                for (var i=1; i<=Pagination.meta.pages; i++) {
+                    var buttonClass = (Pagination.attr('options.page') == i) ? 'disabled' : '';
+                    links += can.route.link(
+                            "<button>"+i+"</button>",
+                            { page: i, perpage: Pagination.attr('options.perPage') },
+                            { className: buttonClass }, false );
+                }
+                return links;
+            }
+        } ));
+    },
+
+    'a click': function(el, ev) {
+        if (el.hasClass('disabled')) {
+            ev.preventDefault();
+        }
+    }
+});
 
 var ThreadsControl = can.Control.extend({
     defaults : { view: 'threadTemplate', reply: 'replyTemplate' } }, {
@@ -59,6 +174,9 @@ var ThreadsControl = can.Control.extend({
     },
 
     '{Thread} created': 'getThreads',
+    '{Pagination.options} change': function(el, ev) {
+        this.getThreads();
+    },
 
     /*
     * Retrieve all threads from server.
@@ -66,34 +184,34 @@ var ThreadsControl = can.Control.extend({
     */
     getThreads: function() {
         var self = this;
-        Thread.findAll({}, function(threads) {
-            console.log('threads: ', threads);
+
+        Thread.findAll(Pagination, function(threads) {
+            self.element.empty();
+
             can.each(threads, function(thread) {
-                /*self.element.append(can.)*/
                 self.element.append(can.view(self.options.view, thread, {
-                    formatDate: function(date) { return new Date(date()); },
+
+                    formatDate: function(date) {
+                        return new Date(date());
+                    },
+
                     replyLink: function() {
-                        return can.route.link( "<button>Reply</button>", { id: thread.attr('id')}, {}, false );
+                        return can.route.link(
+                            "<button>Reply</button>",
+                            { id: thread.attr('id') },
+                            {}, false );
                     }
                 }));
             });
-            /*self.element.html(can.view(self.options.view, {threads: threads}, {*/
-                /*formatDate: function(date) { return new Date(date()); },*/
-                /*replyLink: function(postId) {*/
-                    /*console.log(postId);*/
-                    /*var link = can.route.link( "<button>Reply</button>", { id: postId}, {}, false );*/
-                    /*console.log(link);*/
-                    /*return link;*/
-                /*}*/
-            /*}));*/
 
+            self.element.find('.thread').each(function(i, el) {
+                new ThreadControl(el);
+            });
 
-            /*new ThreadControl('.thread');*/
-
-            // Instantiate a ThreadControl for each thread on the page.
-            /*$('.thread').each(function(i, el) {*/
-                /*new ThreadControl(el);*/
-            /*});*/
+            if (Pagination.options.active) {
+                console.log('paginate is on');
+                updateAmountOfPages();
+            }
         });
     }
 });

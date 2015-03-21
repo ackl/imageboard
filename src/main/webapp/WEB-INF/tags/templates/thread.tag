@@ -18,7 +18,6 @@
 
         <div class="thread__reply-buttons">
                 {{{replyLink}}}
-                <button class="thread__reply">Reply to thread</button>
                 <button class="thread__reply--quick">Quick reply</button>
                 <button class="thread__reply--expand">Expand replies</button>
         </div>
@@ -31,5 +30,5 @@
 </script>
 
 <script type="text/mustache" id="replyPreviewTemplate">
-    <p class="replies-preview__reply">{{content}}</p>
+    <p class="replies-preview__reply">{{{content}}}</p>
 </script>

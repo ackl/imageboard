@@ -2,6 +2,7 @@
 @import 'threads';
 @import 'header';
 @import 'quickreply';
+@import '../../node_modules/font-awesome/scss/font-awesome';
 
 body, html {
     font-family: Helvetica, sans-serif;
@@ -20,6 +21,24 @@ button {
     font-size: 1.1rem;
     border: 0;
     cursor: pointer;
+
+    &:active, &:focus {
+        outline: none;
+    }
+
+    &.disabled {
+    }
+}
+
+a.disabled button,
+button.disabled {
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.1);
+    transition: none;
+
+    &:hover {
+        cursor: default;
+    }
 }
 
 button:hover {

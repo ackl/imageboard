@@ -26,22 +26,6 @@ ul.threads {
         background: rgba(60, 0, 60, 0.4);
     }
 
-    button {
-        &:active, &:focus {
-            outline: none;
-        }
-
-        &.disabled {
-            opacity: 1;
-            background: rgba(0, 0, 0, 0.1);
-            transition: none;
-
-            &:hover {
-                cursor: default;
-            }
-        }
-    }
-
     .thread__reply-buttons {
         position: absolute;
         bottom: 10px;

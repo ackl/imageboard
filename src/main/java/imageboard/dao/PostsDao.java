@@ -47,6 +47,11 @@ public class PostsDao {
 		return jdbcTemplate.query(sql, new Object[] {parentId},
 				new BeanPropertyRowMapper(PostsModel.class));
 	}
+	public long selectPostDateById(int id) {
+		String sql = "SELECT date FROM posts WHERE id=?";
+
+		return jdbcTemplate.queryForLong(sql, new Object[] {id});
+	}
 
 	public void insertPost(int userId, int parentId, long date, String imageUrl, String content) {
 		String sql = "INSERT INTO posts (user_id, parent_id, date, image_url, content) VALUES (?, ?, ?, ?, ?)";

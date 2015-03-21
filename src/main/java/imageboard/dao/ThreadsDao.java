@@ -25,11 +25,38 @@ public class ThreadsDao {
 	}
 
 	public List<ThreadsModel> selectAllThreads() {
-		String sql = "SELECT * FROM posts WHERE parent_id=0";
+		String sql = "SELECT * FROM posts WHERE parent_id=0 ORDER BY date DESC";
 
 		return jdbcTemplate.query(sql,
 				new BeanPropertyRowMapper(ThreadsModel.class));
 	}
+
+    public int countThreads() {
+        String sql = "SELECT COUNT(*) FROM posts WHERE parent_id=0";
+
+        return jdbcTemplate.queryForInt(sql);
+    }
+
+    public long selectLastActiveDate() {
+        String sql = "SELECT MAX(date) FROM posts";
+
+        return jdbcTemplate.queryForLong(sql);
+    }
+
+    public long selectLastActiveDateByThreadId(int id) {
+        String sql = "SELECT MAX(date) FROM posts WHERE parent_id=?";
+        return jdbcTemplate.queryForLong(sql, new Object[] {id});
+    }
+
+    public int selectLastActiveThreadId() {
+        String sql = "SELECT id FROM posts ORDER BY date DESC LIMIT 1";
+        return jdbcTemplate.queryForInt(sql);
+    }
+
+    public int countReplies(int id) {
+        String sql = "SELECT COUNT(*) FROM posts WHERE parent_id=?";
+        return jdbcTemplate.queryForInt(sql, new Object[] {id});
+    }
 
 	public ThreadsModel selectThreadById(int id) {
 		String sql = "SELECT * FROM posts WHERE id=?";
