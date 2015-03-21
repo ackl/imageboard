@@ -12,3 +12,11 @@ gulp.task('sass', function () {
 gulp.task('watch', function() {
   gulp.watch('./src/sass/*.scss', ['sass']);
 });
+
+gulp.task('copy', function(){
+  gulp.src('node_modules/font-awesome/fonts/*')
+    .pipe(gulp.dest('dist/fonts/'));
+});
+
+gulp.task('default', ['sass', 'copy']);
+
