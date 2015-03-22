@@ -5,6 +5,7 @@
 #####Dependencies:
 * MySQL
 * Java 7+
+* npm (node package manager)
 
 #####Create the database
 `mysql -u root -p`
@@ -18,6 +19,8 @@ Required tables will be created as part of the application build process.
 Build bundled UI (optional)
 `cd src/main/webapp/public/`
 `npm install`
+`npm install -g bower`
+`npm install -g gulp`
 `bower update`
 `gulp`
 

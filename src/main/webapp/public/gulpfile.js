@@ -56,5 +56,5 @@ function bundle() {
     .pipe(gulp.dest('./dist/js/'));
 }
 
-gulp.task('default', ['browserify', 'sass', 'copy']);
+gulp.task('default', ['js', 'sass', 'copy']);
 
