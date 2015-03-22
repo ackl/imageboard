@@ -31,7 +31,6 @@
         <div class="thread__reply-buttons">
                 {{{replyLink}}}
                 <button class="thread__reply--quick">Quick reply</button>
-                <button class="thread__reply--expand">Expand replies</button>
         </div>
 
         <%-- Dev helper --%>

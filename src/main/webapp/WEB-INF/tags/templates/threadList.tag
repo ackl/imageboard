@@ -3,12 +3,7 @@
 
 <script type="text/mustache" id="threadListTemplate">
 <div class="row thread-list-wrap">
-    <div class="columns small-12 medium-9">
-        <form:thread></form:thread>
-    </div>
-    <div class="columns small-12 medium-3">
-        <div class="thread-list__info"></div>
-    </div>
+    <form:thread></form:thread>
     <div class="columns small-12">
         <ul id="thread-list" class="threads"></ul>
     </div>

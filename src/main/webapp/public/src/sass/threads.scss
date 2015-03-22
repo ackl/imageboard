@@ -1,5 +1,5 @@
 .row.thread-list-wrap {
-    max-width: 75rem;
+    max-width: 95%;
 }
 
 ul.threads {
@@ -15,7 +15,7 @@ ul.threads {
         border-bottom-left-radius: 5px;
         border-bottom-right-radius: 5px;
         min-height: 200px;
-        background: #efefef;
+        /*background: #efefef;*/
 
         .thread__timestamp, .reply__timestamp {
             font-size: 0.7rem;
@@ -27,17 +27,23 @@ ul.threads {
     li.row {
         margin-bottom: 35px;
         padding: 0;
+        border-color: rgba(49, 138, 171, 0.4);
+        border-style: solid;
+        border-width: 0 1px 3px 1px;
+        /*border-bottom: 3px solid rgba(49, 138, 171, 0.4);*/
 
         > .columns:first-child {
             padding: 0;
 
             h3 {
+                padding: 10px;
+                font-size: 20px;
                 margin-top: 0;
                 margin-bottom: 20px;
-                background: rgba(17, 110, 144, 0.1);
-                /*background: rgba(0, 0, 0, 0.2);*/
-                padding: 7px 10px;
-                border-bottom: 3px solid rgba(17, 110, 144, 0.25);
+                /*background: rgba(17, 110, 144, 0.1);*/
+                background: rgba(49, 138, 171, 0.2);
+                /*border-bottom: 3px solid rgba(17, 110, 144, 0.25);*/
+                border-bottom: 3px solid rgba(49, 138, 171, 0.4);
                 font-weight: 500;
             }
         }
@@ -57,15 +63,20 @@ ul.threads {
 
     .thread__image {
         min-height: 1px;
+
+        img {
+            /*max-width: 200px;*/
+        }
     }
 
     .thread__reply-buttons {
         position: absolute;
-        top: 10px;
+        top: 20px;
         right: 10px;
 
         button {
             padding: 5px;
+            margin-right: 20px;
         }
     }
 
@@ -78,7 +89,7 @@ ul.threads {
         width: 50%;
         padding: 15px;
         margin: 8px 0;
-        background: rgba(0, 0, 0, 0.1);
+        background: rgba(0, 0, 0, 0.25);
         width: 100%;
 
         .reply__timestamp {
@@ -97,7 +108,19 @@ ul.threads {
 
     input, textarea {
         border: 2px solid grey;
+        background: rgb(29, 29, 29);
+        opacity: 0.4;
+        box-shadow: none;
+        border-color: none;
+        transition: opacity 0.3s, color 0.3s;
+
+        &:focus, &:active {
+            opacity: 1;
+            color: #efefef;
+            background: rgb(29, 29, 29);
+        }
     }
+
 
     input.error, textarea.error {
         border-color: rgb(255, 171, 171);
