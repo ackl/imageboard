@@ -41,7 +41,6 @@ public class ThreadsController {
             @RequestParam(value="page", required=false, defaultValue="1") Integer page,
             @RequestParam(value="perpage", required=false, defaultValue="3") Integer perPage) throws JSONException {
 
-        System.out.println(replylimit);
         List<ThreadsModel> threads = (paginate == null) ?
                 threadsService.getAllThreads(replylimit) : threadsService.getPaginatedThreads(replylimit, page, perPage);
 

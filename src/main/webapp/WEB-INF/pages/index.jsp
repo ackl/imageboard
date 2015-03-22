@@ -10,6 +10,7 @@
     </div>
 
     <script src='<c:url value="/public/dist/js/bundle.js"/>'></script>
+
     <template:threadList></template:threadList>
     <template:thread></template:thread>
     <template:reply></template:reply>

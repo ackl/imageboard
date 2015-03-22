@@ -8,7 +8,6 @@ var can = require('canjs/amd/can');
 
 var Router = can.Control({
     'init': function(el, ev) {
-        console.log(el);
     },
 
     displayHome: function() {
@@ -16,7 +15,6 @@ var Router = can.Control({
         new ThreadForm('.new-thread-form');
         var threadsControl = new ThreadsControl('.threads');
         threadsControl.on("threadsdone", function(ev, value) {
-            console.log('router heard some shit dude');
         });
         var paginateControl = new PaginateControl('.paginate-controls');
     },
@@ -30,12 +28,10 @@ var Router = can.Control({
     },
 
     'threads/:id route': function(data) {
-        console.log('thread with id');
         var self = this;
         this.element.empty();
         this.element.append('<h1>yo</h1>');
         Thread.findOne({id: data.id}).then(function(resp) {
-            console.log(resp);
             self.element.html(can.view('threadTemplate', resp));
 
         })

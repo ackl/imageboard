@@ -3,6 +3,7 @@ var $ = require('jquery');
 var can = require('canjs/amd/can');
 //var Pagination = require('./map/pagination');
 
+//TODO: REMOVE FROM GLOBAL SCOPE
 Pagination = new can.Map({
     options: {
         active: true,

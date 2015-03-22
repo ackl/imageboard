@@ -2,7 +2,7 @@
     display: inline-block;
     border: 1px solid #999;
     position: absolute;
-    bottom: 50px;
+    top: 45px;
     right: 10px;
     width: 45%;
     background: white;
@@ -10,11 +10,36 @@
 
     button {
         padding: 0;
+        width: 20px;
+        height: 20px;
+        background: none;
+        color: #888;
+
+        &:hover {
+            color: #111;
+        }
+
+        &.new-reply-form__submit {
+            float: right;
+        }
+
+        &.quick-reply__close {
+            float: left;
+        }
     }
 
-    input {
+    textarea {
         display: block;
-        width: 80%;
         padding: 5px;
+        height: 50px;
+        max-height: 100px;
+        border: none;
+        margin: 0;
+
+        &:focus {
+            border: none;
+            box-shadow: none;
+            background: none;
+        }
     }
 }

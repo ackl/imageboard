@@ -11,12 +11,10 @@ var ThreadsControl = can.Control.extend({
     init: function(el, opts) {
         this.options = opts;
         this.getThreads();
-        console.log(Pagination);
     },
 
     '{Thread} created': 'getThreads',
     '{Pagination.options} change': function(el, ev) {
-        console.log('pag opts changed');
         this.getThreads();
     },
 
@@ -31,6 +29,7 @@ var ThreadsControl = can.Control.extend({
             self.element.empty();
 
             can.each(threads, function(thread) {
+                console.log(thread);
                 self.element.append(can.view(self.options.view, thread, {
 
                     formatDate: function(date) {
@@ -51,12 +50,10 @@ var ThreadsControl = can.Control.extend({
             });
 
             if (Pagination.options.active) {
-                console.log('paginate is on');
                 self.updateAmountOfPages();
             }
         });
 
-        console.log(this);
         can.trigger(this, 'threadsdone');
     },
 

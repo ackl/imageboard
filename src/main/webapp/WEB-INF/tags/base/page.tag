@@ -8,11 +8,8 @@
         <meta name="viewport" content="initial-scale = 1.0,maximum-scale = 1.0" />
         <meta charset="UTF-8">
         <title></title>
-        <!--<script src="http://code.jquery.com/jquery-1.11.2.js"></script>-->
-        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>-->
-        <!--<script src='<c:url value="/public/dist/js/can.jquery.js"/>'></script>-->
-        <!--<script src='<c:url value="/public/dist/js/can.stache.js"/>'></script>-->
         <link rel="stylesheet" href="<c:url value="/public/dist/css/style.css" />">
+        <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>
     </head>
     <body>
         <base:header></base:header>

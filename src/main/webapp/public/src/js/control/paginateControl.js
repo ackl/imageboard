@@ -9,7 +9,6 @@ var PaginateControl = can.Control.extend({
 
     init: function(el, opts) {
         this.options = opts;
-        console.log('yoyo this is paginator');
         can.trigger(Pagination.attr('meta'), 'change');
     },
 
@@ -58,8 +57,6 @@ var PaginateControl = can.Control.extend({
     },
 
     '{ThreadsControl} threadsdone': function(el, ev) {
-        console.log('paginate heard threads finishing');
-        console.log(el, ev);
     }
 });
 

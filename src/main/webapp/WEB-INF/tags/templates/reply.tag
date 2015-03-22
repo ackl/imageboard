@@ -4,7 +4,9 @@
 <script type="text/mustache" id="replyTemplate">
 <div class="quick-reply">
     <form:reply></form:reply>
-    <button class="quick-reply__close">x</button>
+    <button class="quick-reply__close">
+        <i class="fa-times fa"></i>
+    </button>
 </div>
 </script>
 

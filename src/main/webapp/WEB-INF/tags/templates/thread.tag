@@ -7,13 +7,25 @@
 </script>
 
 <script type="text/mustache" id="threadTemplate">
-    <li class="thread" data-post-id="{{id}}">
-        <h2>{{subject}}</h2>
-        <p>{{content}}</p>
-        <p class="thread__timestamp">Posted at: {{formatDate date}}</p>
-        <div class="thread__info">
-            <p class="thread__info--id">postID: {{id}}</p>
-            <p class="thread__info--parent-id">parentId: {{parentId}}</p>
+    <li class="thread row" data-post-id="{{id}}">
+        <div class="columns small-12">
+            <h3>{{subject}}</h3>
+        </div>
+        <div class="columns small-12">
+            <p>{{content}}</p>
+            <p class="thread__timestamp">Posted at: {{formatDate date}}</p>
+        </div>
+        <div class="thread__image columns small-12 medium-4">
+            {{#if image_url}}
+                <img src="{{image_url}}" alt="">
+            {{/if}}
+        </div>
+        <div class="replies-preview columns small-12 medium-8">
+            {{#replies}}
+                <div class="replies-preview__reply">
+                    {{>replyPreviewTemplate}}
+                </div>
+            {{/replies}}
         </div>
 
         <div class="thread__reply-buttons">
@@ -21,14 +33,16 @@
                 <button class="thread__reply--quick">Quick reply</button>
                 <button class="thread__reply--expand">Expand replies</button>
         </div>
-        <div class="replies-preview">
-            {{#replies}}
-                {{>replyPreviewTemplate}}
-            {{/replies}}
+
+        <%-- Dev helper --%>
+        <div class="thread__info">
+            <p class="thread__info--id">postID: {{id}}</p>
         </div>
+
     </li>
 </script>
 
 <script type="text/mustache" id="replyPreviewTemplate">
-    <p class="replies-preview__reply">{{{content}}}</p>
+    <p class="reply__timestamp">Posted at: {{formatDate date}}</p>
+    <p class="reply__content">{{{content}}}</p>
 </script>

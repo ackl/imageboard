@@ -8,8 +8,4 @@
     <div class="page">
         <h1>this is a thread page</h1>
     </div>
-
-    <%--<script src='<c:url value="/public/dist/js/posts.js"/>'></script>--%>
-    <%--<template:thread></template:thread>--%>
-    <%--<template:reply></template:reply>--%>
 </base:page>

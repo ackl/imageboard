@@ -15,7 +15,6 @@ Thread = Post.extend({
                 queryString += '&perpage='+attrs.options.perPage;
             }
         }
-        console.log(queryString);
 
         return $.get('/api/threads'+queryString);
     },
