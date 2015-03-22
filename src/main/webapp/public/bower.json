@@ -1,7 +1,8 @@
 {
-    "name": "23chan",
-    "dependencies": {
-        "foundation": "~5.4.7",
-        "fontawesome": "~4.3.0"
-    }
+  "name": "23chan",
+  "dependencies": {
+    "foundation": "~5.4.7",
+    "fontawesome": "~4.3.0",
+    "canjs": "~2.2.0"
+  }
 }
