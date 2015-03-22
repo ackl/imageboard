@@ -92,7 +92,7 @@ public class JSONResponse {
 
         JSONObject resp = new JSONObject();
         resp.put("message", "Post created.");
-        resp.put("status", 200);
+        resp.put("status", 201);
 
         return ResponseEntity.created(uriComponents.toUri())
                 .header("resourceId", Integer.toString(resourceId))

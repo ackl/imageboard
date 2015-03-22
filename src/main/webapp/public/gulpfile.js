@@ -10,12 +10,14 @@ gulp.task('sass', function () {
 });
 
 gulp.task('watch', function() {
-  gulp.watch('./src/sass/*.scss', ['sass']);
+    gulp.watch('./src/sass/*.scss', ['sass']);
 });
 
 gulp.task('copy', function(){
-  gulp.src('node_modules/font-awesome/fonts/*')
-    .pipe(gulp.dest('dist/fonts/'));
+    gulp.src('bower_components/fontawesome/fonts/*')
+        .pipe(gulp.dest('dist/fonts/'));
+    gulp.src('bower_components/jquery/dist/jquery.js')
+        .pipe(gulp.dest('dist/js/'));
 });
 
 gulp.task('default', ['sass', 'copy']);

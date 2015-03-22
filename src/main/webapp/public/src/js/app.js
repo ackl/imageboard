@@ -55,6 +55,9 @@ var Router = can.Control({
         this.element.html(can.view('threadListTemplate'));
         new ThreadForm('.new-thread-form');
         var threadsControl = new ThreadsControl('.threads');
+        threadsControl.on("threadsdone", function(ev, value) {
+            console.log('router heard some shit dude');
+        });
         var paginateControl = new PaginateControl('.paginate-controls');
     },
     'route' : function(){
@@ -87,11 +90,14 @@ var Router = can.Control({
     },
 
     'perpage/:perpage/page/:page route': function(data) {
-        this.displayHome();
+        if (!$('.threads').length) {
+            this.displayHome();
+        }
         Pagination.attr('options.active', true);
         Pagination.attr('options.page', data.page);
         Pagination.attr('options.perPage', data.perpage);
         can.trigger(Pagination.attr('options'), 'change');
+        can.trigger(Pagination.attr('meta'), 'change');
     }
 });
 
@@ -131,37 +137,51 @@ var PaginateControl = can.Control.extend({
 
     '.paginate-controls__back click': function(el, ev) {
         if (Pagination.attr('options.page') != 1) {
-            Pagination.attr('options.page', parseInt(Pagination.attr('options.page'))-1);
+            var toPage = parseInt(Pagination.attr('options.page')) - 1;
+            can.route.attr({'perpage': Pagination.attr('options.perPage'), 'page': toPage});
+            //Pagination.attr('options.page', parseInt(Pagination.attr('options.page'))-1);
         }
+        window.scrollTo(0,document.body.scrollHeight);
     },
 
     '.paginate-controls__forward click': function(el, ev) {
         if (Pagination.attr('options.page') != Pagination.attr('meta.pages')) {
-            Pagination.attr('options.page', parseInt(Pagination.attr('options.page'))+1);
+            //Pagination.attr('options.page', parseInt(Pagination.attr('options.page'))+1);
+            var toPage = parseInt(Pagination.attr('options.page')) + 1;
+            can.route.attr({'perpage': Pagination.attr('options.perPage'), 'page': toPage});
         }
+        window.scrollTo(0,document.body.scrollHeight);
     },
 
     '{Pagination.meta} change': function(el, ev) {
-        console.log('paginator heard Pagination.meta change');
-        this.element.html(can.view(this.options.view, {
-            count: function() {
-                var links = '';
-                for (var i=1; i<=Pagination.meta.pages; i++) {
-                    var buttonClass = (Pagination.attr('options.page') == i) ? 'disabled' : '';
-                    links += can.route.link(
-                            "<button>"+i+"</button>",
-                            { page: i, perpage: Pagination.attr('options.perPage') },
-                            { className: buttonClass }, false );
-                }
-                return links;
-            }
-        } ));
+        var paginateLinks = [];
+        for (var i=1; i<=Pagination.meta.pages; i++) {
+            paginateLinks.push({
+                link: can.route.link(i, {
+                        page: i,
+                        perpage: Pagination.attr('options.perPage')
+                    }, {}, false ),
+                current: Pagination.attr('options.page') == i
+            });
+        }
+
+        var disable = {
+            back: Pagination.attr('options.page') == 1,
+            forward: Pagination.attr('options.page') == Pagination.attr('meta.pages')
+        }
+
+        this.element.html(can.view(this.options.view, { links: paginateLinks, disable: disable } ));
     },
 
     'a click': function(el, ev) {
         if (el.hasClass('disabled')) {
             ev.preventDefault();
         }
+    },
+
+    '{ThreadsControl} threadsdone': function(el, ev) {
+        console.log('paginate heard threads finishing');
+        console.log(el, ev);
     }
 });
 
@@ -213,6 +233,9 @@ var ThreadsControl = can.Control.extend({
                 updateAmountOfPages();
             }
         });
+
+        console.log(this);
+        can.trigger(this, 'threadsdone');
     }
 });
 
@@ -287,13 +310,13 @@ var ThreadForm = can.Control.extend({
         ev.stopPropagation();
         ev.preventDefault();
 
-        var threadContent = this.element.find('input.content').val();
+        var threadContent = this.element.find('textarea.content').val();
         var threadSubject = this.element.find('input.subject').val();
 
         if (threadContent) {
             var thread = new Thread({ content: threadContent, subject: threadSubject });
             thread.save();
-            this.element.find('input.content').val('');
+            this.element.find('textarea.content').val('');
             this.element.find('input.subject').val('');
         }
     }

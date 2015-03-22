@@ -1,8 +1,11 @@
-@import 'reset';
+@import '../../bower_components/fontawesome/scss/font-awesome';
+@import '../../bower_components/foundation/scss/foundation';
+@import '../../bower_components/foundation/scss/foundation/components/pagination';
+
+
 @import 'threads';
 @import 'header';
 @import 'quickreply';
-@import '../../node_modules/font-awesome/scss/font-awesome';
 
 body, html {
     font-family: Helvetica, sans-serif;
@@ -17,10 +20,11 @@ button {
     opacity: 0.8;
     transition: opacity 0.2s;
     color: #efefef;
-    padding: 5px;
-    font-size: 1.1rem;
-    border: 0;
+    /*padding: 5px;*/
+    /*font-size: 1.1rem;*/
+    /*border: 0;*/
     cursor: pointer;
+    margin-bottom: 0;
 
     &:active, &:focus {
         outline: none;

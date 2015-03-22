@@ -2,7 +2,16 @@
 <%@taglib prefix="form" tagdir="/WEB-INF/tags/form" %>
 
 <script type="text/mustache" id="threadListTemplate">
-    <form:thread></form:thread>
-    <ul id="thread-list" class="threads"></ul>
-    <div class="paginate-controls"></div>
+<div class="row">
+    <div class="columns small-9">
+        <form:thread></form:thread>
+    </div>
+    <div class="columns small-3">
+        <div class="thread-list__info"></div>
+    </div>
+    <div class="columns small-12">
+        <ul id="thread-list" class="threads"></ul>
+    </div>
+    <div class="paginate-controls columns small-12"></div>
+</div>
 </script>
