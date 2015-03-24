@@ -15,18 +15,29 @@
             <p>{{content}}</p>
             <p class="thread__timestamp">Posted at: {{formatDate date}}</p>
         </div>
-        <div class="thread__image columns small-12 medium-4">
-            {{#if image_url}}
+
+        {{#if image_url}}
+        <div class="thread__image columns small-12 medium-2">
                 <img src="{{image_url}}" alt="">
-            {{/if}}
         </div>
-        <div class="replies-preview columns small-12 medium-8">
+        <div class="replies-preview columns small-12 medium-10">
             {{#replies}}
                 <div class="replies-preview__reply">
                     {{>replyPreviewTemplate}}
                 </div>
             {{/replies}}
         </div>
+        {{/if}}
+
+        {{^if image_url}}
+        <div class="replies-preview columns small-12">
+            {{#replies}}
+                <div class="replies-preview__reply">
+                    {{>replyPreviewTemplate}}
+                </div>
+            {{/replies}}
+        </div>
+        {{/if}}
 
         <div class="thread__reply-buttons">
                 {{{replyLink}}}

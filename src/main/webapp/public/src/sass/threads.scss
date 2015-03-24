@@ -1,3 +1,5 @@
+$base-background-color: rgb(29, 29, 29);
+
 .row.thread-list-wrap {
     max-width: 95%;
 }
@@ -12,8 +14,6 @@ ul.threads {
         list-style-type: none;
         padding: 10px 20px;
         /*border: 1px solid grey;*/
-        border-bottom-left-radius: 5px;
-        border-bottom-right-radius: 5px;
         min-height: 200px;
         /*background: #efefef;*/
 
@@ -26,18 +26,29 @@ ul.threads {
 
     li.row {
         margin-bottom: 35px;
+        margin-top: 55px;
         padding: 0;
         border-color: rgba(49, 138, 171, 0.4);
         border-style: solid;
-        border-width: 0 1px 3px 1px;
+        background: darken($base-background-color, 1%) url('/public/dist/bgdots.png');
+        opacity: 0.8;
+
+        &:nth-child(even) {
+            border-width: 0 1px 1px 0px;
+        }
+
+        &:nth-child(odd) {
+            border-width: 0 0px 1px 1px;
+        }
+
         /*border-bottom: 3px solid rgba(49, 138, 171, 0.4);*/
 
         > .columns:first-child {
             padding: 0;
 
             h3 {
-                padding: 10px;
-                font-size: 20px;
+                padding: 5px 10px;
+                font-size: 17px;
                 margin-top: 0;
                 margin-bottom: 20px;
                 /*background: rgba(17, 110, 144, 0.1);*/
@@ -46,6 +57,12 @@ ul.threads {
                 border-bottom: 3px solid rgba(49, 138, 171, 0.4);
                 font-weight: 500;
             }
+        }
+    }
+
+    .reply__content {
+        li {
+            min-height: 0;
         }
     }
 
@@ -65,18 +82,21 @@ ul.threads {
         min-height: 1px;
 
         img {
-            /*max-width: 200px;*/
+            display: block;
+            margin: auto;
+            max-height: 225px;
         }
     }
 
     .thread__reply-buttons {
         position: absolute;
-        top: 20px;
+        top: 6px;
         right: 10px;
 
         button {
             padding: 5px;
             margin-right: 20px;
+            font-size: 12px;
         }
     }
 
