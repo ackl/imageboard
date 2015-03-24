@@ -5,14 +5,11 @@ var ThreadForm = can.Control.extend({
     init: function(el, ev) {
     },
 
-    /**
-     * Submit a new thread.
-     */
-    'button click': function(el, ev) {
-        ev.stopPropagation();
+    'submit': function(el, ev) {
+        console.log('submite from control');
         ev.preventDefault();
-
         var threadContent = this.element.find('textarea.content').val();
+        var threadImage = this.element.find('input.file').val();
         var threadSubject = this.element.find('input.subject').val();
 
         if (!threadSubject) {
@@ -21,18 +18,30 @@ var ThreadForm = can.Control.extend({
             this.element.find('input.subject').removeClass('error');
         }
 
+        if (!threadImage) {
+            this.element.find('input.file').addClass('error');
+        } else {
+            this.element.find('input.file').removeClass('error');
+        }
+
         if (!threadContent) {
             this.element.find('textarea.content').addClass('error');
         } else {
             this.element.find('textarea.content').removeClass('error');
         }
+        if (threadContent && threadSubject && threadImage) {
+            var data = new FormData(el[0]);
+            console.log(data);
 
-        if (threadContent && threadSubject) {
-            var thread = new Thread({ content: threadContent, subject: threadSubject });
-            can.route.attr({'page': '1'});
+            var thread = new Thread({form: el[0]});
             thread.save();
-            this.element.find('textarea.content').val('');
-            this.element.find('input.subject').val('');
+
+            if (Pagination.attr('options.page') != 1) {
+                can.route.attr({'page': '1'});
+            }
+
+
+            this.element.trigger('reset');
         }
     }
 });

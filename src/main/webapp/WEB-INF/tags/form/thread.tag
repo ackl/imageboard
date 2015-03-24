@@ -1,12 +1,14 @@
 <%@tag description="Form for new thread" pageEncoding="UTF-8"%>
 
-<form class="new-thread-form">
-    <div class="columns small-12 medium-10">
-        <input type="text" class="subject" placeholder="Thread subject here.">
-        <!--<input type="text" class="content" placeholder="Thread content here.">-->
-        <textarea id="new-thread-form__content" class="content" name="" cols="30" rows="10" placeholder="Thread content here."></textarea>
-    </div>
-    <div class="columns small-12 medium-2">
-        <button class="new-thread-form__submit">Submit Thread</button>
+<form class="new-thread-form" method="POST" action="api/threads/uploadFile" enctype="multipart/form-data">
+    <div class="row">
+        <div class="columns medium-9">
+            Thread subject: <input type="text" class="subject" name="subject" placeholder="Thread subject here." tabindex="1">
+            Thread content: <textarea id="new-thread-form__content" class="content" name="content" cols="30" rows="10" placeholder="Thread content here." tabindex="2"></textarea>
+        </div>
+        <div class="columns medium-3">
+            File to upload: <input type="file" name="file" tabindex="3" class="file"><br />
+            <button class="new-thread-form__submit" tabindex="5">Submit Thread</button>
+        </div>
     </div>
 </form>

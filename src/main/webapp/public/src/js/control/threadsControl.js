@@ -18,6 +18,7 @@ var ThreadsControl = can.Control.extend({
         this.getThreads();
     },
 
+    '.thread replied': 'getThreads',
     /*
     * Retrieve all threads from server.
     * Data is stored in a can.List and pass to view.
@@ -38,7 +39,7 @@ var ThreadsControl = can.Control.extend({
 
                     replyLink: function() {
                         return can.route.link(
-                            "<button>Reply</button>",
+                            "<button><i class='fa fa-eye'></i><span class='show-for-medium-up'>View</span></button>",
                             { id: thread.attr('id') },
                             {}, false );
                     }

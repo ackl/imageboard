@@ -1,5 +1,5 @@
 var Router = require('./router');
-var $ = require('jquery');
+$ = require('jquery');
 var can = require('canjs/amd/can');
 //var Pagination = require('./map/pagination');
 
@@ -19,4 +19,21 @@ $(function() {
     //new Pagination();
     new Router($('.page'));
     can.route.ready();
+
+    /*$('.new-thread-form').submit(function(e) {*/
+        /*e.preventDefault();*/
+        /*var data = new FormData(this);*/
+        /*console.log(data);*/
+        /*$.ajax({*/
+            /*url: 'api/threads/uploadFile',*/
+            /*data: data,*/
+            /*cache: false,*/
+            /*contentType: false,*/
+            /*processData: false,*/
+            /*type: 'POST',*/
+            /*success: function(data){*/
+                /*console.log(data);*/
+            /*}*/
+        /*});*/
+    /*});*/
 });

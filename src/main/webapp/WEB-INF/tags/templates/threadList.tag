@@ -3,7 +3,9 @@
 
 <script type="text/mustache" id="threadListTemplate">
 <div class="row thread-list-wrap">
-    <form:thread></form:thread>
+    <div class="columns small-12">
+        <form:thread></form:thread>
+    </div>
     <div class="columns small-12">
         <ul id="thread-list" class="threads"></ul>
     </div>

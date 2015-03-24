@@ -25,7 +25,7 @@ public class ThreadsDao {
 	}
 
 	public List<ThreadsModel> selectAllThreads() {
-		String sql = "SELECT * FROM posts WHERE parent_id=0 ORDER BY date DESC";
+		String sql = "SELECT * FROM posts WHERE parent_id=0 ORDER BY last_active DESC";
 
 		return jdbcTemplate.query(sql,
 				new BeanPropertyRowMapper(ThreadsModel.class));
@@ -66,15 +66,21 @@ public class ThreadsDao {
 	}
 
 	public void insertThread(int userId, int parentId, long date, String imageUrl, String content, String subject) {
-		String sql = "INSERT INTO posts (user_id, parent_id, date, image_url, content, subject) VALUES (?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO posts (user_id, parent_id, date, image_url, content, subject, last_active) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-		jdbcTemplate.update(sql, new Object[] {userId, parentId, date, imageUrl, content, subject});
+		jdbcTemplate.update(sql, new Object[] {userId, parentId, date, imageUrl, content, subject, date});
 	}
 
 	public void updateThread(int id, int userId, int parentId, long date, String imageUrl, String content, String subject) {
 		String sql = "UPDATE posts SET user_id=?,parent_id=?,date=?,image_url=?,content=?,subject=? WHERE id=?";
 
 		jdbcTemplate.update(sql, new Object[] {userId, parentId, date, imageUrl, content, id, subject});
+	}
+
+	public void setLastActive(int id, long lastActive) {
+		String sql = "UPDATE posts SET last_active=? WHERE id=?";
+
+		jdbcTemplate.update(sql, new Object[] {lastActive, id});
 	}
 
 	public void removeThreadById(int id) {

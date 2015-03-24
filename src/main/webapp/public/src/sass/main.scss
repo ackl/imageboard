@@ -7,8 +7,6 @@
 @import 'header';
 @import 'quickreply';
 
-$base-background-color: rgb(29, 29, 29);
-
 body, html {
     /*font-family: Helvetica, sans-serif;*/
     /*font-family: 'Lato', sans-serif;*/
@@ -44,6 +42,10 @@ button {
 
     &:active, &:focus {
         outline: none;
+    }
+
+    &:hover {
+        background: rgba(49, 138, 171, 0.6);
     }
 }
 

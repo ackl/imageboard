@@ -6,11 +6,17 @@ public class ThreadsModel extends PostsModel {
 
 	private String subject;
 	private List<PostsModel> replies;
+	private long lastActive;
 
 
 	public ThreadsModel() {}
 
 
+	public long getLastActive() {
+		return this.lastActive;
+	} public void setLastActive(long lastActive) {
+		this.lastActive = lastActive;
+	}
 	public String getSubject() {
 		return this.subject;
 	} public void setSubject(String subject) {

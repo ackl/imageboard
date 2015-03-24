@@ -36,9 +36,15 @@ var ThreadControl = can.Control.extend({
         var reply = new Post({ content: threadContent, parentId: this.postId });
         reply.save()
              .then(function(postData) {
-                self.element.find('.replies-preview').append(can.view(self.options.view.reply, postData));
-                self.hideQuickReply();
+                //self.element.find('.replies-preview').append(can.view(self.options.view.reply, postData));
+                //self.hideQuickReply();
+                if (Pagination.attr('options.page') == 1) {
+                    self.element.trigger('replied');
+                } else {
+                    can.route.attr({'page': '1'});
+                }
              });
+
     },
 
     showQuickReply: function(el, ev) {

@@ -44,11 +44,15 @@ public class PostsController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Map<String, String>> postTesting(@RequestBody PostsModel post, UriComponentsBuilder b) {
+        long date = new Date().getTime();
 		dao.insertPost(post.getUserId(),
 			       post.getParentId(),
-                   new Date().getTime(),
+                   date,
 			       post.getImageUrl(),
 			       post.getContent());
+        if (post.getParentId() != 0) {
+            threadsDao.setLastActive(post.getParentId(), date);
+        }
 
         //TODO: Get id of created post;
         return buildCreateResponse(b, 1);

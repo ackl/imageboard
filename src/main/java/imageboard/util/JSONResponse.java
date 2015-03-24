@@ -59,6 +59,7 @@ public class JSONResponse {
         JSONObject threadJSON = new JSONObject();
         threadJSON = JSONResponse.populatePostJSON(threadJSON, thread);
         threadJSON.put("subject", thread.getSubject());
+        threadJSON.put("last_active", thread.getLastActive());
 
         JSONArray repliesJSON = new JSONArray();
 

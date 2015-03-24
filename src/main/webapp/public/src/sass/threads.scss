@@ -18,27 +18,39 @@ ul.threads {
         /*background: #efefef;*/
 
         .thread__timestamp, .reply__timestamp {
-            font-size: 0.7rem;
+            font-size: 0.8rem;
             color: grey;
             margin-top: 8px;
         }
     }
 
-    li.row {
+    li.thread {
         margin-bottom: 35px;
         margin-top: 55px;
         padding: 0;
         border-color: rgba(49, 138, 171, 0.4);
         border-style: solid;
-        background: darken($base-background-color, 1%) url('/public/dist/bgdots.png');
+        /*background: darken($base-background-color, 1%) url('/public/dist/bgdots.png');*/
+        background: rgba(26,26,26,0.5) url('/public/dist/bgdots.png');
         opacity: 0.8;
+        outline: none;
+        transition: box-shadow 0.3s;
+        /*box-shadow: 0 0 10px #9ecaed;*/
 
         &:nth-child(even) {
-            border-width: 0 1px 1px 0px;
+            border-width: 0 0 2px 2px;
+
+            &:hover {
+                box-shadow: -6px 6px 6px rgba(49, 138, 171, 0.2);
+            }
         }
 
         &:nth-child(odd) {
-            border-width: 0 0px 1px 1px;
+            border-width: 0 2px 2px 0;
+
+            &:hover {
+                box-shadow: 6px 6px 6px rgba(49, 138, 171, 0.2);
+            }
         }
 
         /*border-bottom: 3px solid rgba(49, 138, 171, 0.4);*/
@@ -67,7 +79,7 @@ ul.threads {
     }
 
     //DEV HELPER
-    .thread__info {
+    .thread__info, .post__info {
         position: absolute;
         left: 0;
         bottom: 0;
@@ -80,6 +92,7 @@ ul.threads {
 
     .thread__image {
         min-height: 1px;
+        margin-bottom: 40px;
 
         img {
             display: block;
@@ -90,19 +103,54 @@ ul.threads {
 
     .thread__reply-buttons {
         position: absolute;
-        top: 6px;
-        right: 10px;
+        top: 0;
+        right: 0;
+        @media only screen and (min-width: 40.063em) {
+            top: 10px;
+            right: 10px;
+        }
 
         button {
             padding: 5px;
-            margin-right: 20px;
             font-size: 12px;
+            margin-right: 0;
+            @media only screen and (min-width: 40.063em) {
+                margin-right: 20px;
+            }
+
+            i {
+                margin-right: 0;
+                padding: 0 4px;
+                font-size: 23px;
+                @media only screen and (min-width: 40.063em) {
+                    font-size: 15px;
+                    margin-right: 5px;
+                    padding: 0;
+                }
+            }
+
+            span {
+                display: none;
+                @media only screen and (min-width: 40.063em) {
+                    display: inline;
+                }
+            }
         }
     }
 
+    .replies-preview {
+        margin-bottom: 20px;
+    }
+
     .replies-preview__reply {
+        position: relative;
+
         &:first-child {
             margin-top: 0;
+        }
+
+        &:hover {
+            background: rgba(0, 0, 0, 0.15);
         }
 
         border-radius: 4px;
@@ -110,6 +158,7 @@ ul.threads {
         padding: 15px;
         margin: 8px 0;
         background: rgba(0, 0, 0, 0.25);
+        transition: background 0.2s;
         width: 100%;
 
         .reply__timestamp {
@@ -120,6 +169,7 @@ ul.threads {
 
 .new-thread-form {
     margin: 20px 0;
+    color: rgb(112, 112, 112);
 
     input, button {
         width: 100%;
@@ -129,10 +179,10 @@ ul.threads {
     input, textarea {
         border: 2px solid grey;
         background: rgb(29, 29, 29);
-        opacity: 0.4;
+        opacity: 0.6;
         box-shadow: none;
-        border-color: none;
         transition: opacity 0.3s, color 0.3s;
+        color: white;
 
         &:focus, &:active {
             opacity: 1;
@@ -145,6 +195,11 @@ ul.threads {
     input.error, textarea.error {
         border-color: rgb(255, 171, 171);
         margin-bottom: inherit;
+    }
+
+    input.file {
+        padding: 11px;
+        margin-bottom: 40px;
     }
 }
 

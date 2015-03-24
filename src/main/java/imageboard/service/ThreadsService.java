@@ -58,6 +58,11 @@ public class ThreadsService {
         return thread.getReplies().size();
     }
 
+    public List<PostsModel> getAllReplies (int id) {
+        List<PostsModel> replies = postsDao.selectPostsByParentId(id);
+        return replies;
+    }
+
     public List<ThreadsModel> getAllThreads(Integer replylimit) {
         List<ThreadsModel> threadsModels = threadsDao.selectAllThreads();
         for (ThreadsModel thread : threadsModels) {
@@ -93,12 +98,19 @@ public class ThreadsService {
         return threadsDao.countThreads();
     }
 
+    public void updateLastActive(int id, long lastActive) {
+        System.out.println(lastActive);
+        threadsDao.setLastActive(id, lastActive);
+    }
+
     public void createThread(ThreadsModel thread) {
+        long date = new Date().getTime();
 		threadsDao.insertThread(thread.getUserId(),
 			       thread.getParentId(),
-                   new Date().getTime(),
+                   date,
 			       thread.getImageUrl(),
 			       thread.getContent(),
                    thread.getSubject());
+        updateLastActive(thread.getId(), date);
     }
 }

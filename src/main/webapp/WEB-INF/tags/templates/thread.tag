@@ -1,19 +1,16 @@
 <%@tag description="Front end thread template" pageEncoding="UTF-8"%>
 
-<script type="text/mustache" id="threadsTemplate">
-    {{#threads}}
-        {{>threadTemplate}}
-    {{/threads}}
-</script>
-
 <script type="text/mustache" id="threadTemplate">
-    <li class="thread row" data-post-id="{{id}}">
+    <li class="thread" data-post-id="{{id}}">
         <div class="columns small-12">
             <h3>{{subject}}</h3>
+            <div class="thread__meta-info">
+                <span class="thread__timestamp">ID: {{id}} | </span>
+                <span class="thread__timestamp">Time: {{formatDate date}}</span>
+            </div>
         </div>
         <div class="columns small-12">
             <p>{{content}}</p>
-            <p class="thread__timestamp">Posted at: {{formatDate date}}</p>
         </div>
 
         {{#if image_url}}
@@ -30,7 +27,7 @@
         {{/if}}
 
         {{^if image_url}}
-        <div class="replies-preview columns small-12">
+        <div class="replies-preview columns small-12 medium-9">
             {{#replies}}
                 <div class="replies-preview__reply">
                     {{>replyPreviewTemplate}}
@@ -41,7 +38,10 @@
 
         <div class="thread__reply-buttons">
                 {{{replyLink}}}
-                <button class="thread__reply--quick">Quick reply</button>
+                <button class="thread__reply--quick">
+                    <i class="fa fa-reply"></i>
+                    <span class=""> Reply </span>
+                </button>
         </div>
 
         <%-- Dev helper --%>
@@ -55,4 +55,7 @@
 <script type="text/mustache" id="replyPreviewTemplate">
     <p class="reply__timestamp">Posted at: {{formatDate date}}</p>
     <p class="reply__content">{{{content}}}</p>
+    <div class="post__info">
+        <p class="post__info--id">postID: {{id}}</p>
+    </div>
 </script>

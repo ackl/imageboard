@@ -14,10 +14,23 @@ var Router = can.Control({
         this.element.html(can.view('threadListTemplate'));
         new ThreadForm('.new-thread-form');
         var threadsControl = new ThreadsControl('.threads');
-        threadsControl.on("threadsdone", function(ev, value) {
-        });
+        //$('.threads').on("threadsdone", function(e) {
+            //console.log('threads finished loading');
+            //$('body,html').animate({
+                //scrollTop: 400
+            //}, 500);
+        //});
+        //threadsControl.on("threadsdone", function(ev, value) {
+        //});
         var paginateControl = new PaginateControl('.paginate-controls');
     },
+
+    //'threadsdone': function(el, ev) {
+        //console.log('hi');
+        //$('body,html').animate({
+            //scrollTop: 400
+        //}, 500);
+    //},
 
     'route' : function(){
         this.displayHome();
