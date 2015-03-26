@@ -30,7 +30,7 @@ Thread = Post.extend({
         var data = new FormData(attrs.form);
         console.log(attrs, data);
         return $.ajax({
-            url: '/api/threads/uploadFile',
+            url: '/api/threads',
             data: data,
             cache: false,
             contentType: false,

@@ -105,12 +105,15 @@ public class ThreadsService {
 
     public void createThread(ThreadsModel thread) {
         long date = new Date().getTime();
-		threadsDao.insertThread(thread.getUserId(),
-			       thread.getParentId(),
-                   date,
-			       thread.getImageUrl(),
-			       thread.getContent(),
-                   thread.getSubject());
-        updateLastActive(thread.getId(), date);
+        thread.setDate(date);
+
+        threadsDao.insertThread(thread);
+		//threadsDao.insertThread(thread.getUserId(),
+				   //thread.getParentId(),
+                   //date,
+				   //thread.getImageUrl(),
+				   //thread.getContent(),
+                   //thread.getSubject());
+        //updateLastActive(thread.getId(), date);
     }
 }

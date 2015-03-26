@@ -44,7 +44,7 @@ public class ThreadsDao {
     }
 
     public long selectLastActiveDateByThreadId(int id) {
-        String sql = "SELECT MAX(date) FROM posts WHERE parent_id=?";
+        String sql = "SELECT last_active FROM posts WHERE id=?";
         return jdbcTemplate.queryForLong(sql, new Object[] {id});
     }
 
@@ -65,10 +65,10 @@ public class ThreadsDao {
 				new BeanPropertyRowMapper(ThreadsModel.class));
 	}
 
-	public void insertThread(int userId, int parentId, long date, String imageUrl, String content, String subject) {
+	public void insertThread(ThreadsModel t) {
 		String sql = "INSERT INTO posts (user_id, parent_id, date, image_url, content, subject, last_active) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-		jdbcTemplate.update(sql, new Object[] {userId, parentId, date, imageUrl, content, subject, date});
+		jdbcTemplate.update(sql, new Object[] {t.getUserId(), t.getParentId(), t.getDate(), t.getImageUrl(), t.getContent(), t.getSubject(), t.getDate()});
 	}
 
 	public void updateThread(int id, int userId, int parentId, long date, String imageUrl, String content, String subject) {
