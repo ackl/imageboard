@@ -4,9 +4,12 @@
     position: absolute;
     top: 45px;
     right: 10px;
-    width: 45%;
+    width: 95%;
     background: rgb(29, 29, 29);
     opacity: 0.95;
+    @media only screen and (min-width: 40.063em) {
+        width: 45%;
+    }
 
     button {
         padding: 0;
@@ -36,6 +39,7 @@
         border: none;
         margin: 0;
         color: #efefef;
+        width: 100%;
         background: rgb(29, 29, 29);
 
 

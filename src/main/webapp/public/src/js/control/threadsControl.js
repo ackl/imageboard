@@ -19,6 +19,11 @@ var ThreadsControl = can.Control.extend({
     },
 
     '.thread replied': 'getThreads',
+    '{paginate} changePage': 'setFlag',
+    setFlag: function() {
+        console.log('hi');
+        this.changePage = true;
+    },
     /*
     * Retrieve all threads from server.
     * Data is stored in a can.List and pass to view.
@@ -30,7 +35,6 @@ var ThreadsControl = can.Control.extend({
             self.element.empty();
 
             can.each(threads, function(thread) {
-                console.log(thread);
                 self.element.append(can.view(self.options.view, thread, {
 
                     formatDate: function(date) {
@@ -44,7 +48,14 @@ var ThreadsControl = can.Control.extend({
                             {}, false );
                     }
                 }));
+                console.log('rendering athread');
             });
+
+            if (self.changePage) {
+                console.log('scrolling page');
+                window.scrollTo(0,document.body.scrollHeight);
+            }
+
 
             self.element.find('.thread').each(function(i, el) {
                 new ThreadControl(el);
@@ -55,7 +66,7 @@ var ThreadsControl = can.Control.extend({
             }
         });
 
-        can.trigger(this, 'threadsdone');
+        this.element.trigger('threadsdone');
     },
 
     updateAmountOfPages: can.compute(function() {

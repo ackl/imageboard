@@ -13,7 +13,8 @@ var Router = can.Control({
     displayHome: function() {
         this.element.html(can.view('threadListTemplate'));
         new ThreadForm('.new-thread-form');
-        var threadsControl = new ThreadsControl('.threads');
+        var paginateControl = new PaginateControl('.paginate-controls');
+        var threadsControl = new ThreadsControl('.threads', {paginate: $('.paginate-controls')});
         //$('.threads').on("threadsdone", function(e) {
             //console.log('threads finished loading');
             //$('body,html').animate({
@@ -22,7 +23,6 @@ var Router = can.Control({
         //});
         //threadsControl.on("threadsdone", function(ev, value) {
         //});
-        var paginateControl = new PaginateControl('.paginate-controls');
     },
 
     //'threadsdone': function(el, ev) {

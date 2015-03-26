@@ -7,7 +7,7 @@
             Thread content: <textarea id="new-thread-form__content" class="content" name="content" cols="30" rows="10" placeholder="Thread content here." tabindex="2"></textarea>
         </div>
         <div class="columns medium-3">
-            File to upload: <input type="file" name="file" tabindex="3" class="file"><br />
+            <label class="file">Choose image<input type="file" name="file" tabindex="3"></label><br />
             <button class="new-thread-form__submit" tabindex="5">Submit Thread</button>
         </div>
     </div>

@@ -190,6 +190,7 @@ ul.threads {
         opacity: 0.6;
         box-shadow: none;
         transition: opacity 0.3s, color 0.3s;
+        margin-bottom: 15px;
         color: white;
 
         &:focus, &:active {
@@ -200,14 +201,25 @@ ul.threads {
     }
 
 
-    input.error, textarea.error {
+    input.error, textarea.error, .file.error {
         border-color: rgb(255, 171, 171);
-        margin-bottom: inherit;
+        margin-bottom: 15px;
     }
 
-    input.file {
-        padding: 11px;
-        margin-bottom: 40px;
+    .file {
+        border: 2px solid transparent;
+        text-align: center;
+        padding: 10px;
+        margin-top: 24px;
+        margin-bottom: 15px;
+        background: rgba(49, 138, 171, 0.4);
+        opacity: 0.8;
+        transition: opacity 0.2s, background 0.2s;
+        color: #efefef;
+
+        input {
+            display: none;
+        }
     }
 }
 

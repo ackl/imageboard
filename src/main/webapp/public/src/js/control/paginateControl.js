@@ -12,6 +12,25 @@ var PaginateControl = can.Control.extend({
         can.trigger(Pagination.attr('meta'), 'change');
     },
 
+    '.paginate-controls__back click': function(el, ev) {
+        if (Pagination.attr('options.page') != 1) {
+            this.element.trigger('changePage');
+            var toPage = parseInt(Pagination.attr('options.page')) - 1;
+            can.route.attr({'perpage': Pagination.attr('options.perPage'), 'page': toPage});
+            //Pagination.attr('options.page', parseInt(Pagination.attr('options.page'))-1);
+        }
+    },
+
+    '.paginate-controls__forward click': function(el, ev) {
+        if (Pagination.attr('options.page') != Pagination.attr('meta.pages')) {
+            this.element.trigger('changePage');
+            //Pagination.attr('options.page', parseInt(Pagination.attr('options.page'))+1);
+            var toPage = parseInt(Pagination.attr('options.page')) + 1;
+            can.route.attr({'perpage': Pagination.attr('options.perPage'), 'page': toPage});
+            this.changedPage = true;
+        }
+    },
+
     '{Pagination.meta} change': function(el, ev) {
         var paginateLinks = [];
         for (var i=1; i<=Pagination.meta.pages; i++) {
@@ -36,9 +55,6 @@ var PaginateControl = can.Control.extend({
         if (el.hasClass('disabled')) {
             ev.preventDefault();
         }
-    },
-
-    '{ThreadsControl} threadsdone': function(el, ev) {
     }
 });
 
