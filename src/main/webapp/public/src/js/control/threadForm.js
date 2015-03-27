@@ -6,10 +6,8 @@ var ThreadForm = can.Control.extend({
     },
 
     'submit': function(el, ev) {
-        console.log('submite from control');
         ev.preventDefault();
         var threadContent = this.element.find('textarea.content').val();
-        var threadImage = this.element.find('.file input').val();
         var threadSubject = this.element.find('input.subject').val();
 
         if (!threadSubject) {
@@ -17,21 +15,19 @@ var ThreadForm = can.Control.extend({
         } else {
             this.element.find('input.subject').removeClass('error');
         }
-
-        if (!threadImage) {
-            this.element.find('.file').addClass('error');
-        } else {
-            this.element.find('.file').removeClass('error');
-        }
-
         if (!threadContent) {
             this.element.find('textarea.content').addClass('error');
         } else {
             this.element.find('textarea.content').removeClass('error');
         }
-        if (threadContent && threadSubject && threadImage) {
+        if (!this.filename) {
+            this.element.find('.file').addClass('error');
+        } else {
+            this.element.find('.file').removeClass('error');
+        }
+
+        if (threadContent && threadSubject && this.filename) {
             var data = new FormData(el[0]);
-            console.log(data);
 
             var thread = new Thread({form: el[0]});
             thread.save();
@@ -47,6 +43,7 @@ var ThreadForm = can.Control.extend({
 
     '.file input change': function(el, ev) {
         var filename = el.val().replace(/^.*\\/, "");
+        this.filename = filename;
         el.parent().text(filename);
     }
 });
