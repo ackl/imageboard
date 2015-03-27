@@ -44,7 +44,7 @@ var ThreadForm = can.Control.extend({
     '.file input change': function(el, ev) {
         var filename = el.val().replace(/^.*\\/, "");
         this.filename = filename;
-        el.parent().text(filename);
+        el.siblings().text(filename);
     }
 });
 
