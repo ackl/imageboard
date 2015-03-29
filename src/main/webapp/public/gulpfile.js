@@ -23,21 +23,13 @@ gulp.task('watch', function() {
 gulp.task('copy', function(){
     gulp.src('bower_components/fontawesome/fonts/*')
         .pipe(gulp.dest('dist/fonts/'));
-    gulp.src('bower_components/jquery/dist/jquery.js')
-        .pipe(gulp.dest('dist/js/'));
+    gulp.src('src/img/*')
+        .pipe(gulp.dest('dist/img/'));
 });
-
-//gulp.task('browserify', function() {
-    //return browserify('./src/js/app.js')
-        //.bundle()
-        //.pipe(source('bundle.js'))
-        //.pipe(gulp.dest('./dist/js/'));
-//});
 
 var bundler = watchify(browserify('./src/js/app.js', watchify.args));
 bundler.transform('decanify');
 bundler.transform('debowerify');
-//bundler.transform('brfs');
 
 gulp.task('js', bundle); // so you can run `gulp js` to build the file
 bundler.on('update', bundle); // on any dep update, runs the bundler
