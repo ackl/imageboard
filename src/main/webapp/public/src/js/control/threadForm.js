@@ -38,6 +38,7 @@ var ThreadForm = can.Control.extend({
 
 
             this.element.trigger('reset');
+            this.element.find('.file__text').empty();
         }
     },
 
