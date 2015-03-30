@@ -5,6 +5,7 @@
 #####Dependencies:
 * MySQL
 * Java 7+
+* Maven
 * npm (node package manager)
 
 #####Create the database
