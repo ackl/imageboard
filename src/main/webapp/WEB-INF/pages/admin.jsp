@@ -6,4 +6,9 @@
     <h1>Admin page</h1>
     <h2>${message}</h2>
     <form:logout></form:logout>
+
+
+
+
+    <form:createUser></form:createUser>
 </base:base>

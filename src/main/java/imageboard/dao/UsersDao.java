@@ -45,11 +45,23 @@ public class UsersDao {
 				new BeanPropertyRowMapper(UsersModel.class));
 	}
 
-	public void insertUser(String keycode, long expiryDate) {
-		String sql = "INSERT INTO users (keycode, expiry_date) VALUES (?, ?)";
 
-		jdbcTemplate.update(sql, new Object[] {keycode, expiryDate});
+	public void insertUser(String username, String password) {
+		String sql = "INSERT INTO users (username, password) VALUES (?, ?)";
+
+		jdbcTemplate.update(sql, new Object[] {username, password});
 	}
+
+	public void insertRole(String username, String role) {
+		String sql = "INSERT INTO user_roles (username, ROLE) VALUES (?, ?)";
+
+		jdbcTemplate.update(sql, new Object[] {username, role});
+	}
+	//public void insertUser(String keycode, long expiryDate) {
+		//String sql = "INSERT INTO users (keycode, expiry_date) VALUES (?, ?)";
+
+		//jdbcTemplate.update(sql, new Object[] {keycode, expiryDate});
+	//}
 
 	public void updateUser(int id, String name, String pass, String imageUrl) {
 		String sql = "UPDATE users SET name=?,pass=?,image_url=? WHERE id=?";

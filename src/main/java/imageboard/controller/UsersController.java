@@ -42,10 +42,12 @@ public class UsersController {
 	}
 	@RequestMapping(method=RequestMethod.POST)
 	public String postUser(@RequestParam Map<String, String> params) {
-		int timeLimit = (int) (TimeUnit.HOURS.toMillis(
-					Integer.parseInt(params.get("timeLimit"))
-					) +(new Date()).getTime());
-		dao.insertUser(params.get("keycode"), timeLimit);
+		//int timeLimit = (int) (TimeUnit.HOURS.toMillis(
+					//Integer.parseInt("24")
+					//) + (new Date()).getTime());
+		dao.insertUser(params.get("username"), params.get("password"));
+        String role = "ROLE_" + params.get("role").toUpperCase();
+        dao.insertRole(params.get("username"), role);
 
 		return "redirect:/";
 	}
