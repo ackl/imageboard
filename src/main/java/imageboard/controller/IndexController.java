@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import imageboard.dao.ThreadsDao;
 
@@ -15,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.multipart.MultipartFile;
+import org.mindrot.BCrypt;
 
 
 @Controller
@@ -30,8 +32,45 @@ public class IndexController {
 		this.threadsDao = threadsDao;
 	}
 
+    @RequestMapping(value = "/admin**", method = RequestMethod.GET)
+    public ModelAndView adminPage() {
+
+        ModelAndView model = new ModelAndView();
+        model.addObject("message", "Admin page stuff will go here.");
+        model.setViewName("admin")
+        return model;
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+	public ModelAndView login(
+		@RequestParam(value = "error", required = false) String error,
+		@RequestParam(value = "logout", required = false) String logout) {
+
+		ModelAndView model = new ModelAndView();
+		if (error != null) {
+			model.addObject("error", "Invalid username and password!");
+		}
+
+		if (logout != null) {
+			model.addObject("msg", "You've been logged out successfully.");
+		}
+		model.setViewName("login");
+		return model;
+	}
+
     @RequestMapping("/")
     public String hello(ModelMap model) {
+        String hashed = BCrypt.hashpw("thisismypassword", BCrypt.gensalt());
+        System.out.println(hashed);
+        if (BCrypt.checkpw("hi there", hashed))
+            System.out.println("It matches");
+        else
+            System.out.println("It does not match");
+        if (BCrypt.checkpw("thisismypassword", hashed))
+            System.out.println("It matches");
+        else
+            System.out.println("It does not match");
+
         model.addAttribute("message", "TODO: go to bed");
         return "index";
     }
@@ -43,103 +82,8 @@ public class IndexController {
 
     @RequestMapping("/threads/{id}")
     public String renderPostPage(@PathVariable int id, ModelMap model) {
-        //System.out.println(id);
-        //model.addAttribute("message", "TODO: go to bed");
-        //model.addAttribute("postId", id);
-
-        //ThreadsModel thread = threadsDao.selectThreadById(id);
-        //List<PostsModel> replies = dao.selectPostsByParentId(thread.getId());
-        //thread.setReplies(replies);
-        //model.addAttribute("thread", thread);
-
         return "thread";
     }
-
-
-    /**
-     * Upload single file using Spring Controller
-     */
-    @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
-    public @ResponseBody
-    String uploadFileHandler(@RequestParam("name") String name,
-            @RequestParam("file") MultipartFile file) {
-
-        if (!file.isEmpty()) {
-            try {
-                byte[] bytes = file.getBytes();
-
-                // Creating the directory to store file
-                //String rootPath = System.getProperty("catalina.home");
-                String rootPath = ("/home/vagrant/image_uploads");
-                File dir = new File(rootPath + File.separator + "tmpFiles");
-                if (!dir.exists())
-                    dir.mkdirs();
-
-                // Create the file on server
-                File serverFile = new File(dir.getAbsolutePath()
-                        + File.separator + name);
-                BufferedOutputStream stream = new BufferedOutputStream(
-                        new FileOutputStream(serverFile));
-                stream.write(bytes);
-                stream.close();
-
-                logger.info("Server File Location="
-                        + serverFile.getAbsolutePath());
-
-                return "You successfully uploaded file=" + name;
-            } catch (Exception e) {
-                return "You failed to upload " + name + " => " + e.getMessage();
-            }
-        } else {
-            return "You failed to upload " + name
-                    + " because the file was empty.";
-        }
-    }
-
-    /**
-     * Upload multiple file using Spring Controller
-     */
-    @RequestMapping(value = "/uploadMultipleFile", method = RequestMethod.POST)
-    public @ResponseBody
-    String uploadMultipleFileHandler(@RequestParam("name") String[] names,
-            @RequestParam("file") MultipartFile[] files) {
-
-        if (files.length != names.length)
-            return "Mandatory information missing";
-
-        String message = "";
-        for (int i = 0; i < files.length; i++) {
-            MultipartFile file = files[i];
-            String name = names[i];
-            try {
-                byte[] bytes = file.getBytes();
-
-                // Creating the directory to store file
-                String rootPath = System.getProperty("catalina.home");
-                File dir = new File(rootPath + File.separator + "tmpFiles");
-                if (!dir.exists())
-                    dir.mkdirs();
-
-                // Create the file on server
-                File serverFile = new File(dir.getAbsolutePath()
-                        + File.separator + name);
-                BufferedOutputStream stream = new BufferedOutputStream(
-                        new FileOutputStream(serverFile));
-                stream.write(bytes);
-                stream.close();
-
-                logger.info("Server File Location="
-                        + serverFile.getAbsolutePath());
-
-                message = message + "You successfully uploaded file=" + name
-                        + "<br />";
-            } catch (Exception e) {
-                return "You failed to upload " + name + " => " + e.getMessage();
-            }
-        }
-        return message;
-    }
-
 }
 
 

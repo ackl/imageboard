@@ -1,0 +1,34 @@
+.login__welcome {
+    text-align: center;
+}
+
+.login {
+    display: table;
+    width: 100%;
+    height: 100%;
+
+    .row {
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    .columns {
+        width: 50%;
+        margin: 0 auto;
+        float: none;
+    }
+
+    .message {
+        color: white;
+
+        &.error {
+            color: pink;
+        }
+    }
+
+    form {
+        label {
+            color: #efefef;
+        }
+    }
+}

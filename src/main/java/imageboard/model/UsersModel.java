@@ -10,6 +10,7 @@ public class UsersModel {
 	private String imageUrl;
 	private String keycode;
 	private int expiryDate;
+	private int admin;
 
 	public UsersModel() {}
 
@@ -42,6 +43,11 @@ public class UsersModel {
 		return this.expiryDate;
 	} public void setExpiryDate(int expiryDate) {
 		this.expiryDate = expiryDate;
+	}
+	public int getAdmin() {
+		return this.admin;
+	} public void setAdmin(int admin) {
+		this.admin = admin;
 	}
 
 	public boolean checkRegistered() {
