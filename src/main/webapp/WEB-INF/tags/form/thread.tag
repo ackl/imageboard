@@ -1,6 +1,7 @@
 <%@tag description="Form for new thread" pageEncoding="UTF-8"%>
 
 <form class="new-thread-form" method="POST" action="api/threads/uploadFile" enctype="multipart/form-data">
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
     <div class="row">
         <div class="columns medium-9">
             Thread subject: <input type="text" class="subject" name="subject" placeholder="Thread subject here." tabindex="1">

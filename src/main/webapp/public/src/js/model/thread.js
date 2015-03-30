@@ -22,13 +22,7 @@ Thread = Post.extend({
     findOne: 'GET /api/threads/{id}',
 
     create:  function(attrs) {
-        //return $.ajax('/api/threads', {
-            //data : JSON.stringify(attrs),
-            //contentType : 'application/json',
-            //type : 'POST'
-        //});
         var data = new FormData(attrs.form);
-        console.log(attrs, data);
         return $.ajax({
             url: '/api/threads',
             data: data,

@@ -5,8 +5,8 @@ var Post = can.Model.extend({
     findAll: 'GET /api/posts',
     findOne: 'GET /api/posts/{id}',
     create:  function(attrs){
-        return $.ajax('/api/posts', {
-            data : JSON.stringify(attrs),
+        return $.ajax('/api/posts?_csrf='+attrs.csrf, {
+            data : JSON.stringify(attrs.payload),
             contentType : 'application/json',
             type : 'POST'
         });

@@ -30,14 +30,21 @@ var ThreadControl = can.Control.extend({
     '.new-reply-form__submit click': function(el, ev) {
         ev.stopPropagation();
         ev.preventDefault();
-        var threadContent = el.siblings().first().val(),
+        var threadContent = el.siblings('textarea').val(),
+            csrf = el.siblings('input').val(),
             self = this;
 
-        var reply = new Post({ content: threadContent, parentId: this.postId });
+
+        var reply = new Post({
+            payload: {
+                content: threadContent,
+                parentId: this.postId
+            },
+            csrf: csrf
+        });
+
         reply.save()
              .then(function(postData) {
-                //self.element.find('.replies-preview').append(can.view(self.options.view.reply, postData));
-                //self.hideQuickReply();
                 if (Pagination.attr('options.page') == 1) {
                     self.element.trigger('replied');
                 } else {
