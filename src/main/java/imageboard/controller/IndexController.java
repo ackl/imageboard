@@ -16,7 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.multipart.MultipartFile;
-import org.mindrot.BCrypt;
+//import org.mindrot.BCrypt;
 
 
 @Controller
@@ -60,16 +60,16 @@ public class IndexController {
 
     @RequestMapping("/")
     public String hello(ModelMap model) {
-        String hashed = BCrypt.hashpw("thisismypassword", BCrypt.gensalt());
-        System.out.println(hashed);
-        if (BCrypt.checkpw("hi there", hashed))
-            System.out.println("It matches");
-        else
-            System.out.println("It does not match");
-        if (BCrypt.checkpw("thisismypassword", hashed))
-            System.out.println("It matches");
-        else
-            System.out.println("It does not match");
+        //String hashed = BCrypt.hashpw("thisismypassword", BCrypt.gensalt());
+        //System.out.println(hashed);
+        //if (BCrypt.checkpw("hi there", hashed))
+            //System.out.println("It matches");
+        //else
+            //System.out.println("It does not match");
+        //if (BCrypt.checkpw("thisismypassword", hashed))
+            //System.out.println("It matches");
+        //else
+            //System.out.println("It does not match");
 
         model.addAttribute("message", "TODO: go to bed");
         return "index";
