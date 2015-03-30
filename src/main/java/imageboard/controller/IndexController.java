@@ -37,7 +37,7 @@ public class IndexController {
 
         ModelAndView model = new ModelAndView();
         model.addObject("message", "Admin page stuff will go here.");
-        model.setViewName("admin")
+        model.setViewName("admin");
         return model;
     }
 
