@@ -4,36 +4,42 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.context.annotation.*;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurity extends WebSecurityConfigurerAdapter {
 
-	//@Autowired
-	//public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        //auth.inMemoryAuthentication().withUser("user").password("password").roles("USER");
-        //auth.inMemoryAuthentication().withUser("admin").password("admin").roles("ADMIN");
-	//}
+    @Autowired
+    DataSource dataSource;
 
-    //@Autowired
-	//DataSource dataSource;
+    @Autowired
+    public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
 
-	//@Autowired
-	//public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
+      auth.jdbcAuthentication().dataSource(dataSource)
+        .passwordEncoder(passwordEncoder())
+        .usersByUsernameQuery(
+            "select username, password, enabled from users where username=?")
+        .authoritiesByUsernameQuery(
+            "select username, role from user_roles where username=?");
+    }
 
-	  //auth.jdbcAuthentication().dataSource(dataSource)
-		//.usersByUsernameQuery(
-			//"select username, password, enabled from users where username=?")
-		//.authoritiesByUsernameQuery(
-			//"select username, role from user_roles where username=?");
-	//}
+    @Bean
+	public PasswordEncoder passwordEncoder(){
+		PasswordEncoder encoder = new BCryptPasswordEncoder();
+		return encoder;
+	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 	  http.authorizeRequests()
+          .antMatchers("/users/**").permitAll()
+          .antMatchers("/users/profiles/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
           .antMatchers("/j_spring_security_check*").permitAll()
           .antMatchers("/login*").permitAll()
           .antMatchers("/public/**").permitAll()
@@ -44,5 +50,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 		    .usernameParameter("username").passwordParameter("password")
 		.and()
 		    .logout().logoutUrl("/logout").logoutSuccessUrl("/login?logout");
+        //.and()
+            //.exceptionHandling().accessDeniedPage("/403");
 	}
 }

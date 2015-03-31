@@ -10,13 +10,13 @@ import imageboard.dao.ThreadsDao;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.security.Principal;
 import java.io.FileOutputStream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.multipart.MultipartFile;
-//import org.mindrot.BCrypt;
 
 
 @Controller
@@ -32,13 +32,13 @@ public class IndexController {
 		this.threadsDao = threadsDao;
 	}
 
-    @RequestMapping(value = "/admin**", method = RequestMethod.GET)
-    public ModelAndView adminPage() {
+    @RequestMapping(value = "/admin", method = RequestMethod.GET)
+    public String adminPage() {
 
-        ModelAndView model = new ModelAndView();
-        model.addObject("message", "Admin page stuff will go here.");
-        model.setViewName("admin");
-        return model;
+        //ModelAndView model = new ModelAndView();
+        //model.addObject("message", "Admin page stuff will go here.");
+        //model.setViewName("admin");
+        return "admin";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -59,18 +59,13 @@ public class IndexController {
 	}
 
     @RequestMapping("/")
-    public String hello(ModelMap model) {
-        //String hashed = BCrypt.hashpw("thisismypassword", BCrypt.gensalt());
-        //System.out.println(hashed);
-        //if (BCrypt.checkpw("hi there", hashed))
-            //System.out.println("It matches");
-        //else
-            //System.out.println("It does not match");
-        //if (BCrypt.checkpw("thisismypassword", hashed))
-            //System.out.println("It matches");
-        //else
-            //System.out.println("It does not match");
-
+    public String hello(ModelMap model, Principal principal) {
+        if (principal == null) {
+            System.out.println("nothing");
+        } else {
+            System.out.println("something");
+            System.out.println(principal.getName());
+        }
         model.addAttribute("message", "TODO: go to bed");
         return "index";
     }

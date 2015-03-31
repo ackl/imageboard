@@ -1,7 +1,12 @@
-var Router = require('./router');
 $ = require('jquery');
-var can = require('canjs/amd/can');
-//var Pagination = require('./map/pagination');
+jQuery = require('jquery');
+
+var Router = require('./router'),
+    can = require('canjs/amd/can');
+
+    require('foundation/js/foundation');
+    require('foundation/js/foundation/foundation.topbar.js');
+
 
 //TODO: REMOVE FROM GLOBAL SCOPE
 Pagination = new can.Map({
@@ -16,24 +21,14 @@ Pagination = new can.Map({
 });
 
 $(function() {
-    //new Pagination();
-    new Router($('.page'));
-    can.route.ready();
-
-    /*$('.new-thread-form').submit(function(e) {*/
-        /*e.preventDefault();*/
-        /*var data = new FormData(this);*/
-        /*console.log(data);*/
-        /*$.ajax({*/
-            /*url: 'api/threads/uploadFile',*/
-            /*data: data,*/
-            /*cache: false,*/
-            /*contentType: false,*/
-            /*processData: false,*/
-            /*type: 'POST',*/
-            /*success: function(data){*/
-                /*console.log(data);*/
-            /*}*/
-        /*});*/
-    /*});*/
+    var pageName = $('.page-meta-info').data("page-name");
+        console.log(pageName);
+    if (pageName === "index") {
+        $(document).foundation();
+        new Router($('.page'));
+        can.route.ready();
+    } else if (pageName === "admin") {
+        var admin = require('./admin');
+        admin.init();
+    }
 });

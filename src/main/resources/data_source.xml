@@ -23,10 +23,10 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <security:authentication-manager alias="authenticationManager">
-        <security:authentication-provider user-service-ref="usersService" />
-    </security:authentication-manager>
-    <security:global-method-security pre-post-annotations="enabled" />
+    <!--<security:authentication-manager alias="authenticationManager">-->
+        <!--<security:authentication-provider user-service-ref="usersService" />-->
+    <!--</security:authentication-manager>-->
+    <!--<security:global-method-security pre-post-annotations="enabled" />-->
 
     <bean id="usersService" class="imageboard.service.UsersService"></bean>
 </beans>

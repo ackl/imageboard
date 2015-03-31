@@ -5,18 +5,21 @@ import java.util.Map;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import java.security.Principal;
+import java.util.UUID;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.stereotype.Controller;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.ui.ModelMap;
 
 import imageboard.model.UsersModel;
-import imageboard.dao.UsersDao;
+import imageboard.service.UsersService;
 
 //TODO:
 //Check authentication for certain requests
@@ -27,22 +30,23 @@ import imageboard.dao.UsersDao;
 //PUT is not working
 //Exception handling
 
-@RestController
+@Controller
 @RequestMapping("/users")
 public class UsersController {
 
-    private UsersDao dao;
+    private UsersService usersService;
+    private static final Logger logger = Logger.getLogger(ThreadsController.class.getName() );
 
     @Autowired
-    public UsersController(UsersDao dao) {
-        this.dao = dao;
+    public UsersController(UsersService usersService) {
+        this.usersService = usersService;
     }
 
     @RequestMapping(method=RequestMethod.GET)
-    public String getLoggedIn(Principal principal) {
-        //UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        //System.out.println("User has authorities: " + userDetails.getAuthorities());
-        return principal.getName();
+    public String getLoggedIn(Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        System.out.println("User has authorities: " + userDetails.getAuthorities());
+        return authentication.getName();
     }
     //@RequestMapping(method=RequestMethod.GET)
     //public List<UsersModel> getAllUsers() {
@@ -50,33 +54,77 @@ public class UsersController {
     //}
     @RequestMapping(method=RequestMethod.POST)
     public String postUser(@RequestParam Map<String, String> params) {
-        //int timeLimit = (int) (TimeUnit.HOURS.toMillis(
-                    //Integer.parseInt("24")
-                    //) + (new Date()).getTime());
-        dao.insertUser(params.get("username"), params.get("password"));
+        System.out.println("posting a user");
+
+        String password = params.get("password");
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String hashedPassword = passwordEncoder.encode(password);
+
+        usersService.createUser(params.get("username"), hashedPassword);
         String role = "ROLE_" + params.get("role").toUpperCase();
-        dao.insertRole(params.get("username"), role);
-
+        usersService.createRole(params.get("username"), role);
         return "redirect:/";
     }
 
-    @RequestMapping(value="/{id}", method=RequestMethod.GET)
-    public UsersModel getUser(@PathVariable int id) {
-        return dao.selectUserById(id);
-    }
-    @RequestMapping(value="/{id}", method=RequestMethod.PUT)
-    public String putUser(@PathVariable int id, @RequestParam Map<String, String> params) {
-        dao.updateUser(id, params.get("name"),
-                   params.get("pass"),
-                   params.get("imageUrl"));
+    @RequestMapping(value="/register/{code}", method=RequestMethod.GET)
+    public String registrationPage (@RequestParam Map<String, String> params, @PathVariable String code, ModelMap model, Principal principal) {
+        boolean valid = false;
+        try {
+            valid = usersService.checkKeycodeValid(code);
+        } catch (EmptyResultDataAccessException e) {
+            logger.log( Level.WARNING, e.toString(), e );
+        }
 
-        return "redirect:/" + id;
-    }
-    @RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-    public String deleteUser(@PathVariable int id) {
-        dao.removeUserById(id);
+        if (valid) {
+            model.addAttribute("message", "Complete your registration:");
+        } else {
+            model.addAttribute("message", "Invalid keycode supplied.");
+        }
 
-        return "redirect:/";
+        model.addAttribute("valid", valid);
+        System.out.println(valid);
+
+        if (principal == null) {
+            return "registration";
+        } else {
+            return "index";
+        }
+
     }
 
+    @RequestMapping(value="/keycode", method=RequestMethod.POST)
+    @ResponseBody
+    public String createKeycode(@RequestParam Map<String, String> params) {
+        long millis = TimeUnit.HOURS.toMillis(24);
+        long date = new Date().getTime() + millis;
+        String keycode = String.valueOf(UUID.randomUUID());
+
+        return usersService.createRegistrationKeycode(keycode, date);
+    }
+
+    @RequestMapping(value="/profile/{id}", method=RequestMethod.GET)
+    @ResponseBody
+    public UsersModel getUser(@PathVariable String id) {
+        return usersService.selectUserByUsername(id);
+    }
+
+    //@RequestMapping(value="/{id}", method=RequestMethod.PUT)
+    //public String putUser(@PathVariable int id, @RequestParam Map<String, String> params) {
+        //dao.updateUser(id, params.get("name"),
+                   //params.get("pass"),
+                   //params.get("imageUrl"));
+
+        //return "redirect:/" + id;
+    //}
+    //@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
+    //public String deleteUser(@PathVariable int id) {
+        //dao.removeUserById(id);
+
+        //return "redirect:/";
+    //}
+
+    //@ExceptionHandler(EmptyResultDataAccessException.class)
+    //public String handleEmptyTable(Exception ex, ModelMap model) {
+        ////logger.log( Level.WARNING, ex.toString(), ex );
+    //}
 }

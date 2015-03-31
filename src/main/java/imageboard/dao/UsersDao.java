@@ -8,6 +8,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 
 import imageboard.model.UsersModel;
+import imageboard.model.UserRoleModel;
+import imageboard.model.KeycodeModel;
 
 /* TODO:
  * Separate database access functions through service layer?
@@ -54,6 +56,17 @@ public class UsersDao {
 				new BeanPropertyRowMapper(UsersModel.class));
 	}
 
+	public void insertKeycode(String username, long expiry) {
+		String sql = "INSERT INTO registration_keycodes (keycode, expiry) VALUES (?, ?)";
+		jdbcTemplate.update(sql, new Object[] {username, expiry});
+	}
+
+	public KeycodeModel selectKeycodeByKeycode(String keycode) {
+		String sql = "SELECT * FROM registration_keycodes WHERE keycode=?";
+
+		return (KeycodeModel)jdbcTemplate.queryForObject(sql, new Object[] {keycode},
+				new BeanPropertyRowMapper(KeycodeModel.class));
+	}
 
 	public void insertUser(String username, String password) {
 		String sql = "INSERT INTO users (username, password) VALUES (?, ?)";

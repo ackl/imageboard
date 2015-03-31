@@ -14,6 +14,8 @@
     </head>
     <body>
         <jsp:doBody/>
+
+    <script src='<c:url value="/public/dist/js/bundle.js"/>'></script>
     </body>
 </html>
 

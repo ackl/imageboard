@@ -5,14 +5,11 @@
 <%@taglib prefix="template" tagdir="/WEB-INF/tags/templates" %>
 
 <base:page>
-    <div class="page-meta-info" data-page-name="index"></div>
-
-    <div class="page">
-        ${message}
+    <div class="page row">
+        <h1>Registration page</h1>
+        <p>${message}</p>
+        <c:if test="${valid}">
+            <form:createUser admin="false"></form:createUser>
+        </c:if>
     </div>
-
-    <template:threadList></template:threadList>
-    <template:thread></template:thread>
-    <template:reply></template:reply>
-    <template:paginate></template:paginate>
 </base:page>

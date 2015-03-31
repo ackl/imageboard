@@ -3,7 +3,10 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <base:base>
-    <base:header></base:header>
-    <jsp:doBody/>
+    <div class="wrapper">
+        <base:header></base:header>
+        <jsp:doBody/>
+        <div class="push"></div>
+    </div>
     <base:footer></base:footer>
 </base:base>

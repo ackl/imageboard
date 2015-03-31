@@ -5,14 +5,8 @@
 <%@taglib prefix="template" tagdir="/WEB-INF/tags/templates" %>
 
 <base:page>
-    <div class="page-meta-info" data-page-name="index"></div>
-
     <div class="page">
-        ${message}
+        <h1>404</h1>
+        <p>Page not found...</p>
     </div>
-
-    <template:threadList></template:threadList>
-    <template:thread></template:thread>
-    <template:reply></template:reply>
-    <template:paginate></template:paginate>
 </base:page>

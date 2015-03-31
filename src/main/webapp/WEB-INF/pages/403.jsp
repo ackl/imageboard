@@ -5,14 +5,8 @@
 <%@taglib prefix="template" tagdir="/WEB-INF/tags/templates" %>
 
 <base:page>
-    <div class="page-meta-info" data-page-name="index"></div>
-
     <div class="page">
-        ${message}
+        <h1>403</h1>
+        <p>You do not have sufficient privileges to access this page.</p>
     </div>
-
-    <template:threadList></template:threadList>
-    <template:thread></template:thread>
-    <template:reply></template:reply>
-    <template:paginate></template:paginate>
 </base:page>

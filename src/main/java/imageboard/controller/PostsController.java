@@ -44,9 +44,9 @@ public class PostsController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Map<String, String>> postTesting(@RequestBody PostsModel post, UriComponentsBuilder b) {
+	public ResponseEntity<Map<String, String>> postTesting(@RequestBody PostsModel post, UriComponentsBuilder b, Principal principal) {
         long date = new Date().getTime();
-		dao.insertPost(post.getUserId(),
+		dao.insertPost(principal.getName(),
 			       post.getParentId(),
                    date,
 			       post.getImageUrl(),

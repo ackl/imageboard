@@ -17,9 +17,9 @@ CREATE TABLE user_roles (
 );
 
 INSERT INTO users(username,password,enabled)
-VALUES ('admin','admin', TRUE);
+VALUES ('admin','$2a$10$3sIUO2HU57fxIAhrmU9ij.wpyMHjBwHBx4iSwtdRlkYHhaDoGlGte', TRUE);
 INSERT INTO users(username,password,enabled)
-VALUES ('andrew','password', TRUE);
+VALUES ('andrew','$2a$10$3sIUO2HU57fxIAhrmU9ij.wpyMHjBwHBx4iSwtdRlkYHhaDoGlGte', TRUE);
 
 INSERT INTO user_roles (username, ROLE)
 VALUES ('admin', 'ROLE_USER');

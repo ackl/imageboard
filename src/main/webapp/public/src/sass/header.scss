@@ -8,4 +8,16 @@ header {
         color: #efefef;
         font-size: 18px;
     }
+
+    .logout-form {
+        input.submit {
+            width: 100%;
+            text-align: left;
+            padding-left: 0;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+    }
 }

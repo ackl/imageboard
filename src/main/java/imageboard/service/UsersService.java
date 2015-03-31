@@ -14,7 +14,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import imageboard.model.UsersModel;
+import imageboard.model.UserRoleModel;
 import imageboard.model.PostsModel;
+import imageboard.model.KeycodeModel;
 import imageboard.model.ThreadsModel;
 import imageboard.dao.UsersDao;
 
@@ -36,6 +38,44 @@ public class UsersService implements UserDetailsService {
             throw new UsernameNotFoundException("user name not found");
 
         return buildUserFromUserEntity(u);
+    }
+
+    public UsersModel selectUserByUsername(String username) throws UsernameNotFoundException {
+        UsersModel u = dao.selectUserByUsername(username);
+        if (u == null)
+            throw new UsernameNotFoundException("user name not found");
+
+        return u;
+    }
+
+    //public UsersModel getUser(int id) {
+    //}
+    public String createUser(String username, String password) {
+        dao.insertUser(username, password);
+        return "ok";
+    }
+
+    public String createRole(String username, String role) {
+        dao.insertRole(username, role);
+        return "ok";
+    }
+
+    public String createRegistrationKeycode(String keycode, long expiry) {
+        dao.insertKeycode(keycode, expiry);
+        return keycode;
+    }
+
+    public boolean checkKeycodeValid(String keycode) {
+        KeycodeModel keycodeModel = dao.selectKeycodeByKeycode(keycode);
+        if (keycodeModel.getValid()) {
+            if (keycodeModel.getExpiry() > new Date().getTime()) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 
     private User buildUserFromUserEntity(UsersModel userEntity) {
