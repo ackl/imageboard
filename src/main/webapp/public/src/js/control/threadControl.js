@@ -79,7 +79,6 @@ var ThreadControl = can.Control.extend({
      * Toggle this control's quickreply flag and disabled class of quickreply button
      */
     toggleQuickReply: function() {
-        console.log(this.element);
         this.element.toggleClass('glow');
         this.element.find('button.thread__reply--quick').toggleClass('disabled');
         this.quickreply = !this.quickreply;

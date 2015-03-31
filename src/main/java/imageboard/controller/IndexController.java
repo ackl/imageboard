@@ -60,12 +60,6 @@ public class IndexController {
 
     @RequestMapping("/")
     public String hello(ModelMap model, Principal principal) {
-        if (principal == null) {
-            System.out.println("nothing");
-        } else {
-            System.out.println("something");
-            System.out.println(principal.getName());
-        }
         model.addAttribute("message", "TODO: go to bed");
         return "index";
     }

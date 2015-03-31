@@ -92,6 +92,15 @@ ul.threads {
             .clearing-main-next {
                 display: none;
             }
+
+            .visible-img {
+                height: 100%;
+            }
+
+            .clearing-close {
+                background: rgba(0, 0, 0, 0.3);
+                padding: 0 6px;
+            }
         }
     }
 
@@ -225,7 +234,6 @@ ul.threads {
         text-align: center;
         padding: 10px;
         margin-top: 24px;
-        margin-bottom: 15px;
         background: rgba(49, 138, 171, 0.4);
         opacity: 0.8;
         transition: opacity 0.2s, background 0.2s;
@@ -235,15 +243,23 @@ ul.threads {
             display: none;
         }
     }
+
+    .image_url__label {
+        text-align: center;
+    }
+    .image_url {
+        margin-bottom: 85px;
+    }
 }
 
 ul.pagination {
     li {
         cursor: pointer;
+        color: #999;
 
         &.unavailable {
             cursor: default;
-            color: #999;
+            color: #543F3F;
         }
     }
 }

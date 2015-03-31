@@ -24,7 +24,6 @@ var ThreadsControl = can.Control.extend({
     '.thread replied': 'getThreads',
     '{paginate} changePage': 'setFlag',
     setFlag: function() {
-        console.log('hi');
         this.changePage = true;
     },
     /*
@@ -38,7 +37,6 @@ var ThreadsControl = can.Control.extend({
             self.element.empty();
 
             can.each(threads, function(thread) {
-                console.log(thread);
                 self.element.append(can.view(self.options.view, thread, {
 
                     formatDate: function(date) {
@@ -52,11 +50,9 @@ var ThreadsControl = can.Control.extend({
                             {}, false );
                     }
                 }));
-                console.log('rendering athread');
             });
 
             if (self.changePage) {
-                console.log('scrolling page');
                 window.scrollTo(0,document.body.scrollHeight);
             }
 

@@ -20,4 +20,28 @@ header {
             cursor: pointer;
         }
     }
+
+    .dropdown {
+        border-top: 1px solid rgb(124, 137, 148);
+
+        li {
+            border-bottom: 1px solid rgb(124, 137, 148);
+        }
+
+        li a {
+            background: rgb(85, 88, 90);
+        }
+
+        li.parent-link a {
+            background: rgb(66, 66, 66);
+        }
+
+        li.title {
+            background: #333333;
+
+            a {
+                background: #333333;
+            }
+        }
+    }
 }

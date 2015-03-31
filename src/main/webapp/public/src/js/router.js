@@ -15,22 +15,7 @@ var Router = can.Control({
         new ThreadForm('.new-thread-form');
         var paginateControl = new PaginateControl('.paginate-controls');
         var threadsControl = new ThreadsControl('.threads', {paginate: $('.paginate-controls')});
-        //$('.threads').on("threadsdone", function(e) {
-            //console.log('threads finished loading');
-            //$('body,html').animate({
-                //scrollTop: 400
-            //}, 500);
-        //});
-        //threadsControl.on("threadsdone", function(ev, value) {
-        //});
     },
-
-    //'threadsdone': function(el, ev) {
-        //console.log('hi');
-        //$('body,html').animate({
-            //scrollTop: 400
-        //}, 500);
-    //},
 
     'route' : function(){
         this.displayHome();

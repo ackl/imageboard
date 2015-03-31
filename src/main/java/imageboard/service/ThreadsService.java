@@ -99,7 +99,6 @@ public class ThreadsService {
     }
 
     public void updateLastActive(int id, long lastActive) {
-        System.out.println(lastActive);
         threadsDao.setLastActive(id, lastActive);
     }
 

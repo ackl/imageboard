@@ -45,18 +45,12 @@ public class UsersController {
     @RequestMapping(method=RequestMethod.GET)
     public String getLoggedIn(Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        System.out.println("User has authorities: " + userDetails.getAuthorities());
-        return authentication.getName();
-    }
     //@RequestMapping(method=RequestMethod.GET)
     //public List<UsersModel> getAllUsers() {
         //return dao.selectAllUsers();
     //}
     @RequestMapping(method=RequestMethod.POST)
     public String postUser(@RequestParam Map<String, String> params) {
-        System.out.println("posting a user");
-
-        String password = params.get("password");
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		String hashedPassword = passwordEncoder.encode(password);
 
@@ -82,9 +76,6 @@ public class UsersController {
         }
 
         model.addAttribute("valid", valid);
-        System.out.println(valid);
-
-        if (principal == null) {
             return "registration";
         } else {
             return "index";
