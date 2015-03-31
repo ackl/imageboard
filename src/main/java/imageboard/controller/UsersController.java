@@ -45,14 +45,13 @@ public class UsersController {
     @RequestMapping(method=RequestMethod.GET)
     public String getLoggedIn(Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-    //@RequestMapping(method=RequestMethod.GET)
-    //public List<UsersModel> getAllUsers() {
-        //return dao.selectAllUsers();
-    //}
+        return authentication.getName();
+    }
+
     @RequestMapping(method=RequestMethod.POST)
     public String postUser(@RequestParam Map<String, String> params) {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		String hashedPassword = passwordEncoder.encode(password);
+		String hashedPassword = passwordEncoder.encode(params.get("password"));
 
         usersService.createUser(params.get("username"), hashedPassword);
         String role = "ROLE_" + params.get("role").toUpperCase();
@@ -76,6 +75,8 @@ public class UsersController {
         }
 
         model.addAttribute("valid", valid);
+
+        if (principal == null) {
             return "registration";
         } else {
             return "index";
