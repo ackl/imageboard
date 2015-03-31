@@ -18,22 +18,23 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         //auth.inMemoryAuthentication().withUser("admin").password("admin").roles("ADMIN");
 	//}
 
-    @Autowired
-	DataSource dataSource;
+    //@Autowired
+	//DataSource dataSource;
 
-	@Autowired
-	public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
+	//@Autowired
+	//public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
 
-	  auth.jdbcAuthentication().dataSource(dataSource)
-		.usersByUsernameQuery(
-			"select username, password, enabled from users where username=?")
-		.authoritiesByUsernameQuery(
-			"select username, role from user_roles where username=?");
-	}
+	  //auth.jdbcAuthentication().dataSource(dataSource)
+		//.usersByUsernameQuery(
+			//"select username, password, enabled from users where username=?")
+		//.authoritiesByUsernameQuery(
+			//"select username, role from user_roles where username=?");
+	//}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 	  http.authorizeRequests()
+          .antMatchers("/j_spring_security_check*").permitAll()
           .antMatchers("/login*").permitAll()
           .antMatchers("/public/**").permitAll()
           .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")

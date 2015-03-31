@@ -32,12 +32,21 @@ public class UsersDao {
 		return jdbcTemplate.query(sql,
 				new BeanPropertyRowMapper(UsersModel.class));
 	}
+
 	public UsersModel selectUserById(int id) {
 		String sql = "SELECT * FROM users WHERE id=?";
 
 		return (UsersModel)jdbcTemplate.queryForObject(sql, new Object[] {id},
 				new BeanPropertyRowMapper(UsersModel.class));
 	}
+
+	public UsersModel selectUserByUsername(String username) {
+		String sql = "SELECT * FROM users WHERE username=?";
+
+		return (UsersModel)jdbcTemplate.queryForObject(sql, new Object[] {username},
+				new BeanPropertyRowMapper(UsersModel.class));
+	}
+
 	public UsersModel selectUserByKeycode(String keycode) {
 		String sql = "SELECT * FROM users WHERE keycode=?";
 
@@ -74,10 +83,9 @@ public class UsersDao {
 
 		jdbcTemplate.update(sql, new Object[] {id});
 	}
-	public void removeUserByKeycode(String keycode) {
-		String sql = "DELETE FROM users WHERE keycode=?";
+    public void removeUserByKeycode(String keycode) {
+        String sql = "DELETE FROM users WHERE keycode=?";
 
-		jdbcTemplate.update(sql, new Object[] {keycode});
-	}
-
+        jdbcTemplate.update(sql, new Object[] {keycode});
+    }
 }

@@ -4,57 +4,41 @@ import java.util.Date;
 
 public class UsersModel {
 
-	private int id;
-	private String name;
-	private String pass;
+	private String username;
+	private String password;
 	private String imageUrl;
-	private String keycode;
-	private int expiryDate;
-	private int admin;
+	private boolean enabled;
 
-	public UsersModel() {}
+    public UsersModel() {}
 
-	public int getId() {
-		return this.id;
-	} public void setId(int id) {
-		this.id = id;
+	public UsersModel(String username, String password, boolean enabled, String imageUrl) {
+        this.username = username;
+        this.password = password;
+        this.enabled = enabled;
+        this.imageUrl = imageUrl;
+    }
+
+	public String getUsername() {
+		return this.username;
+	} public void setUsername(String username) {
+		this.username = username;
 	}
-	public String getName() {
-		return this.name;
-	} public void setName(String name) {
-		this.name = name;
+
+	public String getPassword() {
+		return this.password;
+	} public void setPassword(String password) {
+		this.password = password;
 	}
-	public String getPass() {
-		return this.pass;
-	} public void setPass(String pass) {
-		this.pass = pass;
-	}
+
 	public String getImageUrl() {
 		return this.imageUrl;
 	} public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
 	}
-	public String getKeycode() {
-		return this.keycode;
-	} public void setKeycode(String keycode) {
-		this.keycode = keycode;
-	}
-	public int getExpiryDate() {
-		return this.expiryDate;
-	} public void setExpiryDate(int expiryDate) {
-		this.expiryDate = expiryDate;
-	}
-	public int getAdmin() {
-		return this.admin;
-	} public void setAdmin(int admin) {
-		this.admin = admin;
-	}
 
-	public boolean checkRegistered() {
-		return !this.name.equals(null);
+	public boolean getEnabled() {
+		return this.enabled;
+	} public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
-	public boolean isExpired() {
-		return (new Date((long) this.expiryDate)).before(new Date());
-	}
-
 }
