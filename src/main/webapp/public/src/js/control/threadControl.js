@@ -66,6 +66,15 @@ var ThreadControl = can.Control.extend({
         this.toggleQuickReply();
     },
 
+    '{body} closed.fndtn.clearing': function(el, ev) {
+        this.element.addClass('thumbnail');
+    },
+
+    '.th click': function(el, ev) {
+        this.element.removeClass('thumbnail');
+    },
+
+
     /**
      * Toggle this control's quickreply flag and disabled class of quickreply button
      */

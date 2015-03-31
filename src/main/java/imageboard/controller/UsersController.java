@@ -76,7 +76,7 @@ public class UsersController {
         }
 
         if (valid) {
-            model.addAttribute("message", "Complete your registration:");
+            model.addAttribute("message", "Registration your account:");
         } else {
             model.addAttribute("message", "Invalid keycode supplied.");
         }
@@ -103,6 +103,13 @@ public class UsersController {
     }
 
     @RequestMapping(value="/profile/{id}", method=RequestMethod.GET)
+    public String getUser(@PathVariable String id, ModelMap model) {
+        UsersModel userModel = usersService.selectUserByUsername(id);
+        model.addAttribute("message", "Profile");
+        return "profile";
+    }
+
+    @RequestMapping(value="/profile/{id}/json", method=RequestMethod.GET)
     @ResponseBody
     public UsersModel getUser(@PathVariable String id) {
         return usersService.selectUserByUsername(id);

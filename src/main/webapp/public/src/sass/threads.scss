@@ -32,7 +32,6 @@ ul.threads {
         border-style: solid;
         /*background: darken($base-background-color, 1%) url('/public/dist/bgdots.png');*/
         background: rgba(26,26,26,0.5) url('/public/dist/img/bgdots.png');
-        opacity: 0.8;
         outline: none;
         transition: box-shadow 0.3s;
         /*box-shadow: 0 0 10px #9ecaed;*/
@@ -54,6 +53,16 @@ ul.threads {
             border-width: 0 2px 2px 0;
         }
 
+        &.thumbnail {
+            .thread__image img {
+                display: block;
+                margin: auto;
+                max-height: 225px;
+            }
+
+            opacity: 0.8;
+        }
+
         /*border-bottom: 3px solid rgba(49, 138, 171, 0.4);*/
 
         > .columns:first-child {
@@ -71,6 +80,17 @@ ul.threads {
                 @media only screen and (min-width: 40.063em) {
                     padding-right: 190px;
                 }
+            }
+        }
+
+        .clearing-container {
+            .carousel {
+                display: none;
+            }
+
+            .clearing-main-prev,
+            .clearing-main-next {
+                display: none;
             }
         }
     }
@@ -96,12 +116,6 @@ ul.threads {
     .thread__image {
         min-height: 1px;
         margin-bottom: 40px;
-
-        img {
-            display: block;
-            margin: auto;
-            max-height: 225px;
-        }
     }
 
     .thread__reply-buttons {

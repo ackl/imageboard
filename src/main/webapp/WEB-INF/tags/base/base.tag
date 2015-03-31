@@ -11,6 +11,7 @@
         <link rel="stylesheet" href="<c:url value="/public/dist/css/style.css" />">
         <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
     </head>
     <body>
         <jsp:doBody/>

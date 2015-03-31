@@ -45,6 +45,7 @@ public class ThreadsController {
             @RequestParam("file") MultipartFile file,
             @RequestParam("subject") String subject,
             @RequestParam("content") String content,
+            @RequestParam("image_url") String imageUrl,
             UriComponentsBuilder b,
             Principal principal) throws JSONException {
 
@@ -58,7 +59,15 @@ public class ThreadsController {
             this.threadsService.createThread(thread);
             return JSONResponse.buildCreateResponse(b, threadsService.lastActiveThread());
         } else {
-            return JSONResponse.buildBadRequestResponse();
+            ThreadsModel thread = new ThreadsModel();
+            thread.setSubject(subject);
+            thread.setContent(content);
+            thread.setUserId(principal.getName());
+            String downloadPath = FileWriter.downloadFile(imageUrl, imageUploadDirectory, imageDownloadDirectory);
+            thread.setImageUrl(downloadPath);
+            this.threadsService.createThread(thread);
+            return JSONResponse.buildCreateResponse(b, threadsService.lastActiveThread());
+            //return JSONResponse.buildBadRequestResponse();
         }
     }
 

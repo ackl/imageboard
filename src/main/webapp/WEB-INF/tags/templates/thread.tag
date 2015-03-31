@@ -1,7 +1,7 @@
 <%@tag description="Front end thread template" pageEncoding="UTF-8"%>
 
 <script type="text/mustache" id="threadTemplate">
-    <li class="thread" data-post-id="{{id}}">
+    <li class="thread thumbnail" data-post-id="{{id}}">
         <div class="columns small-12">
             <h3>{{subject}}</h3>
             <div class="thread__meta-info">
@@ -16,7 +16,9 @@
 
         {{#if image_url}}
         <div class="thread__image columns small-12 medium-2">
-                <img src="{{image_url}}" alt="">
+            <ul class="clearing-thumbs" data-clearing>
+                <li><a class="th" href="{{image_url}}"><img src="{{image_url}}"></a></li>
+            </ul>
         </div>
         <div class="replies-preview columns small-12 medium-10">
             {{#replies}}

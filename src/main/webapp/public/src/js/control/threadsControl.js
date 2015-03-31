@@ -3,6 +3,9 @@ var can = require('canjs/amd/can');
 
 var Thread = require('../model/thread');
 var ThreadControl = require('./threadControl');
+
+require('foundation/js/foundation');
+require('foundation/js/foundation/foundation.clearing.js');
 //var Pagination = require('../map/pagination').getInstance();
 
 var ThreadsControl = can.Control.extend({
@@ -59,15 +62,16 @@ var ThreadsControl = can.Control.extend({
 
 
             self.element.find('.thread').each(function(i, el) {
-                new ThreadControl(el);
+                new ThreadControl(el, {body: $('body')});
             });
 
             if (Pagination.options.active) {
                 self.updateAmountOfPages();
             }
-        });
 
-        this.element.trigger('threadsdone');
+            self.element.trigger('threadsdone');
+            self.element.foundation();
+        });
     },
 
     updateAmountOfPages: can.compute(function() {

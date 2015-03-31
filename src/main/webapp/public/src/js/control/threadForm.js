@@ -9,6 +9,7 @@ var ThreadForm = can.Control.extend({
         ev.preventDefault();
         var threadContent = this.element.find('textarea.content').val();
         var threadSubject = this.element.find('input.subject').val();
+        var threadImageUrl = this.element.find('input.image_url').val();
 
         if (!threadSubject) {
             this.element.find('input.subject').addClass('error');
@@ -20,13 +21,13 @@ var ThreadForm = can.Control.extend({
         } else {
             this.element.find('textarea.content').removeClass('error');
         }
-        if (!this.filename) {
+        if (!this.filename && !threadImageUrl) {
             this.element.find('.file').addClass('error');
         } else {
             this.element.find('.file').removeClass('error');
         }
 
-        if (threadContent && threadSubject && this.filename) {
+        if (threadContent && threadSubject && (this.filename || threadImageUrl)) {
             var data = new FormData(el[0]);
 
             var thread = new Thread({form: el[0]});
@@ -38,7 +39,7 @@ var ThreadForm = can.Control.extend({
 
 
             this.element.trigger('reset');
-            this.element.find('.file__text').empty();
+            this.element.find('.file__text').text('Choose image');
         }
     },
 

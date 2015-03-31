@@ -6,6 +6,7 @@ var Router = require('./router'),
 
     require('foundation/js/foundation');
     require('foundation/js/foundation/foundation.topbar.js');
+    require('foundation/js/foundation/foundation.clearing.js');
 
 
 //TODO: REMOVE FROM GLOBAL SCOPE
@@ -24,6 +25,7 @@ $(function() {
     var pageName = $('.page-meta-info').data("page-name");
         console.log(pageName);
     if (pageName === "index") {
+        console.log("on index page");
         $(document).foundation();
         new Router($('.page'));
         can.route.ready();
