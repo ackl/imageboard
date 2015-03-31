@@ -6,6 +6,7 @@
             <h3>{{subject}}</h3>
             <div class="thread__meta-info">
                 <span class="thread__timestamp">ID: {{id}} | </span>
+                <span class="thread__timestamp">UserID: {{user_id}} | </span>
                 <span class="thread__timestamp">Time: {{formatDate date}}</span>
             </div>
         </div>
@@ -45,15 +46,19 @@
         </div>
 
         <%-- Dev helper --%>
-        <div class="thread__info">
-            <p class="thread__info--id">postID: {{id}}</p>
-        </div>
+        <!--<div class="thread__info">-->
+            <!--<p class="thread__info--id">postID: {{id}}</p>-->
+            <!--<p class="thread__info--id">userID: {{user_id}}</p>-->
+        <!--</div>-->
 
     </li>
 </script>
 
 <script type="text/mustache" id="replyPreviewTemplate">
-    <p class="reply__timestamp">Posted at: {{formatDate date}}</p>
+    <span class="reply__timestamp">ID: {{id}} | </span>
+    <span class="reply__timestamp">UserID: {{user_id}} | </span>
+    <span class="reply__timestamp">Posted at: {{formatDate date}}</span>
+
     <p class="reply__content">{{{content}}}</p>
     <div class="post__info">
         <p class="post__info--id">postID: {{id}}</p>

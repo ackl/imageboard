@@ -35,6 +35,7 @@ var ThreadsControl = can.Control.extend({
             self.element.empty();
 
             can.each(threads, function(thread) {
+                console.log(thread);
                 self.element.append(can.view(self.options.view, thread, {
 
                     formatDate: function(date) {

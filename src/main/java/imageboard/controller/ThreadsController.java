@@ -13,6 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.security.core.Authentication;
+import java.security.Principal;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import imageboard.model.ThreadsModel;
 import imageboard.service.ThreadsService;
@@ -42,12 +45,14 @@ public class ThreadsController {
             @RequestParam("file") MultipartFile file,
             @RequestParam("subject") String subject,
             @RequestParam("content") String content,
-            UriComponentsBuilder b) throws JSONException {
+            UriComponentsBuilder b,
+            Principal principal) throws JSONException {
 
         if (!file.isEmpty()) {
             ThreadsModel thread = new ThreadsModel();
             thread.setSubject(subject);
             thread.setContent(content);
+            thread.setUserId(principal.getName());
             String downloadPath = FileWriter.writeFile(file, imageUploadDirectory, imageDownloadDirectory);
             thread.setImageUrl(downloadPath);
             this.threadsService.createThread(thread);

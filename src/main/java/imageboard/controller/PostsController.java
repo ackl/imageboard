@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Date;
 import java.net.URI;
+import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
@@ -64,8 +65,8 @@ public class PostsController {
 	}
 
     @RequestMapping(value="/{id}", method=RequestMethod.PUT)
-    public ResponseEntity putPost(@PathVariable int id, @RequestBody PostsModel post) {
-        dao.updatePost(id, post.getUserId(),
+    public ResponseEntity putPost(@PathVariable int id, @RequestBody PostsModel post, Principal principal) {
+        dao.updatePost(id, principal.getName(),
                    post.getParentId(),
                    post.getDate(),
                    post.getImageUrl(),

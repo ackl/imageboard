@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
+import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,10 +39,10 @@ public class UsersController {
     }
 
     @RequestMapping(method=RequestMethod.GET)
-    public String getLoggedIn(Authentication authentication) {
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        System.out.println("User has authorities: " + userDetails.getAuthorities());
-        return authentication.getName();
+    public String getLoggedIn(Principal principal) {
+        //UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        //System.out.println("User has authorities: " + userDetails.getAuthorities());
+        return principal.getName();
     }
     //@RequestMapping(method=RequestMethod.GET)
     //public List<UsersModel> getAllUsers() {

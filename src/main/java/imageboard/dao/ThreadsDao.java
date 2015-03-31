@@ -71,7 +71,7 @@ public class ThreadsDao {
 		jdbcTemplate.update(sql, new Object[] {t.getUserId(), t.getParentId(), t.getDate(), t.getImageUrl(), t.getContent(), t.getSubject(), t.getDate()});
 	}
 
-	public void updateThread(int id, int userId, int parentId, long date, String imageUrl, String content, String subject) {
+	public void updateThread(int id, String userId, int parentId, long date, String imageUrl, String content, String subject) {
 		String sql = "UPDATE posts SET user_id=?,parent_id=?,date=?,image_url=?,content=?,subject=? WHERE id=?";
 
 		jdbcTemplate.update(sql, new Object[] {userId, parentId, date, imageUrl, content, id, subject});

@@ -3,9 +3,9 @@ package imageboard.model;
 public class PostsModel {
 
 	private int id;
-	private int userId;
 	private int parentId;
 	private long date;
+	private String userId;
 	private String imageUrl;
 	private String content;
 
@@ -17,9 +17,9 @@ public class PostsModel {
 	} public void setId(int id) {
 		this.id = id;
 	}
-	public int getUserId() {
+	public String getUserId() {
 		return this.userId;
-	} public void setUserId(int userId) {
+	} public void setUserId(String userId) {
 		this.userId = userId;
 	}
 	public int getParentId() {

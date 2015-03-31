@@ -35,7 +35,7 @@ public class PostsDao {
 		return (PostsModel) jdbcTemplate.queryForObject(sql, new Object[] {id},
 				new BeanPropertyRowMapper(PostsModel.class));
 	}
-	public List<PostsModel> selectPostsByUserId(int userId) {
+	public List<PostsModel> selectPostsByUserId(String userId) {
 		String sql = "SELECT * FROM posts WHERE user_id=?";
 
 		return jdbcTemplate.query(sql, new Object[] {userId},
@@ -53,13 +53,13 @@ public class PostsDao {
 		return jdbcTemplate.queryForLong(sql, new Object[] {id});
 	}
 
-	public void insertPost(int userId, int parentId, long date, String imageUrl, String content) {
+	public void insertPost(String userId, int parentId, long date, String imageUrl, String content) {
 		String sql = "INSERT INTO posts (user_id, parent_id, date, image_url, content) VALUES (?, ?, ?, ?, ?)";
 
 		jdbcTemplate.update(sql, new Object[] {userId, parentId, date, imageUrl, content});
 	}
 
-	public void updatePost(int id, int userId, int parentId, long date, String imageUrl, String content) {
+	public void updatePost(int id, String userId, int parentId, long date, String imageUrl, String content) {
 		String sql = "UPDATE posts SET user_id=?,parent_id=?,date=?,image_url=?,content=? WHERE id=?";
 
 		jdbcTemplate.update(sql, new Object[] {userId, parentId, date, imageUrl, content, id});
