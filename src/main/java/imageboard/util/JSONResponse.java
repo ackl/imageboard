@@ -44,6 +44,17 @@ public class JSONResponse {
                 .body(resp);
     }
 
+    public static ResponseEntity<String> buildGetAllPostsResponse(List<PostsModel> posts) throws JSONException {
+
+        JSONArray resp = new JSONArray();
+        for (PostsModel post: posts) {
+            resp.put(JSONResponse.populatePostJSON(new JSONObject(), post));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(resp.toString());
+    }
+
     public static ResponseEntity<String> buildGetAllResponse(List<ThreadsModel> threads) throws JSONException {
 
         JSONArray resp = new JSONArray();

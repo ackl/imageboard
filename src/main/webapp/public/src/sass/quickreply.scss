@@ -1,20 +1,42 @@
+$background-color: rgb(29, 29, 29);
+
+body.light {
+    .quick-reply {
+        background: rgba(232, 232, 232, 0.99);
+
+        textarea {
+            background: rgba(232, 232, 232, 0.99);
+        }
+    }
+    .new-reply-form__submit,
+    .quick-reply__close {
+        background: rgba(165, 174, 178, 0.77);
+    }
+}
+
 .quick-reply {
     display: inline-block;
     border: 1px solid #999;
     position: absolute;
-    top: 45px;
-    right: 10px;
-    width: 95%;
-    background: rgb(29, 29, 29);
+    top: 0;
+    right: 0;
+    width: 100%;
+    background: $background-color;
     opacity: 0.95;
+    z-index: 1;
     @media only screen and (min-width: 40.063em) {
         width: 45%;
     }
 
     button {
         padding: 0;
-        width: 20px;
-        height: 20px;
+        width: 60px;
+        height: 30px;
+        @media only screen and (min-width: 40.063em) {
+            width: 35px;
+            height: 35px;
+        }
+
         background: none;
         color: #888;
 
@@ -35,12 +57,14 @@
         display: block;
         padding: 5px;
         height: 50px;
-        max-height: 100px;
         border: none;
         margin: 0;
         color: #efefef;
         width: 100%;
-        background: rgb(29, 29, 29);
+        background: $background-color;
+        @media only screen and (min-width: 40.063em) {
+            max-height: 100px;
+        }
 
 
         &:focus, &:active {

@@ -56,7 +56,7 @@ var ThreadControl = can.Control.extend({
 
     showQuickReply: function(el, ev) {
         if (!this.quickreply) {
-            this.element.append(can.view(this.options.view.quickreply));
+            this.element.find('.thread__content--wrap').append(can.view(this.options.view.quickreply));
             this.toggleQuickReply();
         }
     },

@@ -7,6 +7,7 @@ var Router = require('./router'),
     require('foundation/js/foundation');
     require('foundation/js/foundation/foundation.topbar.js');
     require('foundation/js/foundation/foundation.clearing.js');
+    require('foundation/js/foundation/foundation.tooltip.js');
 
 
 //TODO: REMOVE FROM GLOBAL SCOPE

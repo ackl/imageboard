@@ -23,15 +23,20 @@ body {
 
 body.light {
     /*background: white;*/
-    background: white url('/public/dist/img/bgdots.png');
+    background: rgb(239, 239, 239);
+    /*background: url('/public/dist/img/pattern.png');*/
     .new-thread-form input, .new-thread-form textarea {
         background: white;
         color: #333;
     }
 
     ul.threads li.thread.thumbnail {
-        /*opacity: 1;*/
-        background: white;
+        opacity: 1;
+        /*background: white url('/public/dist/img/bgdots.png');*/
+        background: rgba(255, 255, 255, 0.7);
+        border: none;
+        border-bottom: 1px dashed rgb(234, 193, 193);
+        border-top: 2px solid rgb(138, 172, 189);
     }
 
     h1, h2, h3, h4, h5, p {
@@ -43,11 +48,40 @@ body.light {
     }
 
     ul.threads li.thread > .columns:first-child h3 {
-        background: rgba(154, 189, 178, 0.4);
-        border-bottom-color: rgba(30, 56, 66, 0.2);
+        /*background: rgba(154, 189, 178, 0.4);*/
+        background: rgba(151, 152, 169, 0.4);
+        border-bottom-color: transparent;
+        @media only screen and (min-width: 40.063em) {
+            border-bottom: none;
+        }
     }
     .new-thread-form .file, button {
         background: rgba(43, 101, 123, 0.77);
+        background: rgba(95, 151, 173, 0.77);
+    }
+
+    .thread__meta-info {
+        background: rgba(186, 213, 236, 0.42);
+    }
+
+    .login form label {
+        color: #6F5858;
+    }
+
+    button {
+        background: rgba(95, 151, 173, 0.77);
+    }
+
+    ul.pagination {
+        li {
+            &:hover a {
+                background: rgba(192, 208, 218, 0.78);
+            }
+        }
+
+        li.current a {
+            background: #8CACB6;
+        }
     }
 }
 
@@ -73,6 +107,13 @@ h1, h2, h3, h4, h5, p {
     color: #efefef;
     color: darken(aliceblue, 5%);
     font-family: 'Inconsolata', sans-serif;
+}
+
+pre {
+    word-wrap: break-word;
+    border: 1px dashed grey;
+    padding: 7px;
+    margin: 5px 0 10px;
 }
 
 button {

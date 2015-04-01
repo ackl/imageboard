@@ -6,7 +6,7 @@
     <div class="columns small-12">
         <form:thread></form:thread>
     </div>
-    <div class="columns small-12">
+    <div class="columns small-12 thread-list__wrap">
         <ul id="thread-list" class="threads"></ul>
     </div>
     <div class="paginate-controls columns small-12"></div>

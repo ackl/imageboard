@@ -1,9 +1,16 @@
 $base-background-color: rgb(29, 29, 29);
 
 .row.thread-list-wrap {
-    max-width: 95%;
+    max-width: 100%;
+    @media only screen and (min-width: 40.063em) {
+        max-width: 90%;
+    }
 }
-
+.thread-list__wrap {
+    @media only screen and (max-width: 40.063em) {
+        padding: 0;
+    }
+}
 ul.threads {
     padding: 0;
     margin-left: 0;
@@ -22,20 +29,31 @@ ul.threads {
             color: grey;
             margin-top: 8px;
         }
+
+        .thread__meta-info {
+            padding-left: 10px;
+        }
     }
 
     .avatar {
         position: absolute;
-        bottom: 10px;
-        left: 20px;
-        width: 50px;
-        height: 50px;
         opacity: 0.7;
-
-        img {
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
+        top: 0px;
+        right: 106px;
+        & img {
+            width: 45px;
+            height: 45px;
+        }
+        @media only screen and (min-width: 40.063em) {
+            top: auto;
+            right: auto;
+            bottom: 10px;
+            left: 20px;
+            & img {
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+            }
         }
     }
 
@@ -84,18 +102,17 @@ ul.threads {
             padding: 0;
 
             h3 {
-                padding: 5px 10px;
-                padding-right: 95px;
+                padding: 10px;
+                padding-right: 155px;
                 font-size: 17px;
-                margin-top: 0;
-                margin-bottom: 20px;
+                position: relative;
+                margin: 0;
                 background: rgba(49, 138, 171, 0.2);
                 border-bottom: 3px solid rgba(49, 138, 171, 0.4);
-                background: rgba(49, 138, 171, 0.2);
-                border-bottom: 3px solid rgba(49, 138, 171, 0.4);
-                font-weight: 500;
+                font-weight: bold;
                 @media only screen and (min-width: 40.063em) {
                     padding-right: 190px;
+                    /*margin-bottom: 20px;*/
                 }
             }
         }
@@ -118,6 +135,23 @@ ul.threads {
                 background: rgba(0, 0, 0, 0.3);
                 padding: 0 6px;
             }
+
+            .visible-img {
+                background: none;
+            }
+        }
+
+        .clearing-thumbs {
+            text-align: center;
+
+            li {
+                padding: 0;
+                float: none;
+            }
+        }
+
+        .clearing-blackout {
+            background: rgba(15, 14, 14, 0.93);
         }
     }
 
@@ -141,7 +175,7 @@ ul.threads {
 
     .thread__image {
         min-height: 1px;
-        margin-bottom: 40px;
+        margin-bottom: 75px;
     }
 
     .thread__reply-buttons {
@@ -149,7 +183,8 @@ ul.threads {
         top: 0;
         right: 0;
         @media only screen and (min-width: 40.063em) {
-            top: 10px;
+            top: auto;
+            bottom: 0;
             right: 10px;
         }
 
@@ -157,7 +192,12 @@ ul.threads {
             padding: 5px;
             font-size: 12px;
             margin-right: 0;
+            height: 45px;
+            width: 45px;
+
             @media only screen and (min-width: 40.063em) {
+                height: auto;
+                width: auto;
                 margin-right: 20px;
             }
 
@@ -199,6 +239,7 @@ ul.threads {
             img {
                 width: 35px;
                 height: 35px;
+                border-radius: 50%;
             }
         }
 
@@ -221,6 +262,11 @@ ul.threads {
         .reply__timestamp {
             margin-top: 0;
         }
+
+        li {
+            list-style-type: disc;
+            list-style-position: inside;
+        }
     }
 
     .threads__loading {
@@ -232,6 +278,10 @@ ul.threads {
             opacity: 0.6;
             margin-bottom: 50px;
         }
+    }
+
+    .thread__content {
+        margin-top: 20px;
     }
 }
 
@@ -298,19 +348,26 @@ ul.threads {
     .image_url {
         margin-bottom: 68px;
     }
-    .thread__content {
-        position: absolute;
-    }
 }
 
 ul.pagination {
     li {
         cursor: pointer;
         color: #999;
+        font-size: 20px;
+        margin-left: 20px;
 
         &.unavailable {
             cursor: default;
             color: #543F3F;
         }
+
+        &:hover a {
+            background: rgba(255, 255, 255, 0.27);
+        }
+    }
+
+    li.current a {
+        background: #223F49;
     }
 }

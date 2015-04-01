@@ -8,6 +8,7 @@ import java.util.Date;
 import java.net.URI;
 import java.security.Principal;
 
+import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,23 +25,27 @@ import imageboard.model.PostsModel;
 import imageboard.model.ThreadsModel;
 import imageboard.dao.PostsDao;
 import imageboard.dao.ThreadsDao;
+import imageboard.service.PostsService;
+import imageboard.util.JSONResponse;
 
 @RestController
 @RequestMapping("/api/posts")
 public class PostsController {
 
 	private PostsDao dao;
+	private PostsService postsService;
 	private ThreadsDao threadsDao;
 
 	@Autowired
-	public PostsController(PostsDao dao, ThreadsDao threadsDao) {
+	public PostsController(PostsDao dao, ThreadsDao threadsDao, PostsService postsService) {
 		this.dao = dao;
 		this.threadsDao = threadsDao;
+        this.postsService = postsService;
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public List<PostsModel> getAllPosts() {
-		return dao.selectAllPosts();
+	public ResponseEntity<String> getAllPosts() throws JSONException {
+        return JSONResponse.buildGetAllPostsResponse(postsService.getAllPosts());
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
