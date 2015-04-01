@@ -35,24 +35,10 @@ public class UsersDao {
 				new BeanPropertyRowMapper(UsersModel.class));
 	}
 
-	public UsersModel selectUserById(int id) {
-		String sql = "SELECT * FROM users WHERE id=?";
-
-		return (UsersModel)jdbcTemplate.queryForObject(sql, new Object[] {id},
-				new BeanPropertyRowMapper(UsersModel.class));
-	}
-
 	public UsersModel selectUserByUsername(String username) {
 		String sql = "SELECT * FROM users WHERE username=?";
 
 		return (UsersModel)jdbcTemplate.queryForObject(sql, new Object[] {username},
-				new BeanPropertyRowMapper(UsersModel.class));
-	}
-
-	public UsersModel selectUserByKeycode(String keycode) {
-		String sql = "SELECT * FROM users WHERE keycode=?";
-
-		return (UsersModel)jdbcTemplate.queryForObject(sql, new Object[] {keycode},
 				new BeanPropertyRowMapper(UsersModel.class));
 	}
 
@@ -79,11 +65,12 @@ public class UsersDao {
 
 		jdbcTemplate.update(sql, new Object[] {username, role});
 	}
-	//public void insertUser(String keycode, long expiryDate) {
-		//String sql = "INSERT INTO users (keycode, expiry_date) VALUES (?, ?)";
 
-		//jdbcTemplate.update(sql, new Object[] {keycode, expiryDate});
-	//}
+	public void updateUserByImageUrl(String username, String imageUrl) {
+		String sql = "UPDATE users SET image_url=? WHERE username=?";
+
+		jdbcTemplate.update(sql, new Object[] {imageUrl, username});
+	}
 
 	public void updateUser(int id, String name, String pass, String imageUrl) {
 		String sql = "UPDATE users SET name=?,pass=?,image_url=? WHERE id=?";
@@ -91,14 +78,9 @@ public class UsersDao {
 		jdbcTemplate.update(sql, new Object[] {name, pass, imageUrl, id});
 	}
 
-	public void removeUserById(int id) {
-		String sql = "DELETE FROM users WHERE id=?";
+	public void removeUserByUsername(String username) {
+		String sql = "DELETE FROM users WHERE username=?";
 
-		jdbcTemplate.update(sql, new Object[] {id});
+		jdbcTemplate.update(sql, new Object[] {username});
 	}
-    public void removeUserByKeycode(String keycode) {
-        String sql = "DELETE FROM users WHERE keycode=?";
-
-        jdbcTemplate.update(sql, new Object[] {keycode});
-    }
 }

@@ -13,7 +13,7 @@
         <link href='http://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
     </head>
-    <body>
+    <body class="light">
         <jsp:doBody/>
 
     <script src='<c:url value="/public/dist/js/bundle.js"/>'></script>

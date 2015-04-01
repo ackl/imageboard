@@ -33,4 +33,11 @@ $(function() {
         var admin = require('./admin');
         admin.init();
     }
+
+
+    $('.top-bar .left a').click(function() {
+        $('body').toggleClass('light');
+        console.log('switching colour schemes');
+    });
+
 });

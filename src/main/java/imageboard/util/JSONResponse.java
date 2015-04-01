@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import imageboard.model.PostsModel;
+import imageboard.model.UsersModel;
 import imageboard.model.ThreadsModel;
 
 public class JSONResponse {
@@ -78,13 +79,31 @@ public class JSONResponse {
         return threadJSON;
     }
 
+    public static JSONObject populateUserJSON(JSONObject json, UsersModel user) throws JSONException {
+
+        try {
+            json.put("username", user.getUsername());
+        } catch(java.lang.NullPointerException e) {
+            json.put("username", "");
+        }
+
+        try {
+            json.put("image_url", user.getImageUrl());
+        } catch(java.lang.NullPointerException e) {
+            json.put("image_url", "");
+        }
+
+        return json;
+    }
+
     public static JSONObject populatePostJSON(JSONObject json, PostsModel post) throws JSONException {
 
         json.put("id", post.getId());
         json.put("image_url", post.getImageUrl());
         json.put("content", post.getContent());
         json.put("date", post.getDate());
-        json.put("user_id", post.getUserId());
+        //json.put("user_id", post.getUserId());
+        json.put("user", JSONResponse.populateUserJSON(new JSONObject(), post.getUser()));
 
         return json;
     }

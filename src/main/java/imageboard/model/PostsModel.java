@@ -8,6 +8,7 @@ public class PostsModel {
 	private String userId;
 	private String imageUrl;
 	private String content;
+    private UsersModel user;
 
 
 	public PostsModel() {}
@@ -41,6 +42,11 @@ public class PostsModel {
 		return content;
 	} public void setContent(String content) {
 		this.content = content;
+	}
+	public UsersModel getUser() {
+		return user;
+	} public void setUser(UsersModel user) {
+		this.user = user;
 	}
 
 	public boolean isThread() {

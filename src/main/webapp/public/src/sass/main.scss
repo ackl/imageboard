@@ -14,8 +14,41 @@ body, html {
     margin: 0;
     min-height: 100%;
     height: 100%;
-    background: rgb(29, 29, 29) url('/public/dist/img/bggrid.png');
     font-family: 'Inconsolata', sans-serif;
+}
+
+body {
+    background: rgb(29, 29, 29) url('/public/dist/img/bggrid.png');
+}
+
+body.light {
+    /*background: white;*/
+    background: white url('/public/dist/img/bgdots.png');
+    .new-thread-form input, .new-thread-form textarea {
+        background: white;
+        color: #333;
+    }
+
+    ul.threads li.thread.thumbnail {
+        /*opacity: 1;*/
+        background: white;
+    }
+
+    h1, h2, h3, h4, h5, p {
+        color: #183A59;
+    }
+
+    ul.threads .replies-preview__reply {
+        background: rgba(0, 0, 0, 0.07)
+    }
+
+    ul.threads li.thread > .columns:first-child h3 {
+        background: rgba(154, 189, 178, 0.4);
+        border-bottom-color: rgba(30, 56, 66, 0.2);
+    }
+    .new-thread-form .file, button {
+        background: rgba(43, 101, 123, 0.77);
+    }
 }
 
 * {

@@ -6,12 +6,14 @@
             <h3>{{subject}}</h3>
             <div class="thread__meta-info">
                 <span class="thread__timestamp">ID: {{id}} | </span>
-                <span class="thread__timestamp">UserID: {{user_id}} | </span>
+                <span class="thread__timestamp">UserID: {{user.username}} | </span>
                 <span class="thread__timestamp">Time: {{formatDate date}}</span>
             </div>
         </div>
         <div class="columns small-12">
-            <p>{{content}}</p>
+            <div class="thread__content">
+                <p>{{content}}</p>
+            </div>
         </div>
 
         {{#if image_url}}
@@ -46,6 +48,7 @@
                     <span class=""> Reply </span>
                 </button>
         </div>
+        <div class="avatar"><img src="{{user.image_url}}" alt=""></div>
 
         <%-- Dev helper --%>
         <!--<div class="thread__info">-->
@@ -58,11 +61,9 @@
 
 <script type="text/mustache" id="replyPreviewTemplate">
     <span class="reply__timestamp">ID: {{id}} | </span>
-    <span class="reply__timestamp">UserID: {{user_id}} | </span>
+    <span class="reply__timestamp">UserID: {{user.username}} | </span>
     <span class="reply__timestamp">Posted at: {{formatDate date}}</span>
 
     <p class="reply__content">{{{content}}}</p>
-    <div class="post__info">
-        <p class="post__info--id">postID: {{id}}</p>
-    </div>
+    <div class="avatar"><img src="{{user.image_url}}" alt=""></div>
 </script>

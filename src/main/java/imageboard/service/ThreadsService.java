@@ -3,24 +3,52 @@ package imageboard.service;
 import java.util.List;
 import java.util.Date;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.json.JSONException;
 
 import imageboard.model.PostsModel;
 import imageboard.model.ThreadsModel;
+import imageboard.model.UsersModel;
 import imageboard.dao.PostsDao;
 import imageboard.dao.ThreadsDao;
+
+import java.util.logging.Logger;
+import java.util.logging.Level;
+
+import org.json.JSONException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
+import org.springframework.beans.TypeMismatchException;
+import org.springframework.http.ResponseEntity;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.security.core.Authentication;
+import java.security.Principal;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import imageboard.model.ThreadsModel;
+import imageboard.service.ThreadsService;
+import imageboard.util.JSONResponse;
+import imageboard.util.FileWriter;
 
 @Service
 public class ThreadsService {
 
     private PostsDao postsDao;
     private ThreadsDao threadsDao;
+    private UsersService usersService;
+    private static final Logger logger = Logger.getLogger(ThreadsService.class.getName() );
 
     @Autowired
-    public ThreadsService(PostsDao postsDao, ThreadsDao threadsDao) {
+    public ThreadsService(PostsDao postsDao, ThreadsDao threadsDao, UsersService usersService) {
         this.postsDao = postsDao;
         this.threadsDao = threadsDao;
+        this.usersService = usersService;
     }
 
     public boolean isThread(int id) {
@@ -71,7 +99,25 @@ public class ThreadsService {
                 replies = replies.subList(0, replylimit);
             }
 
+            for (PostsModel reply : replies) {
+                try {
+                    UsersModel user = usersService.selectUserByUsername(reply.getUserId());
+                    reply.setUser(user);
+                } catch (EmptyResultDataAccessException e) {
+                    logger.log( Level.WARNING, e.toString(), e );
+                    logger.log( Level.WARNING, "HELLO");
+                }
+            }
+
             thread.setReplies(replies);
+
+            try {
+                UsersModel user = usersService.selectUserByUsername(thread.getUserId());
+                thread.setUser(user);
+            } catch (EmptyResultDataAccessException e) {
+                logger.log( Level.WARNING, e.toString(), e );
+                logger.log( Level.WARNING, "HELLO");
+            }
         }
 
         return threadsModels;
@@ -107,4 +153,11 @@ public class ThreadsService {
         thread.setDate(date);
         threadsDao.insertThread(thread);
     }
+
+    //@ExceptionHandler(EmptyResultDataAccessException.class)
+    //public ResponseEntity<String> handleEmptyTable(Exception ex) throws JSONException {
+        //logger.log( Level.WARNING, ex.toString(), ex );
+
+        //return JSONResponse.buildNotFoundResponse();
+    //}
 }

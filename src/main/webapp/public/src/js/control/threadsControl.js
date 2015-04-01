@@ -33,9 +33,12 @@ var ThreadsControl = can.Control.extend({
     getThreads: function() {
         var self = this;
 
-        Thread.findAll(Pagination, function(threads) {
-            self.element.empty();
+        self.element.html("<div class='threads__loading'><img src='/public/dist/img/ring.svg' /></div>");
+        self.element.toggleClass("loading");
 
+        Thread.findAll(Pagination, function(threads) {
+            self.element.toggleClass("loading");
+            self.element.empty();
             can.each(threads, function(thread) {
                 self.element.append(can.view(self.options.view, thread, {
 
