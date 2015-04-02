@@ -53,7 +53,11 @@
             </div>
             {{/if}}
         {{/if}}
-        <div data-tooltip aria-haspopup="true" class="has-tip avatar tip-top" title="{{user.username}}"><img src="{{user.image_url}}" alt=""></div>
+        <div data-tooltip aria-haspopup="true" class="has-tip avatar tip-top" title="{{user.username}}">
+            <a href="/users/profile/{{user.username}}">
+                <img src="{{user.image_url}}" alt="">
+            </a>
+        </div>
 
         <%-- Dev helper --%>
         <!--<div class="thread__info">-->
@@ -70,5 +74,9 @@
     <span class="reply__timestamp">Posted at: {{formatDate date}}</span>
 
     <p class="reply__content">{{{content}}}</p>
-    <div data-tooltip aria-haspopup="true" class="has-tip avatar tip-top" title="{{user.username}}"><img src="{{user.image_url}}" alt=""></div>
+    <div data-tooltip aria-haspopup="true" class="has-tip avatar tip-top" title="{{user.username}}">
+        <a href="/users/profile/{{user.username}}">
+            <img src="{{user.image_url}}" alt="">
+        </a>
+    </div>
 </script>

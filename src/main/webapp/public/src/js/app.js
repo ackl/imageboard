@@ -15,7 +15,7 @@ Pagination = new can.Map({
     options: {
         active: true,
         page: 1,
-        perPage: 5
+        perPage: 3
     },
     meta: {
         pages: null
