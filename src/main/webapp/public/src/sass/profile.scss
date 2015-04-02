@@ -9,4 +9,22 @@
     .columns {
         border: 1px solid black;
     }
+
+    .static {
+        position: static;
+    }
+
+    .profile-posts__post {
+        .profile-posts__thread-preview {
+            position: absolute;
+            right: 0;
+            top: 0;
+
+            p {
+                display: inline;
+                border: 1px solid;
+            }
+        }
+    }
+
 }

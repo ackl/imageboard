@@ -45,3 +45,35 @@ header {
         }
     }
 }
+
+.nav__wrap {
+
+    a.colour-scheme-switch i {
+        @extend .fa-moon-o;
+        color: rgb(210, 210, 210);
+    }
+
+    a.anchor-nav-switch {
+        i {
+            color: #555;
+        }
+    }
+
+    &.sticky {
+        a.anchor-nav-switch {
+            i {
+                color: rgb(210, 210, 210);
+            }
+        }
+    }
+}
+body.light {
+    header {
+        .left {
+            a.colour-scheme-switch i {
+                @extend .fa-sun-o;
+                color: rgb(234, 234, 170);
+            }
+        }
+    }
+}

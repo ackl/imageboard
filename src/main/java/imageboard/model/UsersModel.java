@@ -7,6 +7,7 @@ public class UsersModel {
 	private String username;
 	private String password;
 	private String imageUrl;
+	private String colourScheme;
 	private boolean enabled;
 
     public UsersModel() {}
@@ -34,6 +35,12 @@ public class UsersModel {
 		return this.imageUrl;
 	} public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
+	}
+
+	public String getColourScheme() {
+		return this.colourScheme;
+	} public void setColourScheme(String colourScheme) {
+		this.colourScheme = colourScheme;
 	}
 
 	public boolean getEnabled() {

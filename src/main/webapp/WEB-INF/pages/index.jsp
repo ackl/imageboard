@@ -14,5 +14,6 @@
     <template:threadList></template:threadList>
     <template:thread></template:thread>
     <template:reply></template:reply>
+    <template:postHoverPreview></template:postHoverPreview>
     <template:paginate></template:paginate>
 </base:page>

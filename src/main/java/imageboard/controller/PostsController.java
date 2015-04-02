@@ -43,7 +43,7 @@ public class PostsController {
         this.postsService = postsService;
 	}
 
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET, produces="application/json")
 	public ResponseEntity<String> getAllPosts() throws JSONException {
         return JSONResponse.buildGetAllPostsResponse(postsService.getAllPosts());
 	}
@@ -66,7 +66,7 @@ public class PostsController {
 
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public PostsModel getPost(@PathVariable int id) {
-		return dao.selectPostById(id);
+		return postsService.getPostById(id);
 	}
 
     @RequestMapping(value="/{id}", method=RequestMethod.PUT)

@@ -66,6 +66,12 @@ public class UsersDao {
 		jdbcTemplate.update(sql, new Object[] {username, role});
 	}
 
+	public void updateUserByColourScheme(String username, String colourScheme) {
+		String sql = "UPDATE users SET colour_scheme=? WHERE username=?";
+
+		jdbcTemplate.update(sql, new Object[] {colourScheme, username});
+	}
+
 	public void updateUserByImageUrl(String username, String imageUrl) {
 		String sql = "UPDATE users SET image_url=? WHERE username=?";
 

@@ -28,18 +28,24 @@
         </div>
         <h3>Posts</h3>
         <div class="row">
-            <div class="columns medium-6">
+            <div class="columns medium-6 static">
+                <div class="profile-posts">
                 <c:forEach items="${posts}" var="post">
-                <c:choose>
-                <c:when test="${post.parentId ne '0'}">
-                    <a href="/#!threads/${post.parentId}">a reply to</a>
-                </c:when>
-                <c:otherwise>
-                    <a href="/#!threads/${post.id}">a thread</a>
-                </c:otherwise>
-                </c:choose>
+                <div class="profile-posts__post">
+                    <c:choose>
+                    <c:when test="${post.parentId ne '0'}">
+                        a reply to
+                        <a href="/#!threads/${post.parentId}" class="hover-preview" data-post-id="${post.parentId}">thread ${post.parentId}</a>
+                        <div class="profile-posts__thread-preview hide"> <p></p> </div>
+                    </c:when>
+                    <c:otherwise>
+                        <a href="/#!threads/${post.id}">a thread</a>
+                    </c:otherwise>
+                    </c:choose>
                     <p> ${post.content} </p>
+                </div>
                 </c:forEach>
+                </div>
             </div>
         </div>
     </div>

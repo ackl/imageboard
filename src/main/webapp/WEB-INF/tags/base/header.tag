@@ -3,6 +3,7 @@
 <%@taglib prefix="form" tagdir="/WEB-INF/tags/form" %>
 
 <header>
+    <div class="nav__wrap">
     <nav class="top-bar" data-topbar role="navigation">
         <ul class="title-area">
             <li class="name">
@@ -27,8 +28,18 @@
 
         <!-- Left Nav Section -->
         <ul class="left">
-            <li><a href="#">Toggle Colour Scheme</a></li>
+            <li><a href="#" class="colour-scheme-switch">
+                <i class="fa"></i>
+                <form:changeColourScheme></form:changeColourScheme>
+            </a></li>
+            <li class="hide-for-small-only">
+                <a href="#" class="anchor-nav-switch">
+                    <i class="fa fa-anchor"></i>
+                </a>
+            </li>
         </ul>
         </section>
     </nav>
+    </div>
+
 </header>

@@ -2,7 +2,8 @@ $ = require('jquery');
 jQuery = require('jquery');
 
 var Router = require('./router'),
-    can = require('canjs/amd/can');
+    can = require('canjs/amd/can'),
+    navbar = require('./navbar');
 
     require('foundation/js/foundation');
     require('foundation/js/foundation/foundation.topbar.js');
@@ -23,26 +24,25 @@ Pagination = new can.Map({
 });
 
 $(function() {
+    navbar.init();
+
     var pageName = $('.page-meta-info').data("page-name");
-        console.log(pageName);
+    $(document).foundation();
+
     if (pageName === "index") {
-        console.log("on index page");
-        $(document).foundation();
+
         new Router($('.page'));
         can.route.ready();
+
     } else if (pageName === "admin") {
+
         var admin = require('./admin');
         admin.init();
+
     } else if (pageName === "profile") {
-        console.log('on profile page');
+
         var profile = require('./profile');
         profile.init();
+
     }
-
-
-    $('.top-bar .left a').click(function() {
-        $('body').toggleClass('light');
-        console.log('switching colour schemes');
-    });
-
 });

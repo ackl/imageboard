@@ -13,9 +13,8 @@
                         </button>
                 </div>
             </h3>
-            <div class="thread__meta-info">
+            <div class="thread__meta-info" data-post-id="{{id}}">
                 <span class="thread__timestamp">ID: {{id}} | </span>
-                <span class="thread__timestamp">UserID: {{user.username}} | </span>
                 <span class="thread__timestamp">Time: {{formatDate date}}</span>
             </div>
         </div>
@@ -53,8 +52,11 @@
             </div>
             {{/if}}
         {{/if}}
-        <div data-tooltip aria-haspopup="true" class="has-tip avatar tip-top" title="{{user.username}}">
-            <a href="/users/profile/{{user.username}}">
+        <div class="avatar">
+            <a class="has-tip tip-top" href="/users/profile/{{user.username}}"
+                data-tooltip aria-haspopup="true"
+                data-options="disable_for_touch:true"
+                title="{{user.username}}">
                 <img src="{{user.image_url}}" alt="">
             </a>
         </div>
@@ -69,12 +71,16 @@
 </script>
 
 <script type="text/mustache" id="replyPreviewTemplate">
-    <span class="reply__timestamp">ID: {{id}} | </span>
-    <span class="reply__timestamp">UserID: {{user.username}} | </span>
-    <span class="reply__timestamp">Posted at: {{formatDate date}}</span>
+    <div class="thread__meta-info" data-post-id="{{id}}">
+        <span class="reply__timestamp">ID: {{id}} | </span>
+        <span class="reply__timestamp">Posted at: {{formatDate date}}</span>
+    </div>
 
-    <p class="reply__content">{{{content}}}</p>
-    <div data-tooltip aria-haspopup="true" class="has-tip avatar tip-top" title="{{user.username}}">
+    <p class="reply__content"> {{{checkReplies content}}} </p>
+    <div data-tooltip aria-haspopup="true"
+        class="has-tip avatar tip-top"
+        data-options="disable_for_touch:true"
+        title="{{user.username}}">
         <a href="/users/profile/{{user.username}}">
             <img src="{{user.image_url}}" alt="">
         </a>

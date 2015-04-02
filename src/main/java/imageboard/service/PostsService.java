@@ -61,16 +61,19 @@ public class PostsService {
     //}
     public List<PostsModel> getPostsByUsername(String username) {
         List<PostsModel> postsModels = postsDao.selectPostsByUsername(username);
-        //for (PostsModel post : postsModels) {
-            //try {
-                //UsersModel user = usersService.selectUserByUsername(post.getUserId());
-                //post.setUser(user);
-            //} catch (EmptyResultDataAccessException e) {
-                //logger.log( Level.WARNING, e.toString(), e );
-                //logger.log( Level.WARNING, "HELLO");
-            //}
-        //}
         return postsModels;
+    }
+
+    public PostsModel getPostById(int id) {
+        PostsModel post = postsDao.selectPostById(id);
+        try {
+            UsersModel user = usersService.selectUserByUsername(post.getUserId());
+            post.setUser(user);
+        } catch (EmptyResultDataAccessException e) {
+            logger.log( Level.WARNING, e.toString(), e );
+            logger.log( Level.WARNING, "HELLO");
+        }
+        return post;
     }
 
     public List<PostsModel> getAllPosts() {

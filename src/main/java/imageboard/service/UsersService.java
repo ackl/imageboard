@@ -83,6 +83,11 @@ public class UsersService implements UserDetailsService {
         return "ok";
     }
 
+    public String updateUserColourScheme(String username, String colourScheme) {
+        dao.updateUserByColourScheme(username, colourScheme);
+        return "ok";
+    }
+
     private User buildUserFromUserEntity(UsersModel userEntity) {
         // convert model user to spring security user
         String username = userEntity.getUsername();

@@ -71,6 +71,14 @@ public class UsersController {
         return "redirect:/";
     }
 
+	@RequestMapping(value="/colour", method = RequestMethod.POST, produces="application/json")
+    @ResponseBody
+    public String updateColourScheme(@RequestParam("colour") String colour, Principal principal) {
+        usersService.updateUserColourScheme(principal.getName(), colour);
+        logger.log(Level.WARNING, principal.getName());
+        return "ok";
+    }
+
     @RequestMapping(value="/{id}", method=RequestMethod.POST)
     @ResponseBody
     public String updateProfileImage(@PathVariable String id, @RequestParam("file") MultipartFile file) {
@@ -110,30 +118,22 @@ public class UsersController {
 
     }
 
-    @RequestMapping(value="/keycode", method=RequestMethod.POST)
-    @ResponseBody
-    public String createKeycode(@RequestParam Map<String, String> params) {
-        long millis = TimeUnit.HOURS.toMillis(24);
-        long date = new Date().getTime() + millis;
-        String keycode = String.valueOf(UUID.randomUUID());
-
-        return usersService.createRegistrationKeycode(keycode, date);
-    }
-
     @RequestMapping(value="/profile/{id}", method=RequestMethod.GET)
-    public String getUser(@PathVariable String id, ModelMap model) {
+    public String getUser(@PathVariable String id, ModelMap model, Principal principal) {
+        UsersModel currentUser = usersService.selectUserByUsername(principal.getName());
         UsersModel userModel = usersService.selectUserByUsername(id);
         List<PostsModel> postsByUser = postsService.getPostsByUsername(id);
         model.addAttribute("message", "Profile");
         model.addAttribute("request_username", id);
         model.addAttribute("response_user", userModel);
+        model.addAttribute("current_user", currentUser);
         model.addAttribute("posts", postsByUser);
         return "profile";
     }
 
     @RequestMapping(value="/profile/{id}/json", method=RequestMethod.GET)
     @ResponseBody
-    public UsersModel getUser(@PathVariable String id) {
+    public UsersModel getUserJson(@PathVariable String id) {
         return usersService.selectUserByUsername(id);
     }
 

@@ -74,6 +74,41 @@ var ThreadControl = can.Control.extend({
         this.element.removeClass('thumbnail');
     },
 
+    '.thread__meta-info click': function(el, ev) {
+        console.log('clicked metinf');
+        this.element.find('.thread__reply--quick').click();
+        this.element.find('textarea').val('@'+el.data('post-id'));
+        this.element.find('textarea').focus();
+    },
+
+    'span.hover-preview mouseenter': function(el, ev) {
+        var top = el.offset().top,
+            left = el.offset().left + el.width() + 10,
+            postId = el.data('post-id');
+
+        if (!el.data('shown')) {
+            $.get('/api/posts/'+postId).then(function(data) {
+                data.top = top;
+                data.left = left;
+                var hoverView = can.view('postHoverPreview', data);
+                $('body').append(hoverView);
+                //$('body').append('<div class="post-hover-preview">'+data.content+'</div>');
+            });
+
+            el.data('shown', 'true');
+        } else {
+            $("[data-post-preview-id='"+el.data('post-id')+"']").removeClass('hide');
+            $("[data-post-preview-id='"+el.data('post-id')+"']").css({
+                top: top,
+                left: left
+            });
+        }
+    },
+
+    'span.hover-preview mouseleave': function(el, ev) {
+        $("[data-post-preview-id='"+el.data('post-id')+"']").addClass('hide');
+    },
+
 
     /**
      * Toggle this control's quickreply flag and disabled class of quickreply button

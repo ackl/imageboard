@@ -46,6 +46,17 @@ var ThreadsControl = can.Control.extend({
                         return new Date(date());
                     },
 
+                    checkReplies: function(content) {
+                        if (content().match(/(@\w*)/g)) {
+                            var string = content().replace(/(@\w*)/g, function(match) {
+                                return '<span class="hover-preview" data-post-id="'+match.substr(1)+'">'+match+'</span>';
+                            });
+                            return string;
+                        } else {
+                            return content();
+                        }
+                    },
+
                     replyLink: function() {
                         return can.route.link(
                             "<button><i class='fa fa-eye'></i><span class='show-for-medium-up'>View</span></button>",

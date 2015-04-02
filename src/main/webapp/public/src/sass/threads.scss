@@ -221,6 +221,12 @@ ul.threads {
         }
     }
 
+    .hover-preview {
+        background: rgba(153, 218, 166, 0.77);
+        padding: 0 6px;
+        cursor: default;
+    }
+
     .replies-preview {
         margin-bottom: 20px;
     }
@@ -370,4 +376,11 @@ ul.pagination {
     li.current a {
         background: #223F49;
     }
+}
+
+.post-hover-preview {
+    position: absolute;
+    background: white;
+    padding: 10px;
+    border: 1px dashed;
 }
