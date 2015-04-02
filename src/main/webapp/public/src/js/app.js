@@ -33,6 +33,10 @@ $(function() {
     } else if (pageName === "admin") {
         var admin = require('./admin');
         admin.init();
+    } else if (pageName === "profile") {
+        console.log('on profile page');
+        var profile = require('./profile');
+        profile.init();
     }
 
 

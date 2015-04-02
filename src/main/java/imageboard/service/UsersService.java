@@ -78,6 +78,11 @@ public class UsersService implements UserDetailsService {
         }
     }
 
+    public String updateUserProfileImage(String username, String imageUrl) {
+        dao.updateUserByImageUrl(username, imageUrl);
+        return "ok";
+    }
+
     private User buildUserFromUserEntity(UsersModel userEntity) {
         // convert model user to spring security user
         String username = userEntity.getUsername();

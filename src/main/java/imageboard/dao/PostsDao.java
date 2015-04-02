@@ -35,10 +35,10 @@ public class PostsDao {
 		return (PostsModel) jdbcTemplate.queryForObject(sql, new Object[] {id},
 				new BeanPropertyRowMapper(PostsModel.class));
 	}
-	public List<PostsModel> selectPostsByUserId(String userId) {
+	public List<PostsModel> selectPostsByUsername(String username) {
 		String sql = "SELECT * FROM posts WHERE user_id=?";
 
-		return jdbcTemplate.query(sql, new Object[] {userId},
+		return jdbcTemplate.query(sql, new Object[] {username},
 				new BeanPropertyRowMapper(PostsModel.class));
 	}
 	public List<PostsModel> selectPostsByParentId(int parentId) {

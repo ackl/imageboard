@@ -38,8 +38,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 	  http.authorizeRequests()
-          .antMatchers("/users/**").permitAll()
-          .antMatchers("/users/profiles/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+          //.antMatchers("/users/**").permitAll()
+          //.antMatchers("/users/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
           .antMatchers("/j_spring_security_check*").permitAll()
           .antMatchers("/login*").permitAll()
           .antMatchers("/public/**").permitAll()

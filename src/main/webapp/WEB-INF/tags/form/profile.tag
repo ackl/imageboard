@@ -7,6 +7,6 @@
             <span class="file__text">Choose profile image</span>
             <input type="file" name="file" tabindex="3">
         </label>
-        <button class="new-thread-form__submit" tabindex="5">Submit Thread</button>
+        <button class="edit-profile-form__submit" tabindex="5">Change profile image</button>
     </div>
 </form>
