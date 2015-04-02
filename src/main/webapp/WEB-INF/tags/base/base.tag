@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta name="viewport" content="initial-scale = 1.0,maximum-scale = 1.0" />
+        <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0" />
         <meta charset="UTF-8">
         <title></title>
         <link rel="stylesheet" href="<c:url value="/public/dist/css/style.css" />">

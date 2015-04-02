@@ -7,6 +7,7 @@ public class ThreadsModel extends PostsModel {
 	private String subject;
 	private List<PostsModel> replies;
 	private long lastActive;
+	private int replyCount;
 
 
 	public ThreadsModel() {}
@@ -26,6 +27,11 @@ public class ThreadsModel extends PostsModel {
 		return this.replies;
 	} public void setReplies(List<PostsModel> replies) {
 		this.replies = replies;
+	}
+	public int getReplyCount() {
+		return this.replyCount;
+	} public void setReplyCount(int replyCount) {
+		this.replyCount = replyCount;
 	}
 
 }

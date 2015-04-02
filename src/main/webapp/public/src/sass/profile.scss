@@ -20,9 +20,15 @@
             right: 0;
             top: 0;
 
-            p {
-                display: inline;
+            .preview-inline-wrap {
+                display: inline-block;
+                max-width: 95%;
                 border: 1px solid;
+                background: rgba(190, 190, 190, 0.89);
+                padding: 10px 10px 0;
+            }
+
+            p {
             }
         }
     }

@@ -8,6 +8,7 @@
 <sec:authentication var="user" property="principal" />
 
 <base:page>
+    <template:postHoverPreview></template:postHoverPreview>
     <div class="page-meta-info" data-page-name="profile"></div>
 
     <div class="page profile">
@@ -36,7 +37,9 @@
                     <c:when test="${post.parentId ne '0'}">
                         a reply to
                         <a href="/#!threads/${post.parentId}" class="hover-preview" data-post-id="${post.parentId}">thread ${post.parentId}</a>
-                        <div class="profile-posts__thread-preview hide"> <p></p> </div>
+                        <div class="profile-posts__thread-preview hide">
+                            <div class="preview-inline-wrap"><p></p>
+                        </div></div>
                     </c:when>
                     <c:otherwise>
                         <a href="/#!threads/${post.id}">a thread</a>

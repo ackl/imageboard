@@ -73,8 +73,8 @@ public class JSONResponse {
         threadJSON.put("subject", thread.getSubject());
         threadJSON.put("last_active", thread.getLastActive());
         //threadJSON.put("reply_count", thread.getLastActive());
-        int replyCount = thread.getReplies().size();
-        threadJSON.put("reply_count", replyCount);
+        //int replyCount = thread.getReplies().size();
+        threadJSON.put("reply_count", thread.getReplyCount());
 
         JSONArray repliesJSON = new JSONArray();
 

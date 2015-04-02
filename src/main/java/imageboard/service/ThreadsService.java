@@ -95,6 +95,7 @@ public class ThreadsService {
         List<ThreadsModel> threadsModels = threadsDao.selectAllThreads();
         for (ThreadsModel thread : threadsModels) {
             List<PostsModel> replies = postsDao.selectPostsByParentId(thread.getId());
+            thread.setReplyCount(replies.size());
             if (replylimit != null && replylimit >= 0 && replies.size() >= replylimit) {
                 replies = replies.subList(0, replylimit);
             }

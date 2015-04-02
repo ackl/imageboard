@@ -52,6 +52,7 @@
             </div>
             {{/if}}
         {{/if}}
+        <div class="more-replies">{{replyCount reply_count}}</div>
         <div class="avatar">
             <a class="has-tip tip-top" href="/users/profile/{{user.username}}"
                 data-tooltip aria-haspopup="true"

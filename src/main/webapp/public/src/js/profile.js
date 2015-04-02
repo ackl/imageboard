@@ -6,7 +6,6 @@ var HoverPreviewControl = require('./control/hoverPreviewControl');
 var init = function() {
     new ProfileImageForm('form.edit-profile-form');
     new HoverPreviewControl('.profile-posts');
-    console.log("saying someting");
 }
 
 

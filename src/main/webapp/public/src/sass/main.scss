@@ -50,7 +50,10 @@ body.light {
 
     ul.threads li.thread > .columns:first-child h3 {
         /*background: rgba(154, 189, 178, 0.4);*/
-        background: rgba(151, 152, 169, 0.4);
+        /*background: rgba(151, 152, 169, 0.4);*/
+        background: rgba(36, 36, 36, 0.71);
+        color: rgb(242, 235, 223);
+
         border-bottom-color: transparent;
         @media only screen and (min-width: 40.063em) {
             border-bottom: none;
@@ -82,6 +85,11 @@ body.light {
 
         li.current a {
             background: #8CACB6;
+        }
+    }
+    .thread__reply-buttons {
+        button {
+            background: rgba(147, 239, 255, 0.72);
         }
     }
 }

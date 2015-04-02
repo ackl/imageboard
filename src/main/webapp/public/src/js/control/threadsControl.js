@@ -3,6 +3,7 @@ var can = require('canjs/amd/can');
 
 var Thread = require('../model/thread');
 var ThreadControl = require('./threadControl');
+var HoverPreviewControl = require('./hoverPreviewControl');
 
 require('foundation/js/foundation');
 require('foundation/js/foundation/foundation.clearing.js');
@@ -36,10 +37,13 @@ var ThreadsControl = can.Control.extend({
         self.element.html("<div class='threads__loading'><img src='/public/dist/img/ring.svg' /></div>");
         self.element.toggleClass("loading");
 
+        var Thread = require('../model/thread');
+        console.log(Pagination.attr('options.replyLimit'));
         Thread.findAll(Pagination, function(threads) {
             self.element.toggleClass("loading");
             self.element.empty();
             can.each(threads, function(thread) {
+                //console.log(thread.replies);
                 self.element.append(can.view(self.options.view, thread, {
 
                     formatDate: function(date) {
@@ -54,6 +58,14 @@ var ThreadsControl = can.Control.extend({
                             return string;
                         } else {
                             return content();
+                        }
+                    },
+
+                    replyCount: function(replyCount) {
+                        if (parseInt(replyCount()) > thread.replies.length) {
+                            return (parseInt(replyCount()) - thread.replies.length) + ' more replies hidden';
+                        } else {
+                            return '';
                         }
                     },
 
@@ -74,6 +86,8 @@ var ThreadsControl = can.Control.extend({
             self.element.find('.thread').each(function(i, el) {
                 new ThreadControl(el, {body: $('body')});
             });
+
+            new HoverPreviewControl(self.element);
 
             if (Pagination.options.active) {
                 self.updateAmountOfPages();
