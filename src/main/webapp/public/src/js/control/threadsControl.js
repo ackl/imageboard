@@ -29,7 +29,6 @@ var ThreadsControl = can.Control.extend({
     },
 
     getAllThreads: function(attrs) {
-        console.log('getting all threads');
         $('.tooltip').remove();
         $('.post-hover-preview').remove();
         var queryString = '?replylimit='+attrs.options.replyLimit;

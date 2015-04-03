@@ -39,16 +39,30 @@ var NavBarControl = can.Control.extend({
         this.stickyNav = !this.stickyNav;
     },
 
+    triggerRender: function() {
+        can.trigger(Pagination.attr('options'), 'changePage');
+        can.trigger(Pagination.attr('meta'), 'change');
+    },
+
     '.posts-per-page .item click': function(el, ev) {
-        Pagination.attr('options.perPage', parseInt(el.html()))
+        if (Pagination.attr('options.perPage') != parseInt(el.html())) {
+            Pagination.attr('options.perPage', parseInt(el.html()))
+            this.triggerRender();
+        }
     },
 
     '.replies-per-thread .item click': function(el, ev) {
-        Pagination.attr('options.replyLimit', parseInt(el.html()))
+        if (Pagination.attr('options.replyLimit') != parseInt(el.html())) {
+            Pagination.attr('options.replyLimit', parseInt(el.html()))
+            this.triggerRender();
+        }
     },
 
     '.sort-threads-by .item click': function(el, ev) {
-        Pagination.attr('options.sortby', el.data('param'));
+        if (Pagination.attr('options.sortby') != el.data('param')) {
+            Pagination.attr('options.sortby', el.data('param'));
+            this.triggerRender();
+        }
     }
 });
 
