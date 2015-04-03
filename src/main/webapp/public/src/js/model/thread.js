@@ -14,19 +14,11 @@ Thread = Post.extend({
             if (attrs.options.perPage) {
                 queryString += '&perpage='+attrs.options.perPage;
             }
+            if (attrs.options.sortby) {
+                queryString += '&sortby='+attrs.options.sortby;
+            }
         }
 
-        //return $.get('/api/threads'+queryString);
-        console.log(queryString);
-        $.ajax({
-            url: '/api/threads'+queryString,
-            cache: false,
-            type: 'GET'
-        }).then(function(data) {
-            data.forEach(function(i, j) {
-                console.log(i.replies.length);
-            });
-        })
         return $.ajax({
             url: '/api/threads'+queryString,
             cache: false,

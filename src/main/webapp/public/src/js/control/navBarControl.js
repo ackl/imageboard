@@ -37,6 +37,18 @@ var NavBarControl = can.Control.extend({
         }
 
         this.stickyNav = !this.stickyNav;
+    },
+
+    '.posts-per-page .item click': function(el, ev) {
+        Pagination.attr('options.perPage', parseInt(el.html()))
+    },
+
+    '.replies-per-thread .item click': function(el, ev) {
+        Pagination.attr('options.replyLimit', parseInt(el.html()))
+    },
+
+    '.sort-threads-by .item click': function(el, ev) {
+        Pagination.attr('options.sortby', el.data('param'));
     }
 });
 

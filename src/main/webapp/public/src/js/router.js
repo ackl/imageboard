@@ -35,12 +35,13 @@ var Router = can.Control({
         })
     },
 
-    'page/:page route': function(data) {
-        this.displayHome();
-        Pagination.attr('options.active', true);
-        Pagination.attr('options.page', data.page);
-        Pagination.attr('options.perPage', null);
-    },
+    //'page/:page route': function(data) {
+        //this.displayHome();
+        //Pagination.attr('options.active', true);
+        //Pagination.attr('options.page', data.page);
+        //Pagination.attr('options.perPage', null);
+        //can.trigger(Pagination.attr('options'), 'changePage');
+    //},
 
     'perpage/:perpage/page/:page route': function(data) {
         if (!$('.threads').length) {
@@ -49,7 +50,7 @@ var Router = can.Control({
         Pagination.attr('options.active', true);
         Pagination.attr('options.page', data.page);
         Pagination.attr('options.perPage', data.perpage);
-        can.trigger(Pagination.attr('options'), 'change');
+        can.trigger(Pagination.attr('options'), 'changePage');
         can.trigger(Pagination.attr('meta'), 'change');
     }
 });

@@ -18,7 +18,7 @@ var ThreadsControl = can.Control.extend({
     },
 
     '{Thread} created': 'getThreads',
-    '{Pagination.options} change': function(el, ev) {
+    '{Pagination.options} changePage': function(el, ev) {
         this.getThreads();
     },
 
@@ -26,6 +26,32 @@ var ThreadsControl = can.Control.extend({
     '{paginate} changePage': 'setFlag',
     setFlag: function() {
         this.changePage = true;
+    },
+
+    getAllThreads: function(attrs) {
+        console.log('getting all threads');
+        $('.tooltip').remove();
+        $('.post-hover-preview').remove();
+        var queryString = '?replylimit='+attrs.options.replyLimit;
+        if (attrs.options.active) {
+            queryString += '&paginate=true';
+
+            if (attrs.options.page) {
+                queryString += '&page='+attrs.options.page;
+            }
+            if (attrs.options.perPage) {
+                queryString += '&perpage='+attrs.options.perPage;
+            }
+            if (attrs.options.sortby) {
+                queryString += '&sortby='+attrs.options.sortby;
+            }
+        }
+
+        return $.ajax({
+            url: '/api/threads'+queryString,
+            cache: false,
+            type: 'GET'
+        });
     },
     /*
     * Retrieve all threads from server.
@@ -38,32 +64,33 @@ var ThreadsControl = can.Control.extend({
         self.element.toggleClass("loading");
 
         var Thread = require('../model/thread');
-        console.log(Pagination.attr('options.replyLimit'));
-        Thread.findAll(Pagination, function(threads) {
+        //Thread.findAll(Pagination, function(threads) {
+        self.getAllThreads(Pagination).then(function(threads) {
+            threads.forEach(function(i) {
+            });
             self.element.toggleClass("loading");
             self.element.empty();
             can.each(threads, function(thread) {
-                //console.log(thread.replies);
                 self.element.append(can.view(self.options.view, thread, {
 
                     formatDate: function(date) {
-                        return new Date(date());
+                        return new Date(date);
                     },
 
                     checkReplies: function(content) {
-                        if (content().match(/(@\w*)/g)) {
-                            var string = content().replace(/(@\w*)/g, function(match) {
+                        if (content.match(/(@\w*)/g)) {
+                            var string = content.replace(/(@\w*)/g, function(match) {
                                 return '<span class="hover-preview" data-post-id="'+match.substr(1)+'">'+match+'</span>';
                             });
                             return string;
                         } else {
-                            return content();
+                            return content;
                         }
                     },
 
                     replyCount: function(replyCount) {
-                        if (parseInt(replyCount()) > thread.replies.length) {
-                            return (parseInt(replyCount()) - thread.replies.length) + ' more replies hidden';
+                        if (parseInt(replyCount) > thread.replies.length) {
+                            return (parseInt(replyCount) - thread.replies.length) + ' more replies hidden';
                         } else {
                             return '';
                         }
@@ -72,7 +99,7 @@ var ThreadsControl = can.Control.extend({
                     replyLink: function() {
                         return can.route.link(
                             "<button><i class='fa fa-eye'></i><span class='show-for-medium-up'>View</span></button>",
-                            { id: thread.attr('id') },
+                            { id: thread.id },
                             {}, false );
                     }
                 }));

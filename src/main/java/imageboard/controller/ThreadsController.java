@@ -76,10 +76,20 @@ public class ThreadsController {
             @RequestParam(value="replylimit", required=false) Integer replylimit,
             @RequestParam(value="paginate", required=false) Boolean paginate,
             @RequestParam(value="page", required=false, defaultValue="1") Integer page,
+            @RequestParam(value="sortby", required=false) String sortBy,
             @RequestParam(value="perpage", required=false, defaultValue="3") Integer perPage) throws JSONException {
 
-        List<ThreadsModel> threads = (paginate == null) ?
-                threadsService.getAllThreads(replylimit) : threadsService.getPaginatedThreads(replylimit, page, perPage);
+        List<ThreadsModel> threads;
+        logger.log(Level.WARNING, sortBy);
+        if (sortBy.equals("lastactive")) {
+            logger.log(Level.WARNING, "sorting by last active");
+            threads = (paginate == null) ?
+                    threadsService.getAllThreads(replylimit) : threadsService.getPaginatedThreads(replylimit, page, perPage);
+        } else {
+            logger.log(Level.WARNING, "sorting by popularity");
+            threads = (paginate == null) ?
+                    threadsService.getAllThreadsByPopularity(replylimit) : threadsService.getPaginatedThreadsByPopularity(replylimit, page, perPage);
+        }
 
         return JSONResponse.buildGetAllResponse(threads);
     }

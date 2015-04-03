@@ -44,9 +44,25 @@ header {
             }
         }
     }
+    .top-bar-section ul li > a {
+        font-family: 'Inconsolata';
+    }
+
+    .settings-switch {
+        .has-dropdown {
+            i.fa {
+                margin-right: 13px;
+            }
+        }
+
+        .level-two {
+            min-width: 0;
+        }
+    }
 }
 
 .nav__wrap {
+    font-family: 'Inconsolata';
 
     a.colour-scheme-switch i {
         @extend .fa-moon-o;

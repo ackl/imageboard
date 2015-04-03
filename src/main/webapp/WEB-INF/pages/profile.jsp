@@ -35,14 +35,18 @@
                 <div class="profile-posts__post">
                     <c:choose>
                     <c:when test="${post.parentId ne '0'}">
+                    <span class="profile-posts__about">
                         a reply to
                         <a href="/#!threads/${post.parentId}" class="hover-preview" data-post-id="${post.parentId}">thread ${post.parentId}</a>
+                    </span>
                         <div class="profile-posts__thread-preview hide">
                             <div class="preview-inline-wrap"><p></p>
                         </div></div>
                     </c:when>
                     <c:otherwise>
+                    <span class="profile-posts__about">
                         <a href="/#!threads/${post.id}">a thread</a>
+                    </span>
                     </c:otherwise>
                     </c:choose>
                     <p> ${post.content} </p>

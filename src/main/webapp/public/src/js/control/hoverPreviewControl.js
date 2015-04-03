@@ -41,13 +41,11 @@ var HoverPreviewControl = can.Control.extend({
         if (left < $(window).width()/2) {
             //on the left of screen
             left += el.width() + 10;
-            console.log(left);
             left += 'px';
             right = 'auto';
             side = 'right';
         } else {
             //on the right side of screen
-            console.log($(window).width(), left, el.width());
             right = $(window).width() - left - el.width() + 35;
             right += 'px';
             left = 'auto';

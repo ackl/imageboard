@@ -15,6 +15,8 @@
     }
 
     .profile-posts__post {
+        border-bottom: 1px solid black;
+
         .profile-posts__thread-preview {
             position: absolute;
             right: 0;
@@ -28,7 +30,13 @@
                 padding: 10px 10px 0;
             }
 
-            p {
+        }
+
+        .profile-posts__about {
+            color: #999;
+
+            a {
+                color: #59AAC5;
             }
         }
     }

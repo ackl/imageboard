@@ -2,6 +2,8 @@ package imageboard.service;
 
 import java.util.List;
 import java.util.Date;
+import java.util.Collections;
+import java.util.Comparator;
 
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -35,6 +37,8 @@ import imageboard.model.ThreadsModel;
 import imageboard.service.ThreadsService;
 import imageboard.util.JSONResponse;
 import imageboard.util.FileWriter;
+import imageboard.util.AscendingPopularityComparator;
+import imageboard.util.DescendingPopularityComparator;
 
 @Service
 public class ThreadsService {
@@ -91,13 +95,23 @@ public class ThreadsService {
         return replies;
     }
 
+    public List<ThreadsModel> getAllThreadsByPopularity(Integer replylimit) {
+        List<ThreadsModel> threadsModels = getAllThreads(replylimit);
+        Collections.sort(threadsModels, Collections.reverseOrder(new AscendingPopularityComparator()));
+        return threadsModels;
+    }
+
     public List<ThreadsModel> getAllThreads(Integer replylimit) {
         List<ThreadsModel> threadsModels = threadsDao.selectAllThreads();
         for (ThreadsModel thread : threadsModels) {
             List<PostsModel> replies = postsDao.selectPostsByParentId(thread.getId());
             thread.setReplyCount(replies.size());
             if (replylimit != null && replylimit >= 0 && replies.size() >= replylimit) {
-                replies = replies.subList(0, replylimit);
+                int fromIndex = replies.size() - replylimit - 1;
+                int toIndex = replies.size();
+                fromIndex = (fromIndex > 0) ? fromIndex : 0;
+
+                replies = replies.subList(fromIndex, toIndex);
             }
 
             for (PostsModel reply : replies) {
@@ -124,9 +138,18 @@ public class ThreadsService {
         return threadsModels;
     }
 
+    public List<ThreadsModel> getPaginatedThreadsByPopularity(Integer replylimit, Integer page, Integer perPage) {
+        logger.log(Level.WARNING, "getting paginated threads by popularity");
+        List<ThreadsModel> threads = getAllThreadsByPopularity(replylimit);
+        return paginateThreads(threads, replylimit, page, perPage);
+    }
+
     public List<ThreadsModel> getPaginatedThreads(Integer replylimit, Integer page, Integer perPage) {
         List<ThreadsModel> threads = getAllThreads(replylimit);
+        return paginateThreads(threads, replylimit, page, perPage);
+    }
 
+    public List<ThreadsModel> paginateThreads(List<ThreadsModel> threads, Integer replylimit, Integer page, Integer perPage) {
         double threadsCount = new Double(threads.size());
         int pagesCount = (int) Math.floor(Math.ceil(threadsCount/perPage));
 
