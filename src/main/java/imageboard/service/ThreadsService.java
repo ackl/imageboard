@@ -107,7 +107,7 @@ public class ThreadsService {
             List<PostsModel> replies = postsDao.selectPostsByParentId(thread.getId());
             thread.setReplyCount(replies.size());
             if (replylimit != null && replylimit >= 0 && replies.size() >= replylimit) {
-                int fromIndex = replies.size() - replylimit - 1;
+                int fromIndex = replies.size() - replylimit;
                 int toIndex = replies.size();
                 fromIndex = (fromIndex > 0) ? fromIndex : 0;
 

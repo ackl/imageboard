@@ -8,6 +8,7 @@ import java.security.Principal;
 import java.util.UUID;
 import java.util.logging.Logger;
 import java.util.logging.Level;
+import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -81,14 +82,14 @@ public class UsersController {
 
     @RequestMapping(value="/{id}", method=RequestMethod.POST)
     @ResponseBody
-    public String updateProfileImage(@PathVariable String id, @RequestParam("file") MultipartFile file) {
+    public String updateProfileImage(@PathVariable String id, @RequestParam("file") MultipartFile file) throws IOException {
         logger.log(Level.WARNING, "trying to put");
 
         UsersModel userModel = usersService.selectUserByUsername(id);
 
         if (!file.isEmpty()) {
-            String downloadPath = FileWriter.writeFile(file, imageUploadDirectory, imageDownloadDirectory);
-            usersService.updateUserProfileImage(id, downloadPath);
+            String downloadPath = FileWriter.uploadFileToS3(file);
+            usersService.updateUserProfileImage(id, "http://clanboard-1234.s3-us-west-2.amazonaws.com/"+downloadPath);
         }
         return "ok";
     }

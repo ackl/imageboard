@@ -1,5 +1,6 @@
 package imageboard.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.logging.Level;
@@ -47,28 +48,25 @@ public class ThreadsController {
             @RequestParam("content") String content,
             @RequestParam("image_url") String imageUrl,
             UriComponentsBuilder b,
-            Principal principal) throws JSONException {
+            Principal principal) throws JSONException, IOException {
+
+        String s3Key;
+        ThreadsModel thread = new ThreadsModel();
+
+        thread.setSubject(subject);
+        thread.setContent(content);
+        thread.setUserId(principal.getName());
 
         if (!file.isEmpty()) {
-            ThreadsModel thread = new ThreadsModel();
-            thread.setSubject(subject);
-            thread.setContent(content);
-            thread.setUserId(principal.getName());
-            String downloadPath = FileWriter.writeFile(file, imageUploadDirectory, imageDownloadDirectory);
-            thread.setImageUrl(downloadPath);
-            this.threadsService.createThread(thread);
-            return JSONResponse.buildCreateResponse(b, threadsService.lastActiveThread());
+            s3Key = FileWriter.uploadFileToS3(file);
         } else {
-            ThreadsModel thread = new ThreadsModel();
-            thread.setSubject(subject);
-            thread.setContent(content);
-            thread.setUserId(principal.getName());
-            String downloadPath = FileWriter.downloadFile(imageUrl, imageUploadDirectory, imageDownloadDirectory);
-            thread.setImageUrl(downloadPath);
-            this.threadsService.createThread(thread);
-            return JSONResponse.buildCreateResponse(b, threadsService.lastActiveThread());
-            //return JSONResponse.buildBadRequestResponse();
+            s3Key = FileWriter.downloadFileToS3(imageUrl);
         }
+
+        thread.setImageUrl("http://clanboard-1234.s3-us-west-2.amazonaws.com/"+s3Key);
+
+        this.threadsService.createThread(thread);
+        return JSONResponse.buildCreateResponse(b, threadsService.lastActiveThread());
     }
 
     @RequestMapping(method = RequestMethod.GET, produces="application/json")
@@ -82,11 +80,9 @@ public class ThreadsController {
         List<ThreadsModel> threads;
         logger.log(Level.WARNING, sortBy);
         if (sortBy.equals("lastactive")) {
-            logger.log(Level.WARNING, "sorting by last active");
             threads = (paginate == null) ?
                     threadsService.getAllThreads(replylimit) : threadsService.getPaginatedThreads(replylimit, page, perPage);
         } else {
-            logger.log(Level.WARNING, "sorting by popularity");
             threads = (paginate == null) ?
                     threadsService.getAllThreadsByPopularity(replylimit) : threadsService.getPaginatedThreadsByPopularity(replylimit, page, perPage);
         }
