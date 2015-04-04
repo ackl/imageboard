@@ -56,10 +56,10 @@
                         Posts per page
                     </a>
                     <ul class="dropdown level-two posts-per-page">
-                        <li> <a class="item"> 2 </a> </li>
-                        <li> <a class="item"> 3 </a> </li>
-                        <li> <a class="item"> 4 </a> </li>
-                        <li> <a class="item"> 5 </a> </li>
+                        <li> <a class="item 2"> 2 </a> </li>
+                        <li> <a class="item 3"> 3 </a> </li>
+                        <li> <a class="item 4"> 4 </a> </li>
+                        <li> <a class="item 5"> 5 </a> </li>
                     </ul>
                 </li>
                 <li class="has-dropdown">
@@ -68,10 +68,10 @@
                         Reply preview limit
                     </a>
                     <ul class="dropdown level-two replies-per-thread">
-                        <li> <a class="item"> 2 </a> </li>
-                        <li> <a class="item"> 3 </a> </li>
-                        <li> <a class="item"> 4 </a> </li>
-                        <li> <a class="item"> 5 </a> </li>
+                        <li> <a class="item 2"> 2 </a> </li>
+                        <li> <a class="item 3"> 3 </a> </li>
+                        <li> <a class="item 4"> 4 </a> </li>
+                        <li> <a class="item 5"> 5 </a> </li>
                     </ul>
                 </li>
                 <li class="has-dropdown">
@@ -80,8 +80,8 @@
                         Sort by
                     </a>
                     <ul class="dropdown level-two sort-threads-by">
-                        <li> <a class="item" data-param="lastactive"> Last active </a> </li>
-                        <li> <a class="item" data-param="popularity"> Popularity </a> </li>
+                        <li> <a class="item lastactive disabled" data-param="lastactive"> Last active </a> </li>
+                        <li> <a class="item popularity" data-param="popularity"> Popularity </a> </li>
                     </ul>
                 </li>
                 </ul>

@@ -48,6 +48,11 @@ header {
         font-family: 'Inconsolata';
     }
 
+    .top-bar-section .dropdown li:not(.has-form):not(.active) > a:not(.button).disabled {
+        background: #96B8C6;
+        color: #111;
+    }
+
     .settings-switch {
         .has-dropdown {
             i.fa {

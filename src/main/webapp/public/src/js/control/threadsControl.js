@@ -19,6 +19,7 @@ var ThreadsControl = can.Control.extend({
 
     '{Thread} created': 'getThreads',
     '{Pagination.options} changePage': function(el, ev) {
+        console.log('pagination option changed');
         this.getThreads();
     },
 

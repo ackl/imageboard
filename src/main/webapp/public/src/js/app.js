@@ -18,7 +18,7 @@ Pagination = new can.Map({
         page: 1,
         perPage: 3,
         replyLimit: 2,
-        sortby: 'popularity'
+        sortby: 'lastactive'
     },
     meta: {
         pages: null

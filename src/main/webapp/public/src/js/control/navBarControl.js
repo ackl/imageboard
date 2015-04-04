@@ -5,7 +5,24 @@ var can = require('canjs/amd/can');
 var NavBarControl = can.Control.extend({
     init: function(el, opts) {
         this.csrf = this.element.find('form input[name="_csrf"]').val();
+        var settings = Pagination.attr('options');
+
+        console.log(el.find('.posts-per-page .' + settings.attr('perPage')));
+        el.find('.posts-per-page .' + settings.attr('perPage')).addClass('disabled');
+        el.find('.replies-per-thread .' + settings.attr('replyLimit')).addClass('disabled');
         //this.stickyNav = true;
+    },
+
+    '{Pagination.options} changePage': function(el, ev) {
+        var settings = Pagination.attr('options');
+        this.element.find('.settings-switch .item').removeClass('disabled');
+        this.element.find('.posts-per-page .' + settings.attr('perPage')).addClass('disabled');
+        this.element.find('.replies-per-thread .' + settings.attr('replyLimit')).addClass('disabled');
+        if (settings.attr('sortby') == 'popularity') {
+            this.element.find('.popularity').addClass('disabled');
+        } else {
+            this.element.find('.lastactive').addClass('disabled');
+        }
     },
 
     'a.colour-scheme-switch click': function(el, ev) {
