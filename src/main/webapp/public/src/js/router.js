@@ -12,6 +12,7 @@ var Router = can.Control({
     },
 
     displayHome: function() {
+        this.element.addClass('threads-page');
         this.element.html(can.view('threadListTemplate'));
         new ThreadForm('.new-thread-form');
         var paginateControl = new PaginateControl('.paginate-controls');
@@ -20,6 +21,7 @@ var Router = can.Control({
 
     'route' : function(){
         this.displayHome();
+        this.element.removeClass('thread-page');
     },
 
     'dashboard route': function() {
@@ -29,10 +31,12 @@ var Router = can.Control({
     'threads/:id route': function(data) {
         var self = this;
         this.element.empty();
-        this.element.append('<h1>yo</h1>');
+        this.element.removeClass('threads-page');
+        this.element.addClass('thread-page');
         Thread.findOne({id: data.id}).then(function(resp) {
-            console.log(resp);
             //self.element.html(can.view('threadTemplate', resp));
+            resp.attr('threadPage', 'hello');
+            console.log(resp);
             self.element.append(can.view('threadTemplate', resp, {
 
                 formatDate: function(date) {
@@ -67,7 +71,10 @@ var Router = can.Control({
             }));
 
         self.element.find('.thread').each(function(i, el) {
-            new ThreadControl(el, {body: $('body')});
+            new ThreadControl(el, {body: $('body'), view: {
+                quickreply: 'replyFullTemplate',
+                reply: 'replyPreviewTemplate',
+            }});
         });
 
         });

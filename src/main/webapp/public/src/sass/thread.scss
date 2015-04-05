@@ -1,0 +1,42 @@
+.thread-page {
+    width: 80%;
+    margin: 0 auto;
+
+    li.thread {
+        list-style-type: none;
+        overflow: hidden;
+    }
+
+    .thread__main {
+        margin-top: 30px;
+    }
+
+    .thread__reply-buttons {
+        a {
+            display: none;
+        }
+    }
+
+    .replies-preview {
+        /*background: grky;*/
+    }
+
+    .replies-preview__reply {
+        border-top: 2px solid rgb(113, 113, 113);
+        margin-top: 20px;
+
+        .reply__content {
+            padding: 20px;
+        }
+    }
+    .thread__meta-info {
+        background: none;
+        color: rgb(113, 113, 113);
+    }
+
+    .quick-reply {
+        position: fixed;
+        top: 45%;
+        left: 0;
+    }
+}

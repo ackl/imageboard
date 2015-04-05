@@ -26,6 +26,7 @@ var NavBarControl = can.Control.extend({
     },
 
     'a.colour-scheme-switch click': function(el, ev) {
+        ev.preventDefault();
         this.scheme = $('body').hasClass('light') ?
             'dark' : 'light';
 

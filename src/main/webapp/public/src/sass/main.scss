@@ -4,6 +4,7 @@
 
 
 @import 'threads';
+@import 'thread';
 @import 'header';
 @import 'quickreply';
 @import 'profile';
@@ -95,6 +96,11 @@ body.light {
 
     ul.threads .more-replies {
         color: #111;
+    }
+    .thread-page {
+        .replies-preview__reply {
+            background: rgb(228, 228, 228);
+        }
     }
 }
 

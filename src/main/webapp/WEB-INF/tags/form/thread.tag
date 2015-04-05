@@ -10,7 +10,7 @@
         </div>
         <div class="columns medium-3">
 
-            <label class="file" tabindex="3"><span class="file__text">Choose image</span><input type="file" name="file"></label>
+            <label class="file" tabindex="3"><span class="file__text">Choose image</span><input type="file" name="file"></label><br />
 
             <label class="image_url__label">
                 or:

@@ -27,6 +27,7 @@ import imageboard.model.ThreadsModel;
 import imageboard.model.UsersModel;
 import imageboard.dao.PostsDao;
 import imageboard.dao.ThreadsDao;
+import imageboard.service.PostsService;
 import imageboard.service.ThreadsService;
 import imageboard.util.JSONResponse;
 import imageboard.util.FileWriter;
@@ -88,5 +89,9 @@ public class PostsService {
             }
         }
         return postsModels;
+    }
+
+    public void createPost(PostsModel post) {
+        postsDao.insertPost(post);
     }
 }

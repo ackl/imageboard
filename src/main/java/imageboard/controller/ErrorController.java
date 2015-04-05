@@ -16,10 +16,10 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class ErrorController {
 
-    @RequestMapping("/403")
-    public String hello(ModelMap model) {
-        return "403";
-    }
+    //@RequestMapping("/403")
+    //public String hello(ModelMap model) {
+        //return "403";
+    //}
 
     @RequestMapping("/404")
     public String uploadRoute(ModelMap model) {

@@ -53,10 +53,29 @@ public class PostsDao {
 		return jdbcTemplate.queryForLong(sql, new Object[] {id});
 	}
 
-	public void insertPost(String userId, int parentId, long date, String imageUrl, String content) {
+	//public void insertPost(String userId, int parentId, long date, String imageUrl, String content) {
+		//String sql = "INSERT INTO posts (user_id, parent_id, date, image_url, content) VALUES (?, ?, ?, ?, ?)";
+
+		//jdbcTemplate.update(sql, new Object[] {userId, parentId, date, imageUrl, content});
+	//}
+
+    public int selectMostRecentPostId() {
+        String sql = "SELECT id FROM posts ORDER BY date DESC LIMIT 1";
+
+		return jdbcTemplate.queryForInt(sql);
+    }
+
+    public PostsModel selectMostRecentPost() {
+        String sql = "SELECT * FROM posts ORDER BY date DESC LIMIT 1";
+
+		return (PostsModel) jdbcTemplate.queryForObject(sql, new Object[] {},
+				new BeanPropertyRowMapper(PostsModel.class));
+    }
+
+	public void insertPost(PostsModel p) {
 		String sql = "INSERT INTO posts (user_id, parent_id, date, image_url, content) VALUES (?, ?, ?, ?, ?)";
 
-		jdbcTemplate.update(sql, new Object[] {userId, parentId, date, imageUrl, content});
+		jdbcTemplate.update(sql, new Object[] {p.getUserId(), p.getParentId(), p.getDate(), p.getImageUrl(), p.getContent()});
 	}
 
 	public void updatePost(int id, String userId, int parentId, long date, String imageUrl, String content) {

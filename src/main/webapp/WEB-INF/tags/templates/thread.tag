@@ -18,18 +18,44 @@
                 <span class="thread__timestamp">Time: {{formatDate date}}</span>
             </div>
         </div>
-        <div class="columns small-12 thread__content--wrap">
-            <div class="thread__content">
-                <p>{{content}}</p>
-            </div>
-        </div>
 
-        {{#if image_url}}
-        <div class="thread__image columns small-12 medium-4">
-            <ul class="clearing-thumbs" data-clearing>
-                <li><a class="th" href="{{image_url}}"><img src="{{image_url}}"></a></li>
-            </ul>
-        </div>
+
+        {{#threadPage}}
+            <div class="thread__main">
+                <div class="thread__image columns small-12 medium-4">
+                    <ul class="clearing-thumbs" data-clearing>
+                        <li><a class="th" href="{{image_url}}"><img src="{{image_url}}"></a></li>
+                    </ul>
+                </div>
+                <div class="columns small-12 medium-8 thread__content--wrap">
+                    <div class="thread__content">
+                        <p>{{content}}</p>
+                    </div>
+                </div>
+            </div>
+            {{#if replies.length}}
+            <div class="replies-preview columns small-12 medium-12">
+                {{#replies}}
+                    <div class="replies-preview__reply">
+                        {{>replyPreviewTemplate}}
+                    </div>
+                {{/replies}}
+            </div>
+            {{/if}}
+        {{/threadPage}}
+
+        {{^threadPage}}
+            <div class="columns small-12 thread__content--wrap">
+                <div class="thread__content">
+                    <p>{{content}}</p>
+                </div>
+            </div>
+
+            <div class="thread__image columns small-12 medium-4">
+                <ul class="clearing-thumbs" data-clearing>
+                    <li><a class="th" href="{{image_url}}"><img src="{{image_url}}"></a></li>
+                </ul>
+            </div>
             {{#if replies.length}}
             <div class="replies-preview columns small-12 medium-8">
                 {{#replies}}
@@ -39,19 +65,8 @@
                 {{/replies}}
             </div>
             {{/if}}
-        {{/if}}
+        {{/threadPage}}
 
-        {{^if image_url}}
-            {{#if replies.length}}
-            <div class="replies-preview columns small-12 medium-9">
-                {{#replies}}
-                    <div class="replies-preview__reply">
-                        {{>replyPreviewTemplate}}
-                    </div>
-                {{/replies}}
-            </div>
-            {{/if}}
-        {{/if}}
         <div class="more-replies">{{replyCount reply_count}}</div>
         <div class="avatar">
             <a class="has-tip tip-top" href="/users/profile/{{user.username}}"
@@ -61,13 +76,6 @@
                 <img src="{{user.image_url}}" alt="">
             </a>
         </div>
-
-        <%-- Dev helper --%>
-        <!--<div class="thread__info">-->
-            <!--<p class="thread__info--id">postID: {{id}}</p>-->
-            <!--<p class="thread__info--id">userID: {{user_id}}</p>-->
-        <!--</div>-->
-
     </li>
 </script>
 
@@ -75,6 +83,7 @@
     <div class="thread__meta-info" data-post-id="{{id}}">
         <span class="reply__timestamp">ID: {{id}} | </span>
         <span class="reply__timestamp">Posted at: {{formatDate date}}</span>
+        this is a threadpage reply
     </div>
 
     <p class="reply__content"> {{{checkReplies content}}} </p>
@@ -86,4 +95,38 @@
             <img src="{{user.image_url}}" alt="">
         </a>
     </div>
+</script>
+
+<script type="text/mustache" id="threadsPageLayout">
+    <div class="thread__image columns small-12 medium-4">
+        <ul class="clearing-thumbs" data-clearing>
+            <li><a class="th" href="{{image_url}}"><img src="{{image_url}}"></a></li>
+        </ul>
+    </div>
+    {{#if replies.length}}
+    <div class="replies-preview columns small-12 medium-8">
+        {{#replies}}
+            <div class="replies-preview__reply">
+                {{>replyPreviewTemplate}}
+            </div>
+        {{/replies}}
+    </div>
+    {{/if}}
+</script>
+
+<script type="text/mustache" id="threadPageLayout">
+    <div class="thread__image columns small-12">
+        <ul class="clearing-thumbs" data-clearing>
+            <li><a class="th" href="{{image_url}}"><img src="{{image_url}}"></a></li>
+        </ul>
+    </div>
+    {{#if replies.length}}
+    <div class="replies-preview columns small-12">
+        {{#replies}}
+            <div class="replies-preview__reply">
+                {{>replyPreviewTemplate}}
+            </div>
+        {{/replies}}
+    </div>
+    {{/if}}
 </script>

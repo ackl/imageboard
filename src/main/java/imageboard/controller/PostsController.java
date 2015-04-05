@@ -1,6 +1,7 @@
 package imageboard.controller;
 
 import java.util.List;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -25,6 +27,7 @@ import imageboard.model.PostsModel;
 import imageboard.model.ThreadsModel;
 import imageboard.dao.PostsDao;
 import imageboard.dao.ThreadsDao;
+import imageboard.util.FileWriter;
 import imageboard.service.PostsService;
 import imageboard.util.JSONResponse;
 
@@ -48,21 +51,52 @@ public class PostsController {
         return JSONResponse.buildGetAllPostsResponse(postsService.getAllPosts());
 	}
 
-	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Map<String, String>> postTesting(@RequestBody PostsModel post, UriComponentsBuilder b, Principal principal) {
+    @RequestMapping(method = RequestMethod.POST, produces="application/json")
+    public ResponseEntity<String> postTesting(
+            @RequestParam("file") MultipartFile file,
+            @RequestParam("content") String content,
+            @RequestParam("image_url") String imageUrl,
+            @RequestParam("parent_id") int parentId,
+            UriComponentsBuilder b,
+            Principal principal) throws JSONException, IOException {
+
+        PostsModel post = new PostsModel();
+        String s3Key = "";
+        if (file.isEmpty()) {
+            s3Key = FileWriter.downloadFileToS3(imageUrl);
+        }
+
         long date = new Date().getTime();
-		dao.insertPost(principal.getName(),
-			       post.getParentId(),
-                   date,
-			       post.getImageUrl(),
-			       post.getContent());
+
+        post.setDate(date);
+        post.setImageUrl("http://clanboard-1234.s3-us-west-2.amazonaws.com/"+s3Key);
+        post.setContent(content);
+        post.setParentId(parentId);
+
+        postsService.createPost(post);
         if (post.getParentId() != 0) {
             threadsDao.setLastActive(post.getParentId(), date);
         }
 
         //TODO: Get id of created post;
-        return buildCreateResponse(b, 1);
-	}
+        return JSONResponse.buildCreateResponse(b, 1);
+    }
+
+    //@RequestMapping(method = RequestMethod.POST)
+    //public ResponseEntity<Map<String, String>> postTesting(@RequestBody PostsModel post, UriComponentsBuilder b, Principal principal) {
+        //long date = new Date().getTime();
+        //dao.insertPost(principal.getName(),
+                   //post.getParentId(),
+                   //date,
+                   //post.getImageUrl(),
+                   //post.getContent());
+        //if (post.getParentId() != 0) {
+            //threadsDao.setLastActive(post.getParentId(), date);
+        //}
+
+        ////TODO: Get id of created post;
+        //return buildCreateResponse(b, 1);
+    //}
 
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public PostsModel getPost(@PathVariable int id) {
