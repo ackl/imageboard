@@ -74,7 +74,7 @@ var Router = can.Control({
             new ThreadControl(el, {body: $('body'), view: {
                 quickreply: 'replyFullTemplate',
                 reply: 'replyPreviewTemplate',
-            }});
+            }, thread: resp});
         });
 
         });

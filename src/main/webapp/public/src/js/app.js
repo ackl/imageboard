@@ -29,7 +29,6 @@ $(function() {
     navbar.init();
 
     var pageName = $('.page-meta-info').data("page-name");
-    $(document).foundation();
 
     if (pageName === "index") {
 
@@ -47,4 +46,6 @@ $(function() {
         profile.init();
 
     }
+
+    $(document).foundation();
 });

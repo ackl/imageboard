@@ -19,6 +19,40 @@ var ThreadControl = can.Control.extend({
     init: function(el, opts) {
         this.postId = el.data('post-id');
         this.threadPage = $('.page').hasClass('thread-page');
+        opts.thread.replies.forEach(function(reply) {
+            el.find('.replies-preview').append(
+                can.view('replyPreviewTemplate', reply, {
+                    formatDate: function(date) {
+                        if (opts.thread.threadPage) {
+                            return new Date(date());
+                        } else {
+                            return new Date(date);
+                        }
+                    },
+
+                    checkReplies: function(content) {
+                        if (opts.thread.threadPage) {
+                            if (content().match(/(@\w*)/g)) {
+                                var string = content().replace(/(@\w*)/g, function(match) {
+                                    return '<span class="hover-preview" data-post-id="'+match.substr(1)+'">'+match+'</span>';
+                                });
+                                return string();
+                            } else {
+                                return content();
+                            }
+                        } else {
+                            if (content.match(/(@\w*)/g)) {
+                                var string = content.replace(/(@\w*)/g, function(match) {
+                                    return '<span class="hover-preview" data-post-id="'+match.substr(1)+'">'+match+'</span>';
+                                });
+                                return string;
+                            } else {
+                                return content;
+                            }
+                        }
+                    }
+                }));
+        });
     },
 
     '.thread__reply click': function(el, ev) {
@@ -27,34 +61,6 @@ var ThreadControl = can.Control.extend({
 
     '.thread__reply--quick click': 'showQuickReply',
     '.quick-reply__close click': 'hideQuickReply',
-
-    //'.new-reply-form__submit click': function(el, ev) {
-        //ev.stopPropagation();
-        //ev.preventDefault();
-
-        //var threadContent = el.siblings('textarea').val(),
-            //csrf = el.siblings('input').val(),
-            //self = this;
-
-
-        //var reply = new Post({
-            //payload: {
-                //content: threadContent,
-                //parentId: this.postId
-            //},
-            //csrf: csrf
-        //});
-
-        //reply.save()
-             //.then(function(postData) {
-                //if (Pagination.attr('options.page') == 1) {
-                    //self.element.trigger('replied');
-                //} else {
-                    //can.route.attr({'page': '1'});
-                //}
-             //});
-
-    //},
 
     'submit': function(el, ev) {
         ev.preventDefault();
@@ -69,7 +75,7 @@ var ThreadControl = can.Control.extend({
             this.element.find('textarea.content').removeClass('error');
         }
 
-        if (threadContent && (this.filename || threadImageUrl)) {
+        if (threadContent) {
             var data = new FormData(el[0]);
 
             //var thread = new Thread({form: el[0]});

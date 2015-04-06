@@ -3,6 +3,7 @@ var can = require('canjs/amd/can');
 
 var ThreadForm = can.Control.extend({
     init: function(el, ev) {
+        this.localImageSource = true;
     },
 
     'submit': function(el, ev) {
@@ -43,10 +44,32 @@ var ThreadForm = can.Control.extend({
         }
     },
 
+    '.flipper__switch click': function(el, ev) {
+        var $fileInput = this.element.find('.file input');
+        var $imageUrlInput = this.element.find('input.image_url');
+
+        ev.preventDefault();
+        ev.stopPropagation();
+        el.parent().toggleClass('flip');
+
+        $fileInput.replaceWith($fileInput.val('').clone(true));
+        this.element.find('.file__text').text('Choose image');
+        $imageUrlInput.val('');
+        this.filename = null;
+
+        var tooltipTitle = this.localImageSource ?
+            el.data('link-text') : el.data('upload-text');
+
+        $('span[data-selector="flipper__switch"]').html(tooltipTitle);
+        this.localImageSource = !this.localImageSource;
+    },
+
     '.file input change': function(el, ev) {
         var filename = el.val().replace(/^.*\\/, "");
-        this.filename = filename;
-        el.siblings().text(filename);
+        if (filename) {
+            this.filename = filename;
+            el.siblings('.file__text').text(filename);
+        }
     }
 });
 

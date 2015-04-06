@@ -70,7 +70,9 @@ var ThreadsControl = can.Control.extend({
             });
             self.element.toggleClass("loading");
             self.element.empty();
+            console.log(threads)
             can.each(threads, function(thread) {
+                //console.log(thread)
                 self.element.append(can.view(self.options.view, thread, {
 
                     formatDate: function(date) {
@@ -103,6 +105,7 @@ var ThreadsControl = can.Control.extend({
                             {}, false );
                     }
                 }));
+                new ThreadControl(self.element.find('li.thread[data-post-id="' + thread.id + '"]'), {body: $('body'), thread: thread});
             });
 
             if (self.changePage) {
@@ -110,9 +113,9 @@ var ThreadsControl = can.Control.extend({
             }
 
 
-            self.element.find('.thread').each(function(i, el) {
-                new ThreadControl(el, {body: $('body')});
-            });
+            //self.element.find('.thread').each(function(i, el) {
+                //new ThreadControl(el, {body: $('body')});
+            //});
 
             new HoverPreviewControl(self.element);
 

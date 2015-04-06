@@ -148,6 +148,7 @@ $base-background-color: rgb(29, 29, 29);
 
                 li {
                     padding: 0;
+                    list-style-type: none;
                     float: none;
                 }
             }
@@ -300,6 +301,79 @@ $base-background-color: rgb(29, 29, 29);
     }
 
     .new-thread-form {
+        /* entire container, keeps perspective */
+        .flip-container {
+            position: relative;
+            perspective: 1000;
+        }
+
+        .flip-container.flip .flipper {
+            transform: rotateY(180deg);
+        }
+
+        .flip-container, .front, .back {
+            width: 100%;
+            min-height: 220px;
+        }
+
+        .flipper {
+            transition: 0.3s;
+            transform-style: preserve-3d;
+
+            position: relative;
+        }
+
+        .flipper__switch {
+            position: absolute;
+            top: 24px;
+            height: 45px;
+            width: auto;
+            padding: 10px;
+            background: #111;
+            border: 2px solid grey;
+            border-width: 0;
+            transition: border 0.3s;
+            z-index: 5;
+            background: none;
+
+            &:hover, &:focus, &:active {
+                box-shadow: none;
+            }
+
+            .fa {
+                @extend .fa-upload;
+                transition: color 0.3s;
+            }
+        }
+
+        .flip .flipper__switch {
+            .fa {
+                @extend .fa-link;
+                color: grey;
+            }
+        }
+
+        .flip-container.flip .flipper {
+            .flipper__switch {
+                border-width: 2px 0;
+            }
+        }
+
+        .front, .back {
+            backface-visibility: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .front {
+            z-index: 2;
+            transform: rotateY(0deg);
+        }
+        .back {
+            transform: rotateY(180deg);
+        }
+
         margin: 20px 0;
         color: rgb(112, 112, 112);
 
@@ -352,15 +426,12 @@ $base-background-color: rgb(29, 29, 29);
 
         .image_url__label {
             text-align: center;
+            position: relative;
+            margin-top: 24px;
         }
 
-        .image_url__label,
-        .image_url__label input {
-            margin-top: 8.5px;
-        }
-
-        .image_url {
-            margin-bottom: 68px;
+        input.image_url {
+            text-align: center;
         }
     }
 
@@ -386,63 +457,5 @@ $base-background-color: rgb(29, 29, 29);
         }
     }
 
-    .post-hover-preview {
-        position: absolute;
-
-        .preview-inline-wrap {
-            background: rgba(226, 225, 225, 0.83);
-            padding: 10px;
-            border: 1px dashed #222222;
-            max-width: 70%;
-            position: relative;
-            background: #BEBEBE;
-            /*border: 1px solid #222222;*/
-        }
-
-        .preview-inline-wrap:after, .preview-inline-wrap:before {
-            right: 100%;
-            top: 17px;
-            border: solid transparent;
-            content: " ";
-            height: 0;
-            width: 0;
-            position: absolute;
-            pointer-events: none;
-        }
-
-        .preview-inline-wrap:after {
-            border-color: rgba(190, 190, 190, 0);
-            border-right-color: #BEBEBE;
-            border-width: 5px;
-            margin-top: -5px;
-        }
-        .preview-inline-wrap:before {
-            border-color: rgba(34, 34, 34, 0);
-            border-right-color: #222222;
-            border-width: 6px;
-            margin-top: -6px;
-        }
-
-        &.left {
-            .preview-inline-wrap {
-                float: right;
-
-                &:after, &:before {
-                    right: auto;
-                    left: 100%;
-                }
-
-                &:after {
-                    border-color: rgba(190, 190, 190, 0);
-                    border-left-color: #BEBEBE;
-                }
-
-                &:before {
-                    border-color: rgba(34, 34, 34, 0);
-                    border-left-color: #222222;
-                }
-            }
-        }
-    }
 }
 

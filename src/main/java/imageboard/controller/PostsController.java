@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.Date;
 import java.net.URI;
 import java.security.Principal;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +37,7 @@ import imageboard.util.JSONResponse;
 @RequestMapping("/api/posts")
 public class PostsController {
 
+    private static final Logger logger = Logger.getLogger(PostsController.class.getName() );
 	private PostsDao dao;
 	private PostsService postsService;
 	private ThreadsDao threadsDao;
@@ -61,15 +64,28 @@ public class PostsController {
             Principal principal) throws JSONException, IOException {
 
         PostsModel post = new PostsModel();
-        String s3Key = "";
-        if (file.isEmpty()) {
-            s3Key = FileWriter.downloadFileToS3(imageUrl);
+        String s3Key = "http://clanboard-1234.s3-us-west-2.amazonaws.com/";
+
+        if (!file.isEmpty()) {
+            s3Key += FileWriter.uploadFileToS3(file);
+        } else if (imageUrl != null && !imageUrl.isEmpty()) {
+            s3Key += FileWriter.downloadFileToS3(imageUrl);
+        } else {
+            s3Key = null;
         }
+
+        //if (imageUrl != null && !imageUrl.isEmpty()) {
+            //logger.log(Level.WARNING, "has imageurl");
+        //} else {
+            //logger.log(Level.WARNING, "is null or empty");
+        //}
+
 
         long date = new Date().getTime();
 
+        post.setUserId(principal.getName());
         post.setDate(date);
-        post.setImageUrl("http://clanboard-1234.s3-us-west-2.amazonaws.com/"+s3Key);
+        post.setImageUrl(s3Key);
         post.setContent(content);
         post.setParentId(parentId);
 

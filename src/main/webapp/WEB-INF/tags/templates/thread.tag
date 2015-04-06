@@ -35,11 +35,6 @@
             </div>
             {{#if replies.length}}
             <div class="replies-preview columns small-12 medium-12">
-                {{#replies}}
-                    <div class="replies-preview__reply">
-                        {{>replyPreviewTemplate}}
-                    </div>
-                {{/replies}}
             </div>
             {{/if}}
         {{/threadPage}}
@@ -58,11 +53,6 @@
             </div>
             {{#if replies.length}}
             <div class="replies-preview columns small-12 medium-8">
-                {{#replies}}
-                    <div class="replies-preview__reply">
-                        {{>replyPreviewTemplate}}
-                    </div>
-                {{/replies}}
             </div>
             {{/if}}
         {{/threadPage}}
@@ -80,20 +70,42 @@
 </script>
 
 <script type="text/mustache" id="replyPreviewTemplate">
-    <div class="thread__meta-info" data-post-id="{{id}}">
-        <span class="reply__timestamp">ID: {{id}} | </span>
-        <span class="reply__timestamp">Posted at: {{formatDate date}}</span>
-        this is a threadpage reply
-    </div>
+    <div class="replies-preview__reply">
+        <div class="row">
+        <div class="thread__meta-info" data-post-id="{{id}}">
+            <span class="reply__timestamp">ID: {{id}} | </span>
+            <span class="reply__timestamp">Posted at: {{formatDate date}}</span>
+            this is a threadpage reply
+        </div>
 
-    <p class="reply__content"> {{{checkReplies content}}} </p>
-    <div data-tooltip aria-haspopup="true"
-        class="has-tip avatar tip-top"
-        data-options="disable_for_touch:true"
-        title="{{user.username}}">
-        <a href="/users/profile/{{user.username}}">
-            <img src="{{user.image_url}}" alt="">
-        </a>
+        {{#if image_url}}
+            <div class="reply__image columns small-12 medium-4">
+                <ul class="clearing-thumbs" data-clearing>
+                    <li><a class="th" href="{{image_url}}"><img src="{{image_url}}"></a></li>
+                </ul>
+            </div>
+            <div class="columns small-12 medium-8 reply__content--wrap">
+                <div class="reply__content">
+                    <p> {{{checkReplies content}}} </p>
+                </div>
+            </div>
+        {{/if}}
+        {{^if image_url}}
+            <div class="columns small-12 reply__content--wrap">
+                <div class="reply__content">
+                    <p> {{{checkReplies content}}} </p>
+                </div>
+            </div>
+        {{/if}}
+        <div data-tooltip aria-haspopup="true"
+            class="has-tip avatar tip-top"
+            data-options="disable_for_touch:true"
+            title="{{user.username}}">
+            <a href="/users/profile/{{user.username}}">
+                <img src="{{user.image_url}}" alt="">
+            </a>
+        </div>
+        </div>
     </div>
 </script>
 
